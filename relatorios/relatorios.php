@@ -92,7 +92,7 @@ if (isset($_SESSION['cpf'])) {
             $id_programa = $rgt['id_programa'];
             echo '<p>';
             echo "<a href='criarel.php?id=$id_programa'> $rgt[nome_programa]</a>||";
-            echo "<a href=''> Editar </a>||";
+            echo "<a href='editar_relatorio.php'> Editar </a>||";
             echo "<a href='relatorios.php?id=$id_programa'> Deletar </a><br>";
             echo '</p>';
         }

@@ -36,6 +36,8 @@ if(!empty($dados["entrar"])){
         <label for="senha">Senha:</label><br>
         <input type="password" id="senha" name="senha" required><br><br>
         <a href="..\sempermissao/sempermissao.php">Não tenho cadastro</a>
+    /
+        <a href="..\recuperar_senha/recuperar.php">Esqueci a senha</a>
         <input type="submit" name="entrar" value="Entrar">
     </form>
 </div>

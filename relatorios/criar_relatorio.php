@@ -10,12 +10,16 @@ $stmt = $mysqli->prepare($chave_verificar_tb_contratos);
 // $stmt->bindParam(":id_tabela", $id_tabela_total);
 // $stmt->bindParam(":ano", $ano);
 $stmt->execute();
-$rgt = $stmt->rowCount();
-if ($rgt) {
- echo($rgt);
- $cont = $rgt +  1;
-}
+$result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+foreach ($result as $row) {
+    // Faça algo com os dados de cada linha, por exemplo:
+    $cont = $row["id_programa"];
+}
+$ano = date('Y'); // Obtém o ano atual
+$ultimo_digito = substr((string)$cont, -3);
+$id_sequencial = $ultimo_digito + 1; // Começa o ID sequencial de 1 para este ano
+$cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 
 ?>
 <!DOCTYPE html>
@@ -204,9 +208,11 @@ if ($rgt) {
             <label for="projeto" id="projeto">Informações do Projeto:</label>
             
 
-            <label for="titulo"id="titleLabel">PROGRAMA <?php echo($cont);?>:</label>
+            <label for="titulo"id="titleLabel">PROGRAMA:</label>
             <!-- <input type="text" id="titulo" name="titulo" required> -->
             <textarea name="titulo" id="programa<?php echo($cont);?>" cols="30" rows="10"  style="resize: none;height: 50px;" required> </textarea>
+            <input type="hidden" name="id_do_programa" value="<?php echo($cont);?>">
+
 
 
             <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_meta" alt="teste" > <br> <br><br> <br>

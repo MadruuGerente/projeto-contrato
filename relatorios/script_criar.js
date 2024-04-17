@@ -1,9 +1,11 @@
 
-let contPrograma = window.document.querySelector(`#titleLabel`).textContent;
+let contPrograma = window.document.querySelector("input[name='id_do_programa']").value;
+
 var funcaoChamada = false;
 
-contPrograma = contPrograma[contPrograma.length - 2];
-
+// contPrograma = contPrograma[contPrograma.length - 2];
+contPrograma = contPrograma.substring(contPrograma.length - 8);
+console.log(contPrograma);
 window.addEventListener('beforeunload', function (event) {
     // Salvar os dados do formulário em localStorage'
     localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
