@@ -1,0 +1,70 @@
+.body {
+    margin: 10px; /* Reduzi a margem geral */
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-left: 10px; /* Reduzi a margem à esquerda */
+}
+
+.project-box {
+    position: relative; /* Adicionado para posicionar elementos filhos relativos a este elemento */
+    background-color: #fff;
+    border-radius: 6px; /* Reduzi o raio da borda */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;  /* Reduzi mais o padding */
+    margin: 8px;  /* Reduzi mais a margem */
+    max-width: 250px;  /* Reduzi o tamanho máximo ainda mais */
+    width: 100%;
+}
+
+.project-title {
+    font-size: 18px;  /* Reduzi mais o tamanho da fonte do título */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6px;  /* Reduzi mais a margem inferior do título */
+}
+
+.project-description {
+    font-size: 12px;  /* Reduzi mais o tamanho da fonte da descrição */
+    color: #666;
+    margin-bottom: 12px;  /* Reduzi mais a margem inferior da descrição */
+}
+
+.project-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 6px 10px;  /* Reduzi mais o padding do botão */
+    border: none;
+    border-radius: 3px; /* Reduzi mais o raio da borda do botão */
+    cursor: pointer;
+    font-size: 12px;  /* Reduzi mais o tamanho da fonte do botão */
+} 
+.project-button1 {
+    background-color: #1b196e;
+    color: #fff;
+    padding: 6px 10px;  /* Reduzi mais o padding do botão */
+    border: none;
+    border-radius: 3px; /* Reduzi mais o raio da borda do botão */
+    cursor: pointer;
+    font-size: 12px;  /* Reduzi mais o tamanho da fonte do botão */
+}
+
+.project-button:hover {
+    background-color: #45a049;
+}
+.notification-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    width: 15px; /* Reduzi a largura */
+    height: 15px; /* Reduzi a altura */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px; /* Reduzi o tamanho da fonte */
+}

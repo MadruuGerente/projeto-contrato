@@ -1,0 +1,73 @@
+.body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.nav {
+    background-color: #333;
+    overflow: hidden;
+    text-align: left;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.nav a {
+    display: inline;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 30px;
+}
+
+.nav a:hover {
+    background-color: #c82333;
+}
+.nav img{
+    text-align: left;
+    height: 100px; /* Altura da imagem ajustável conforme necessário */
+    margin-right: 50px;
+}
+
+.content {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.h2, h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333; /* Cor neutra */
+}
+.notification-badge {
+    background: #c82333;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid blue; 
+}
+.project-box {
+    position: relative; /* Adicionado para posicionar elementos filhos relativos a este elemento */
+    background-color: #fff;
+    border-radius: 6px; /* Reduzi o raio da borda */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;  /* Reduzi mais o padding */
+    margin: 8px;  /* Reduzi mais a margem */
+    max-width: 250px;  /* Reduzi o tamanho máximo ainda mais */
+    width: 100%;
+}

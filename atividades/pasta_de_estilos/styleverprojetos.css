@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+header {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    padding: 20px;
+}
+
+.project-details {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px; /* Reduzindo o espaçamento interno da seção de detalhes do projeto */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-details h2 {
+    color: #007bff;
+    font-size: 20px; /* Reduzindo o tamanho da fonte do título */
+    margin-bottom: 10px;
+}
+
+.project-details p {
+    color: #555;
+    font-size: 14px; /* Reduzindo o tamanho da fonte do texto */
+    margin-bottom: 10px; /* Reduzindo a margem inferior */
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #343a40;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+button[name="upload_relatorio"] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
