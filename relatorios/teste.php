@@ -113,7 +113,7 @@ if (count($pegarElementosIndicador) != 0 && $pegarElementosIndicador['id'] != nu
     $elementos_realizados_trimestre = $pegarElementosPrevisoes['dados_realizados'];
     $elementos_realizados_trimestre = explode(",", $elementos_realizados_trimestre);
 
-
+    
     $id_tabela_previsoes = $pegarElementosPrevisoes['id'];
 
     $total_previstos = 0;

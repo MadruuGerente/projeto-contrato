@@ -4,29 +4,11 @@ var funcaoChamada = false;
 
 contPrograma = contPrograma[contPrograma.length - 2];
 
-// window.addEventListener('unload', function (event) {
-//     // Salvar os dados do formulário em localStorage
-//     localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
-
-//     // Chamar a função para fazer outras ações, se necessário
-//     apagar_programa();
-// }); 
-// window.addEventListener('unload', function(event) {
-//     // Salvar os dados do formulário em localStorage
-//     // localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
-//     apagar_programa();
-// });
-
 window.addEventListener('beforeunload', function (event) {
     // Salvar os dados do formulário em localStorage'
     localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
     mandar("resetar");
-    // // Verificar se a página está sendo recarregada
-    // if (event.currentTarget.performance.navigationType === 1) {
-    //     // A página está sendo recarregada, então executar a função para apagar os dados
-    // } else {
-    //     this.alert('DDDA');
-    // }
+ 
 });
 let adicionar_meta = window.document.querySelector("#img_adicionar_meta");
 let adicionar_indicador = window.document.querySelector("#img_adicionar_indicador");

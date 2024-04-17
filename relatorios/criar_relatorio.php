@@ -16,6 +16,7 @@ if ($rgt) {
  $cont = $rgt +  1;
 }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
