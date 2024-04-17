@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pega_id_programa'])) {
     // Responde ao JavaScript que a requisição não foi feita corretamente
     echo "Requisição inválida.";
 }
+echo("");
 
 
 $guardar = 1;
