@@ -4,9 +4,16 @@ $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($dados["entrar"])) {
     if (!empty($dados["senha"]) && !empty($dados["conf"])) {
         $cpf = $_GET['cpf'];
-        $confirmar = atualizarSenha($cpf, $dados["senha"]);
-        if($confirmar != 0){
-            echo(" ATUALIZADO COM SUCESSO");
+        if ($dados["senha"] == $dados["conf"]) {
+            $cpf = $_GET['cpf'];
+            $d = $_GET['a'];
+            $confirmar = atualizarSenha($cpf, $dados["senha"]);
+            if ($confirmar != 0) {
+                echo (" ATUALIZADO COM SUCESSO");
+                header("Location:..\login/login.php");
+            }
+        }else{
+            header("Location:nova_senha.php?a=0&&cpf=$cpf");
         }
     }
 }
@@ -19,11 +26,25 @@ if (!empty($dados["entrar"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="..\login/pasta_de_estilos/stylelogin.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
     <title>SergipeTec - Login</title>
 </head>
 
+
 <body class="body">
 
+<?php if (isset($_GET['a'])) {
+        echo ('<script type="text/javascript">  
+    
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Login ou cpf não encontrados!"
+            
+          });
+        </script>');
+    } ?>
     <div class="title-container">
         <h1>SergipeTec</h1>
         <h2>Sergipe Parque Tecnológico</h2>

@@ -1,17 +1,30 @@
 .body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
-    margin: 0;
+    margin-top: 200px ;
+    display: table; /* Substitui display flex */
+    width: 100%; /* Ocupa toda a largura */
+    height: 100vh;
+    overflow: hidden
+}
+/* .body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 50px 0 0; /* Adiciona margem de 50px no topo 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
+} */
+.wrapper {
+    display: table-cell;
+    vertical-align: middle;
+    margin-top: 50px; /* Adiciona margem superior */
 }
 
 .title-container {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .title-container h1 {
@@ -31,6 +44,7 @@
     padding: 20px;
     width: 300px;
     text-align: center;
+    margin: 0 auto; /* Centraliza horizontalmente */
 }
 
 .login-container label {

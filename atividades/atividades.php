@@ -24,7 +24,7 @@ if ($resultado->num_rows >= 1) {
 } else {
     echo "<h4>No momento você não está em nenhum projeto!<h4>";
 }
-$idsEncontrados = array(); 
+$idsEncontrados = array();
 while ($dados = $resultado->fetch_assoc()) {
     if (!in_array($dados['id_projeto'], $idsEncontrados)) {
         $idsEncontrados[] = $dados['id_projeto'];
@@ -36,7 +36,7 @@ while ($dados = $resultado->fetch_assoc()) {
         echo '<div class="project-box">';
         if ($view == 0) {
             echo '<div class="notification-badge"></div>';
-        } 
+        }
         echo '<form method="POST">';
         echo '<div class="project-title">' . $nome_projeto . '</div>';
         echo '<div class="project-description">Objetivo: ' . $objetivo . '</div>';
@@ -69,12 +69,28 @@ echo "</div>";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pasta_de_estilos/atividades.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
+
     <title>Document</title>
 </head>
+
 <body class="body">
+    <button onclick="teste()">fdfdsf</button>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+<script>
+    function teste() {
+        Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        });
+    }
+</script>
+
 </html>

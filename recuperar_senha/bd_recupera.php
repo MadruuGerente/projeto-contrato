@@ -14,7 +14,11 @@ function verifica($login, $cpf)
     $stmt->bindParam(":cpf", $cpf);
     $stmt->execute();
     $rgt  = $stmt->rowCount();
-    return $rgt;
+    if($rgt != 0){
+        header("Location:nova_senha.php?cpf=$cpf");
+    }else{
+        header("Location:recuperar.php?a=0");
+    }
 }
 function atualizarSenha($cpf, $senha){
     $con = new Conexao();
@@ -26,6 +30,10 @@ function atualizarSenha($cpf, $senha){
     $stmt->bindParam(":cpf",$cpf);
     $stmt->execute();
     $rgt  = $stmt->rowCount();
-    return $rgt;
+    if($rgt != 0){
+        header("Location:..\login/login.php?e=0");
+    }else{
+        header("Location:nova_senha.php?a=0");
+    }
 }
 ?>
