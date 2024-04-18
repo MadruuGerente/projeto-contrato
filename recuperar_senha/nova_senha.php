@@ -40,7 +40,7 @@ if (!empty($dados["entrar"])) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Login ou cpf não encontrados!"
+            text: "Digite a mesma senha nos dois campos!"
             
           });
         </script>');

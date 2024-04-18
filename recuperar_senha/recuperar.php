@@ -31,7 +31,7 @@ if (!empty($dados["entrar"])) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Digite a mesma sneh!"
+            text: "Login ou cpf não encontrado!"
             
           });
         </script>');
