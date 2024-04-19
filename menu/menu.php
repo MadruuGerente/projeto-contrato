@@ -3,7 +3,10 @@ session_start();
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['cpf'])) {
-    header("Location: login.php");
+    header("Location: ..\login/login.php");
+    exit();
+}elseif($_SESSION['status'] == "inativo"){
+    header("Location: ..\login/login.php?c=0");
     exit();
 }
 
@@ -49,23 +52,14 @@ try {
     <link rel="stylesheet" href="pasta_de_estilos/stylemenu.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
+    <script src="scripts/funcoes.js"></script>
     <title>TESTE</title>
 </head>
 
 <body class="body">
     <?php if (isset($_GET['e'])) {
-        echo ('<script type="text/javascript">  
-    
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Login feito com sucesso",
-            showConfirmButton: false,
-            width: 400, // Defina a largura desejada
-            
-            timer: 1500
-          });
-        </script>');
+        $nome = $_SESSION['nome'];
+        echo ('<script type="text/javascript"> entrou("' . $nome . '");</script>');
     } ?>
     <!-- Conteúdo da Página -->
     <div class="content">

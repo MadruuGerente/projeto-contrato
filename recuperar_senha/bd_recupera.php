@@ -15,7 +15,7 @@ function verifica($login, $cpf)
     $stmt->execute();
     $rgt  = $stmt->rowCount();
     if($rgt != 0){
-        header("Location:nova_senha.php?cpf=$cpf");
+        header("Location:nova_senha.php");
     }else{
         header("Location:recuperar.php?a=0");
     }
@@ -27,13 +27,14 @@ function atualizarSenha($cpf, $senha){
     $chave = "UPDATE login SET senha=:senha WHERE cpf=:cpf";
     $stmt = $mysqli->prepare($chave);
     $stmt->bindParam(":senha",$senha);
-    $stmt->bindParam(":cpf",$cpf);
+    $stmt->bindParam(":cpf",$cpf); 
     $stmt->execute();
     $rgt  = $stmt->rowCount();
     if($rgt != 0){
         header("Location:..\login/login.php?e=0");
     }else{
-        header("Location:nova_senha.php?a=0");
+        echo("nao foi ");
+        // header("Location:nova_senha.php?a=0");
     }
 }
 ?>

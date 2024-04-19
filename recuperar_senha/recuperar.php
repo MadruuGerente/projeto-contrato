@@ -1,11 +1,14 @@
 <?php
 require_once "bd_recupera.php";
+session_start();
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($dados["entrar"])) {
     if (!empty($dados["login"]) && !empty($dados["cpf"])) {
+        $_SESSION["cpf_senha"] = $dados["cpf"]; 
         $certo = verifica($dados["login"], $dados["cpf"]);
+     
         if ($certo != 0) {
-            header("Location:nova_senha.php?cpf=$dados[cpf]&&a=0");
+            header("Location:nova_senha.php?a=0&&cpf='". $_SESSION['cpf_se']."'");
         }
     }
 }
@@ -24,7 +27,7 @@ if (!empty($dados["entrar"])) {
 </head>
 
 <body class="body">
-
+ 
 <?php if (isset($_GET['a'])) {
         echo ('<script type="text/javascript">  
     
@@ -48,7 +51,7 @@ if (!empty($dados["entrar"])) {
             <label for="login">Login:</label><br>
             <input type="text" id="login" name="login" required><br>
             <label for="cpf">CPF:</label><br>
-            <input type="password" id="cpf" name="cpf" required><br><br>
+            <input type="text" id="cpf" name="cpf" required><br><br>
             <!-- <a href="..\sempermissao/sempermissao.php">Não tenho cadastro</a>
         <a href="..\recuperar_senha/recuperar.php">Esqueci a senha</a> -->
             <input type="submit" name="entrar" value="Entrar">

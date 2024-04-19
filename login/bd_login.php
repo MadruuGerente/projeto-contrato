@@ -33,7 +33,10 @@ class login
                     session_start();
                     $_SESSION['cpf'] = $dados['cpf'];
                     $_SESSION['login'] = $dados['login'];
-                    //$_SESSION['nome']= $dados['nome'];
+                    $_SESSION['status'] = $dados['status'];
+                    $_SESSION['nome']= $dados['nome'];
+                    session_write_close();
+                   
                     header("Location:..\menu/menu.php?e=1");
                 } else {
                     header("Location:login.php?a=0");

@@ -4,7 +4,6 @@ class Novologin {
         try {
             // Incluindo a conexão
             require_once "..\bancodedados/bd_conectar.php";
-            require_once "insersoes.php";
             $con = new Conexao();
             // Chamando a função connect() com retorno
             $conectado = $con->connect();

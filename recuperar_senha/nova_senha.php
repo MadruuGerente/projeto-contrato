@@ -3,17 +3,18 @@ require_once "bd_recupera.php";
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($dados["entrar"])) {
     if (!empty($dados["senha"]) && !empty($dados["conf"])) {
-        $cpf = $_GET['cpf'];
+        session_start();
+        $cpf = $_SESSION['cpf_senha'];
         if ($dados["senha"] == $dados["conf"]) {
-            $cpf = $_GET['cpf'];
-            $d = $_GET['a'];
+            // $cpf = $_SESSION['cpf_senha'];
+            // $d = $_GET['a'];
             $confirmar = atualizarSenha($cpf, $dados["senha"]);
             if ($confirmar != 0) {
                 echo (" ATUALIZADO COM SUCESSO");
                 header("Location:..\login/login.php");
             }
         }else{
-            header("Location:nova_senha.php?a=0&&cpf=$cpf");
+            header("Location:nova_senha.php?a=0");
         }
     }
 }
@@ -56,7 +57,7 @@ if (!empty($dados["entrar"])) {
             <label for="senha">senha</label><br>
             <input type="text" id="senha" name="senha" required><br>
             <label for="conf">Confirmar senha</label><br>
-            <input type="password" id="conf" name="conf" required><br><br>
+            <input type="text" id="conf" name="conf" required><br><br>
             <!-- <a href="..\sempermissao/sempermissao.php">Não tenho cadastro</a>
     /
         <a href="..\recuperar_senha/recuperar.php">Esqueci a senha</a> -->

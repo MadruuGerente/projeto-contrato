@@ -22,10 +22,10 @@ if (!empty($dados["entrar"])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
     <title>SergipeTec - Login</title>
+    <script src="scripts/funcoes.js"></script>
 </head>
 
 <body class="body">
-    <!-- <button onclick="teste()">ddd</button> -->
 
     <div class="title-container">
         <h1>SergipeTec</h1>
@@ -33,26 +33,16 @@ if (!empty($dados["entrar"])) {
     </div>
 
     <?php if (isset($_GET['a'])) {
-        echo ('<script type="text/javascript">  
-    
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Credenciais inválidas!",
-            
-          });
-        </script>');
-    }elseif(isset($_GET['e'])){
-        echo ('<script type="text/javascript">  
-    
-        Swal.fire({
-            icon: "success",
-            
-            text: "Atualizado com sucesso!",
-            
-          });
-        </script>');
-    } ?>
+        echo ('<script type="text/javascript"> credenciaisInvalidas(); </script>');
+    } elseif (isset($_GET['e'])) {
+        echo ('<script type="text/javascript"> senhaAtualizada(); </script>');
+    } elseif (isset($_GET['b'])) {
+        echo ('<script type="text/javascript"> usuarioInativo(); </script>');
+    }
+    elseif (isset($_GET['c'])) {
+        echo ('<script type="text/javascript"> acessoNegado(); entrou();</script>');
+    }
+    ?>
 
     <div class="login-container">
         <h2>Login</h2>
@@ -71,19 +61,6 @@ if (!empty($dados["entrar"])) {
     </div>
 
 </body>
-<script>
-    function erro() {
 
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-
-
-</script>
 
 </html>
