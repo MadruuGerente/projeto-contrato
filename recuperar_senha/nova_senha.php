@@ -8,7 +8,9 @@ if (!empty($dados["entrar"])) {
         if ($dados["senha"] == $dados["conf"]) {
             // $cpf = $_SESSION['cpf_senha'];
             // $d = $_GET['a'];
-            $confirmar = atualizarSenha($cpf, $dados["senha"]);
+            $senha = $dados['senha'];
+            $senha_cripto = password_hash($senha, PASSWORD_DEFAULT);
+            $confirmar = atualizarSenha($cpf, $senha_cripto);   
             if ($confirmar != 0) {
                 echo (" ATUALIZADO COM SUCESSO");
                 header("Location:..\login/login.php");

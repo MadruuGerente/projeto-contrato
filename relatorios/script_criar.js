@@ -911,7 +911,6 @@ function mandar(quem) {
     voltar();
 }
 
-
 // Chamar a função para criar a tabela
 adicionar_meta.addEventListener('click', adicionarMeta);
 adicionar_indicador.addEventListener('click', adicionarIndicador);

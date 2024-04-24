@@ -3,7 +3,7 @@ function entrou(nome){
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
@@ -15,3 +15,14 @@ function entrou(nome){
         title: `Seja bem-vindo ${nome}` 
       });
 }
+var sidebar = document.getElementById("sidebar");
+var sidebar = document.getElementById("sidebar");
+var menuTrigger = document.querySelector(".imagem-menu");
+
+menuTrigger.addEventListener("click", function () {
+    if (sidebar.style.display === "none" || sidebar.style.display === "") {
+        sidebar.style.display = "block"; /* Mostra o menu lateral */
+    } else {
+        sidebar.style.display = "none"; /* Esconde o menu lateral */
+    }
+});

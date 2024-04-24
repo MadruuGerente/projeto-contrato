@@ -1,39 +1,37 @@
 .body {
+    margin: 0;
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
-    margin-top: 400px ;
-    display: table; /* Substitui display flex */
-    width: 100%; /* Ocupa toda a largura */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
-    overflow: hidden
 }
+
 .nav {
+    display: flex; /* Ativa Flexbox */
+    align-items: center; /* Centraliza elementos verticalmente */
     background-color: #333;
     overflow: hidden;
     text-align: left;
     width: 100%;
+    height: 60px; /* Altura do contêiner */
     position: absolute;
     top: 0;
-}
-
-.nav a {
-    display: inline;
+  }
+  
+  .nav a {
     color: white;
-    padding: 14px 16px;
+    padding: 14px 16px; /* Espaçamento interno */
     text-decoration: none;
     transition: background-color 0.3s;
     font-size: 30px;
-}
-
+  }
+  
 .nav a:hover {
     background-color: #c82333;
 }
-.nav img{
-    text-align: left;
-    height: 100px; /* Altura da imagem ajustável conforme necessário */
-    margin-right: 50px;
-}
-
 .content {
     text-align: center;
     margin-top: 20px;
@@ -69,3 +67,34 @@
     max-width: 250px;  /* Reduzi o tamanho máximo ainda mais */
     width: 100%;
 }
+.sidebar {
+    display: none; /* Menu oculto por padrão */
+    position: fixed;
+    top: 6.4%;
+    left: 0;
+    height: 100%;
+    width: 200px; /* Largura do menu */
+    background-color: #333;
+    padding-top: 20px;
+  }
+  
+  .imagem-menu {
+    cursor: pointer; /* Indica interatividade */
+    width: 40px; /* Ajuste conforme necessário */
+    height: 40px;
+    margin-left: 10px;
+  }
+  .sidebar a {
+    display: block; /* Cada link ocupa toda a largura */
+    color: white;
+    padding: 10px; /* Espaçamento interno */
+    text-decoration: none;
+  }
+  .sidebar a:hover {
+    background-color: #575757; /* Cor ao passar o mouse sobre o link */
+  }
+  .content {
+    padding: 20px; /* Espaçamento do conteúdo */
+    margin-left: 20px; /* Para evitar sobreposição */
+  }
+  

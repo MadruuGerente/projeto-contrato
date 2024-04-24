@@ -13,31 +13,30 @@ class login
             //senao tive vazio continue
 
             if (!empty($conectado)) {
-                $sql = "SELECT * FROM login WHERE login=:login AND senha=:senha";
+                $sql = "SELECT * FROM login WHERE login=:login";
                 $sql = $conectado->prepare($sql);
                 $sql->bindvalue("login", $login);
-                $sql->bindvalue("senha", $senha);
-
-
-
+                // $sql->bindvalue("senha", $senha);
                 $sql->execute();
                 //verificar se tem registro 
 
                 $rgt = $sql->rowCount();
-
                 //criando a sessao do usuario
 
                 if ($rgt > 0) {
                     // so um registro
                     $dados = $sql->fetch(PDO::FETCH_ASSOC);
-                    session_start();
-                    $_SESSION['cpf'] = $dados['cpf'];
-                    $_SESSION['login'] = $dados['login'];
-                    $_SESSION['status'] = $dados['status'];
-                    $_SESSION['nome']= $dados['nome'];
-                    session_write_close();
-                   
-                    header("Location:..\menu/menu.php?e=1");
+                    if (password_verify($senha, $dados['senha'])) {
+                        session_start();
+                        $_SESSION['cpf'] = $dados['cpf'];
+                        $_SESSION['login'] = $dados['login'];
+                        $_SESSION['status'] = $dados['status'];
+                        $_SESSION['nome'] = $dados['nome'];
+                        header("Location:..\menu/menu.php?e=1");
+                        session_write_close();
+                    } else {
+                    header("Location:login.php?a=0");
+                    }
                 } else {
                     header("Location:login.php?a=0");
 

@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['cpf'])) {
     header("Location: ..\login/login.php");
     exit();
-}elseif($_SESSION['status'] == "inativo"){
+} elseif ($_SESSION['status'] == "inativo") {
     header("Location: ..\login/login.php?c=0");
     exit();
 }
@@ -69,16 +69,16 @@ try {
 
     <nav class="nav">
 
-        <a href="https://sergipetec.org.br/" title="Sergipetec" rel="home">
-            <img data-interchange="[http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png, (default)], [http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec600x280.png, (retina)]"
+        <!-- <a href="https://sergipetec.org.br/" title="Sergipetec" rel="home">
+             <img data-interchange="[http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png, (default)], [http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec600x280.png, (retina)]"
                 alt="" class="hideie" data-uuid="62ab370c-836f-46ab-4978-ee131e86227d"
-                src="http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png">
+                src="http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png"> 
             <noscript><img src='http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png'
                     alt='Sergipetec'></noscript>
-        </a>
-        <a href="..\perfil/perfil.php">Meu perfil</a>
-
-        <?php
+        </a> -->
+        <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
+        <!-- <a href="..\perfil/perfil.php">Meu perfil</a> -->
+        <!-- <?php
         if ($usuario['perfil'] == 'gestor') {
             echo '<a id = "ger" href = "..\gerenciaratividades/ger_atividades.php">Gerenciar atividades</a>';
             echo '<a href="..\projetos/antes_projetos.php">Projetos</a>';
@@ -86,8 +86,22 @@ try {
             echo '<a id = "ger" href = "..\atividades/atividades.php">Atividades</a>';
             echo '<a href="..\relatorios/relatorios.php">Relatorios</a>';
         }
-        ?>
+        ?> -->
     </nav>
+    <!-- <button id="toggle-sidebar">Mostrar Menu</button> -->
+
+    <div class="sidebar" id="sidebar">
+        <a href="..\relatorios/relatorios.php">Relatórios</a>
+        <a href="..\perfil/perfil.php">Perfil</a>
+        <a href="..\atividades/atividades.php">Atividades</a>
+        <a href="#contact">Contato</a>
+    </div>
+
+    <div class="content">
+        <h1>Bem-vindo ao Meu Site</h1>
+        <p>Conteúdo do site aqui.</p>
+    </div>
+     <script src="scripts/funcoes.js"></script>
 </body>
 
 </html>

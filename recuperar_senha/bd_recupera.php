@@ -33,7 +33,7 @@ function atualizarSenha($cpf, $senha){
     if($rgt != 0){
         header("Location:..\login/login.php?e=0");
     }else{
-        echo("nao foi ");
+        echo("nao foi");
         // header("Location:nova_senha.php?a=0");
     }
 }
