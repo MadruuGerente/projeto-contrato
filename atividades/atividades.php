@@ -80,16 +80,12 @@ echo "</div>";
 </head>
 
 <body class="body">
-    <button onclick="teste()">fdfdsf</button>
+    <button onclick="teste()"> Voltar </button>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
 <script>
     function teste() {
-        Swal.fire({
-            title: "Good job!",
-            text: "You clicked the button!",
-            icon: "success"
-        });
+        window.location.href = `../menu/menu.php`;
     }
 </script>
 

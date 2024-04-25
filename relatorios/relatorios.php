@@ -67,7 +67,7 @@ require_once "..\bancodedados/bd_conectar.php";
 require "insercoes.php";
 if (isset($_GET['id'])) {
     $id_programa = $_GET['id'];
-  
+
     $resultado_delete = deletePrograma($id_programa);
     if ($resultado_delete > 0) {
 
@@ -110,7 +110,9 @@ if (isset($_SESSION['cpf'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stylerelatorios.css">
+    <link rel="stylesheet" href="pasta_de_estilos/stylerelatorios.css">
+    <link rel="stylesheet" href="..\menu/pasta_de_estilos/stylemenu.css">
+
     <title>Relatórios</title>
 </head>
 
@@ -148,27 +150,31 @@ if (isset($_SESSION['cpf'])) {
         </form>
     </div>
     <nav class="nav">
-        <a href="https://sergipetec.org.br/" title="Sergipetec" rel="home">
-            <!--	<img data-interchange="[http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png, (default)], [http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec600x280.png, (retina)]" alt="" class="hideie" data-uuid="62ab370c-836f-46ab-4978-ee131e86227d" src="http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png">
-                <noscript><img src='http://sergipetec.org.br/wp-content/uploads/2016/04/sergipetec300x140.png' alt='Sergipetec'></noscript>
-            </a>-->
-            <h2 class="hs"> SISTEMA DE GESTAO <h2>
-                    <a href="https://sergipetec.org.br" <div id="sergipeTec">Sergipe<span
-                            style="color: #2ecc71;">Tec</span></div></a>
-                    <a href="..\perfil/perfil.php">Perfil</a>
-                    <a href="..\menu/menu.php">menu</a>
-                    <!-- <a href="..\relatorios/relatorios.php">Relatórios</a>
-    <a href="..\projetos/projetos.php">Projetos</a> -->
-                    <!-- <?php
-                    if ($usuario['perfil'] == 'gestor') {
-                        echo '<a href="..\gerenciaratividades/ger_atividades.php">Gerenciar atividades</a>';
-                        echo '<a href="..\projetos/projetos.php">Projetos</a>';
-                    } else if ($usuario['perfil'] == 'funcionario') {
-                        echo '<a id = "ger" href = "..\atividades/atividades.php">Atividades</a>';
-                    }
-                    ?> -->
-                    <!-- <a href="https://www.instagram.com/levinxs_14/">cnpjotopow?</a> 
-</nav>
+        <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
+        <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
+            <h2 class="hs"> SISTEMA DE GESTÃO <h2>
+    </nav>
+    <div class="sidebar" id="sidebar">
+        <a href="..\menu/menu.php">Menu</a>
+        <a href="..\perfil/perfil.php">Perfil</a>
+        <a href="..\atividades/atividades.php">Atividades</a>
+        <a href="..\menu/menu.php?i=0">sair</a>
+        <a href="#contact">Contato</a>
+    </div>S=
+    <script>
+        var sidebar = document.getElementById("sidebar");
+        var menuTrigger = document.querySelector(".imagem-menu");
+
+        menuTrigger.addEventListener("click", function () {
+            if (sidebar.style.display === "none" || sidebar.style.display === "") {
+                sidebar.style.display = "block"; /* Mostra o menu lateral */
+            } else {
+                sidebar.style.display = "none"; /* Esconde o menu lateral */
+            }
+        });
+    </script>
 
 </body>
+
+
 </html>

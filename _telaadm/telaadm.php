@@ -17,7 +17,9 @@
 <div class="login-container">
     <a border= "1" href="..\_novologin/novologin.php">Novo Login</a> <br><br>
     <a border= "1" href="..\editarlogin/editarlogin.php">Editar Login</a><br><br>
+    <a border= "1" href="..\desativar_login/ativar_login.php">Ativar Login</a><br><br>
     <a border= "1" href="..\desativar_login/desativar_login.php">Desativar Login</a><br><br>
+
 </div>
 
 </body>

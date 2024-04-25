@@ -1,0 +1,148 @@
+table {
+    /* margin-left: 40px;
+             margin-right: 1px; */
+    width: 600px;
+    max-width: 0.5px;
+    overflow: auto;
+    margin-bottom: 10px;
+    /* ou outro valor desejado 
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;*/
+
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background-color: #7B68EE;
+    color: #fff;
+    font-weight: bold;
+}
+
+input {
+    width: 30px;
+    padding: 6px;
+    box-sizing: border-box;
+    font-size: 12px;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+nav {
+    background-color: #000000;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    top: 0;
+}
+
+nav a {
+    display: inline-block;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #c82333;
+}
+
+.content {
+    text-align: center;
+    margin-top: 70px;
+    /* Ajuste para evitar sobreposição com a barra de navegação */
+}
+
+h2,
+h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+#sergipeTec {
+    color: #8e44ad;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#formCriarRelatorio {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+}
+
+#formCriarRelatorio label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#formCriarRelatorio input[type="text"],
+#formCriarRelatorio textarea,
+#formCriarRelatorio input[type="date"],
+#formCriarRelatorio input[type="number"],
+#formCriarRelatorio input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#formCriarRelatorio input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#formCriarRelatorio input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Adiciona regras de estilo para a barra de navegação em dispositivos pequenos */
+@media screen and (max-width: 600px) {
+    nav a {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+.img {
+    width: 30px;
+    height: auto;
+    float: right;
+}

@@ -60,7 +60,14 @@ try {
     <?php if (isset($_GET['e'])) {
         $nome = $_SESSION['nome'];
         echo ('<script type="text/javascript"> entrou("' . $nome . '");</script>');
-    } ?>
+    }
+    if (isset($_GET['i'])) {
+        echo ('<script type="text/javascript"> let v = sair();</script>');
+    } 
+    if (isset($_GET['resultado']) && $_GET['resultado'] ==  "sair") {
+        header("Location: fechar.php");
+    } 
+     ?>
     <!-- Conteúdo da Página -->
     <div class="content">
         <h1>Sistema de Gestão</h1>
@@ -77,7 +84,10 @@ try {
                     alt='Sergipetec'></noscript>
         </a> -->
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
+        <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
+
         <!-- <a href="..\perfil/perfil.php">Meu perfil</a> -->
+        <h1 class = "h1_sistema"> SISTEMA DE GESTÃO </h1>
         <!-- <?php
         if ($usuario['perfil'] == 'gestor') {
             echo '<a id = "ger" href = "..\gerenciaratividades/ger_atividades.php">Gerenciar atividades</a>';
@@ -94,6 +104,7 @@ try {
         <a href="..\relatorios/relatorios.php">Relatórios</a>
         <a href="..\perfil/perfil.php">Perfil</a>
         <a href="..\atividades/atividades.php">Atividades</a>
+        <a href="menu.php?i=0">sair</a>
         <a href="#contact">Contato</a>
     </div>
 

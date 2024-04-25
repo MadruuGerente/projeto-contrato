@@ -10,7 +10,6 @@ window.addEventListener('beforeunload', function (event) {
     // Salvar os dados do formulário em localStorage'
     localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
     mandar("resetar");
- 
 });
 let adicionar_meta = window.document.querySelector("#img_adicionar_meta");
 let adicionar_indicador = window.document.querySelector("#img_adicionar_indicador");
