@@ -12,24 +12,24 @@ if (isset($_GET['id'])) {
     $dompdf = new Dompdf($options);
     
     $dados_pegos = dados_pdf($id_programa);
-    // $dados_pegos .= "<img src='" . __DIR__ . "/imagens/logo.png'>";
+//     // $dados_pegos .= "<img src='" . __DIR__ . "/imagens/logo.png'>";
     
-    $dompdf->loadHtml($dados_pegos);
+//     $dompdf->loadHtml($dados_pegos);
 
-    $dompdf->setPaper('L', 'mm', 'A4', 'true', 'UTF-8', false);
-    // $dompdf->setPaper('A4', 'portrait');
+//     $dompdf->setPaper('L', 'mm', 'A4', 'true', 'UTF-8', false);
+//     // $dompdf->setPaper('A4', 'portrait');
 
-    // Renderizar o PDF
-    $dompdf->render();
+//     // Renderizar o PDF
+//     $dompdf->render();
 
-    // Obter o conteúdo do PDF como uma string
-    $pdf_content = $dompdf->output();
-    // $dompdf->stream('documento.pdf');
-// Iniciar a sessão e armazenar o conteúdo do PDF
-    $_SESSION['pdf_content'] = $pdf_content;
+//     // Obter o conteúdo do PDF como uma string
+//     $pdf_content = $dompdf->output();
+//     // $dompdf->stream('documento.pdf');
+// // Iniciar a sessão e armazenar o conteúdo do PDF
+//     $_SESSION['pdf_content'] = $pdf_content;
 
-    // Redirecionar para a outra página
-    header("Location: exibir_pdf.php");
+//     // Redirecionar para a outra página
+//     header("Location: exibir_pdf.php");
     exit();
     // Exibir o PDF
 

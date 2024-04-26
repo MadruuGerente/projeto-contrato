@@ -1,3 +1,30 @@
+var sidebar = document.getElementById("sidebar");
+var menuTrigger = document.querySelector(".imagem-menu");
+var meuPerfil = document.querySelector("#perfil");
+var teste = document.querySelector(".icon-menu");
+
+meuPerfil.addEventListener("click", function () {
+  document.location.href = "../perfil/perfil.php";
+  // if( teste.style.display === "none"){
+  //   teste.style.display = "block";
+  // }else{
+  //   teste.style.display = "none";
+  // }
+});
+meuPerfil.addEventListener("mouseover", function () {
+  teste.style.display = "block";
+});
+meuPerfil.addEventListener("mouseleave", function () {
+  teste.style.display = "none";
+});
+menuTrigger.addEventListener("click", function () {
+  if (sidebar.style.display === "none" || sidebar.style.display === "") {
+    sidebar.style.display = "block"; /* Mostra o menu lateral */
+  } else {
+    sidebar.style.display = "none"; /* Esconde o menu lateral */
+  }
+}); 
+
 function entrou(nome) {
   const Toast = Swal.mixin({
     toast: true,
@@ -39,17 +66,7 @@ function sair() {
       result.dismiss === Swal.DismissReason.cancel
     ) {
       window.location.href = "menu.php?resultado=ficar";
-      
+
     }
   });
 }
-var sidebar = document.getElementById("sidebar");
-var menuTrigger = document.querySelector(".imagem-menu");
-
-menuTrigger.addEventListener("click", function () {
-  if (sidebar.style.display === "none" || sidebar.style.display === "") {
-    sidebar.style.display = "block"; /* Mostra o menu lateral */
-  } else {
-    sidebar.style.display = "none"; /* Esconde o menu lateral */
-  }
-});

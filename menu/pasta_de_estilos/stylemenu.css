@@ -41,9 +41,15 @@
   text-align: center;
   margin-top: 20px;
 }
+.icon-menu{
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .h1_sistema {
   color: #ffffff;
+  font-size: 20px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -56,6 +62,19 @@
   height: 40px;
   margin-left: 10px;
   border-radius: 15px;
+}
+.perfil-menu {
+  cursor: pointer;
+  /* Indica interatividade */
+  width: 40px;
+  /* Ajuste conforme necessário */
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 15px;
+}
+.nome-perfil{
+  color: #3cec10;
+  margin-top: 80px;
 }
 
 .h2,
@@ -140,4 +159,9 @@ h3 {
   /* Espaçamento do conteúdo */
   margin-left: 20px;
   /* Para evitar sobreposição */
+}
+@media screen and (max-width: 700px) {
+  .logo-menu{
+    display: none;
+  }
 }

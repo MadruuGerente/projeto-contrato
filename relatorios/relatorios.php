@@ -92,7 +92,7 @@ if (isset($_SESSION['cpf'])) {
             $id_programa = $rgt['id_programa'];
             echo '<p>';
             echo "<a href='criarel.php?id=$id_programa'> $rgt[nome_programa]</a>||";
-            echo "<a href='editar_relatorio.php'> Editar </a>||";
+            echo "<a href='editar_relatorio.php?id=$id_programa'> Editar </a>||";
             echo "<a href='relatorios.php?id=$id_programa'> Deletar </a><br>";
             echo '</p>';
         }
@@ -152,18 +152,26 @@ if (isset($_SESSION['cpf'])) {
     <nav class="nav">
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
         <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
-            <h2 class="hs"> SISTEMA DE GESTÃO <h2>
+        <h2 class="hs"> SISTEMA DE GESTÃO <h2>
+                <img src="..\imagens/perfil.png" id="perfil" class="perfil-menu" alt="teste">
+
     </nav>
     <div class="sidebar" id="sidebar">
         <a href="..\menu/menu.php">Menu</a>
         <a href="..\perfil/perfil.php">Perfil</a>
         <a href="..\atividades/atividades.php">Atividades</a>
         <a href="..\menu/menu.php?i=0">sair</a>
-        <a href="#contact">Contato</a>
+        <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
     </div>S=
     <script>
         var sidebar = document.getElementById("sidebar");
         var menuTrigger = document.querySelector(".imagem-menu");
+        let meuPerfil = document.querySelector("#perfil");
+        meuPerfil.addEventListener("click", function () {
+            document.location.href = "../perfil/perfil.php";
+        });
+
+
 
         menuTrigger.addEventListener("click", function () {
             if (sidebar.style.display === "none" || sidebar.style.display === "") {

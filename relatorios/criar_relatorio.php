@@ -114,6 +114,6 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="script_criar.js"></script>
+<script src="scripts/script_criar.js"></script>
 
 </html>

@@ -85,9 +85,12 @@ try {
         </a> -->
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
         <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
+        <h3 class = "h1_sistema"> SISTEMA DE GESTÃO </h3>
+        <img src="..\imagens/perfil.png" id="perfil" class="perfil-menu" alt="teste">
+        <!-- <h3 class="nome-perfil">perfil</h3> -->
+        
 
         <!-- <a href="..\perfil/perfil.php">Meu perfil</a> -->
-        <h1 class = "h1_sistema"> SISTEMA DE GESTÃO </h1>
         <!-- <?php
         if ($usuario['perfil'] == 'gestor') {
             echo '<a id = "ger" href = "..\gerenciaratividades/ger_atividades.php">Gerenciar atividades</a>';
@@ -99,13 +102,14 @@ try {
         ?> -->
     </nav>
     <!-- <button id="toggle-sidebar">Mostrar Menu</button> -->
+    <img src="..\imagens/iconeperfil.png" id="icon.png" class="icon-menu" alt="teste">
 
     <div class="sidebar" id="sidebar">
         <a href="..\relatorios/relatorios.php">Relatórios</a>
         <a href="..\perfil/perfil.php">Perfil</a>
         <a href="..\atividades/atividades.php">Atividades</a>
         <a href="menu.php?i=0">sair</a>
-        <a href="#contact">Contato</a>
+        <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
     </div>
 
     <div class="content">
