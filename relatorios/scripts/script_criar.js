@@ -8,13 +8,13 @@ contPrograma = contPrograma.substring(contPrograma.length - 8);
 console.log(contPrograma);
 window.addEventListener('beforeunload', function (event) {
     // Salvar os dados do formulário em localStorage'
-    localStorage.setItem('campo1', document.querySelector(`#programa${contPrograma}`).value);
+    localStorage.setItem('campo1', document.querySelector(`#programa_${contPrograma}`).value);
     mandar("resetar");
 });
 let adicionar_meta = window.document.querySelector("#img_adicionar_meta");
 let adicionar_indicador = window.document.querySelector("#img_adicionar_indicador");
 let deletar_elemento = window.document.querySelector('#imd_deletar_utimo');
-let jaexistente = window.document.querySelector(`#programa${contPrograma}`);
+let jaexistente = window.document.querySelector(`#programa_${contPrograma}`);
 let form = window.document.querySelector("#formCriarRelatorio");
 let enviar = window.document.querySelector("#enviar");
 let principal = window.document.querySelector("#principal");
@@ -39,7 +39,7 @@ function apagar_programa(quem_chama) {
             funcaoChamada = true;
             return "foii";
         } else {
-            let id_programa = pegaProgram(); // Supondo que esta função retorne o ID do programa
+            let id_programa = pegaProgram(); // Supondo que esta função retorne o ID do programa_
             const dados = new FormData();
             dados.append('pega_id_programa', id_programa['id']); // Passa o ID diretamente para o FormData
             // dados.append('contador', contIndicador);
@@ -516,9 +516,9 @@ function verdados() {
     }
 }
 function pegaProgram() {
-    let id_programa = `programa${contPrograma}`;
-    let programa = window.document.querySelector(`#${id_programa}`);
-    let valorPrograma = programa.value;
+    let id_programa = `programa_${contPrograma}`;
+    let programa_ = window.document.querySelector(`#${id_programa}`);
+    let valorPrograma = programa_.value;
     return {
         id: id_programa,
         valor: valorPrograma,

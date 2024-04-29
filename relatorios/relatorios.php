@@ -38,7 +38,7 @@ $login = $_SESSION['cpf'];
 try {
     $conexao = new Conexao();
     $conn = $conexao->connect();
-
+ 
     // Consultar informações do usuário usando o campo de login
     $sql = "SELECT * FROM login WHERE cpf = :cpf";
     $stmt = $conn->prepare($sql);

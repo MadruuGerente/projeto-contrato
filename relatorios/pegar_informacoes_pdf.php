@@ -235,7 +235,7 @@ function dados_pdf($id_programa)
     $mysqli = $con->connect();
     $chave_sql_verificar = "SELECT * FROM programa WHERE id_programa =:id_programa";
     $stmt = $mysqli->prepare($chave_sql_verificar);
-    $stmt->bindParam(":id_programa", $id_programa);
+    $stmt->bindParam(":id_programa",$id_programa);
     $stmt->execute();
     $resultados_prog_met = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $cont_meta = 1;
@@ -248,17 +248,13 @@ function dados_pdf($id_programa)
     $dados_editar .= "<title>Relatórios</title>";
     $dados_editar .= "<head>";
 
-    $dados_editar .= "<form id='formCriarRelatorio' >"; // Início do formulário
-    $dados_editar .= "<label for='relatorio'>Programa:</label><br>"; // Rótulo para o textarea
+    $dados_editar .= "<form id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
+    $dados_editar .= "<label for='relatorio'>Programa:</label><br>"; // Rótulo para o textarea  
     // Criação do textarea
     // Quebra de linha para espaçamento
     // $dados_editar .= "<input type='submit' value='Salvar Relatório'>"; // Botão de envio
 
     // return $dados_editar;
-
-
-
-
     $dados_pdf = "<!DOCTYPE html>";
     $dados_pdf .= "<html lang='pt-br'>";
     $dados_pdf .= "<head>";
@@ -281,8 +277,8 @@ function dados_pdf($id_programa)
         // echo ("<img src='https://sergipetec.org.br/uploads/2017/08/Logo_SergipeTec.jpg'>");
         // echo ("<h3 style='color: blue;> PROGRAMA: $dados->nome_programa  </h3><br>");
 
-        $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa  </h4>";
-        $dados_editar .= "<textarea id='' name='relatorio' rows='2' cols='30'> $dados->nome_programa </textarea>";
+        $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa </h4>";
+        $dados_editar .= "<textarea id='$dados->id_programa' name='relatorio' rows='2' cols='30'>$dados->nome_programa</textarea>";
         $dados_editar .= "<br>";
         foreach ($metas as $meta) {
             $indicadores = pegar_indicadores($meta['id_meta']);
@@ -294,7 +290,7 @@ function dados_pdf($id_programa)
 
             $dados_pdf .= "META $cont_meta: $dados->nome_meta ";
             $dados_editar .= "<label for='relatorio'>Meta $cont_meta:</label><br>"; // Rótulo para o textarea
-            $dados_editar .= "<textarea id='' name='relatorio' rows='2' cols='30'>  $dados->nome_meta </textarea> <br>";
+            $dados_editar .= "<textarea id='$dados->id_meta' name='relatorio' rows='2' cols='30'>$dados->nome_meta </textarea> <br>";
 
             if ($meta['tem_indicador'] == 0) {
                 $dados_pdf .= "<h5 style='color: red';> NÃO PREVISTA PARA O PERÍODO </h5>";
@@ -311,7 +307,7 @@ function dados_pdf($id_programa)
                 $dados_pdf .= " <br><br>INDICADOR $cont_indicador: $dados->nome_indicador <br><br>";
 
                 $dados_editar .= "<label for='relatorio'>Indicador $cont_indicador:</label><br>"; // Rótulo para o textarea
-                $dados_editar .= "<textarea id='' name='relatorio' rows='2' cols='30'>  $dados->nome_indicador </textarea> <br>";
+                $dados_editar .= "<textarea id='$dados->id_indicador' name='relatorio' rows='2' cols='30'>$dados->nome_indicador </textarea> <br>";
 
                 //    echo ("ID INDICADOR: $dados->id_indicador <br><br>");
                 $cont_indicador++;
@@ -332,10 +328,10 @@ function dados_pdf($id_programa)
                     $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
 
                     $dados_editar .= "<label for='relatorio'>Previsão inicial:</label><br>"; // Rótulo para o textarea
-                    $dados_editar .= "<textarea id='' name='relatorio' rows='2' cols='30'>  $dados->nome_previsao_inicial </textarea> <br>";
+                    $dados_editar .= "<textarea id=' $dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </textarea> <br>";
 
                     $dados_editar .= "<label for='relatorio'>Previsão final:</label><br>"; // Rótulo para o textarea
-                    $dados_editar .= "<textarea id='' name='relatorio' rows='2' cols='30'>  $dados->nome_previsao_final </textarea> <br>";
+                    $dados_editar .= "<textarea id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </textarea> <br>";
 
                     $pegar_elementos_total = pegar_elementos_total_por_ano($indicador['id_indicador']);
                     $pegar_elemento_total = $pegar_elementos_total[0];
@@ -343,6 +339,8 @@ function dados_pdf($id_programa)
                     $pegar_elementos_executado = $pegar_elementos_executados[0];
 
                     $pegar_total_contratos = pegar_tabela_contrato_ano($indicador['id_indicador']);
+                    $id_tabela_contratos = ($pegar_total_contratos[0]['id_tabela']);
+
                     $total_contratos = $pegar_total_contratos[0]['total_contratos'];
                     $total_executadas = $pegar_total_contratos[0]['total_executados'];
 
@@ -355,7 +353,7 @@ function dados_pdf($id_programa)
                     $dados_pdf .= " Total contratos executados: $total_executadas <br><br>";
                     $dados_editar .= "Total de contratos <br>";
                     // echo '<table border="1">';
-                    $dados_editar .= " <table border='1'>";
+                    $dados_editar .= " <table id='$id_tabela_contratos' border='1'>";
                     // echo '<thead>';
                     $dados_editar .= " <thead> ";
                     // echo '<tr>';
@@ -380,7 +378,7 @@ function dados_pdf($id_programa)
                     $dados_editar .= "<th>Total por ano</th> ";
                     foreach ($pegar_elementos_total as $ano) {
                         // echo "<td>" . "$ano[valor]" . "</td>";
-                        $dados_editar .= "<td> <input style='font-size: 15px;' value='$ano[valor]'> </td> ";
+                        $dados_editar .= "<td> <input id='$ano[id_total_por_ano]' style='font-size: 15px;' value='$ano[valor]'> </td> ";
                         // $dados_editar .= " $ano[valor] <br><br>";
                     }
                     // echo '</tr>';
@@ -397,7 +395,7 @@ function dados_pdf($id_programa)
                     foreach ($pegar_elementos_executados as $ano) {
 
                         // echo "<td>" . "$ano[valor]" . "</td>";
-                        $dados_editar .= "<td> <input style='font-size: 15px;' value='$ano[valor]'> </td>";
+                        $dados_editar .= "<td> <input id='$ano[id_total_executados]' style='font-size: 15px;' value='$ano[valor]'> </td>";
 
                     }
                     // echo '</tr>';
@@ -413,12 +411,14 @@ function dados_pdf($id_programa)
                     // echo "<br>";
 
                     $pegar_tabela_previsoes = pegar_tabela_previsoes($indicador['id_indicador']);
+                    $id_tabela_previsoes = ($pegar_tabela_previsoes[0]['id_tabela']);
+
                     $acumulativo = $pegar_tabela_previsoes[0]['acumulativo'];
                     $previsoes_trimestre = pegar_previsoes_trimestre($indicador['id_indicador']);
                     $realizados_trimestre = pegar_realizados_trimestre($indicador['id_indicador']);
 
                     // echo '<table border="1">';
-                    $dados_editar .= " <table border='1'>";
+                    $dados_editar .= " <table id='$id_tabela_previsoes' border='1'>";
                     // echo '<thead>';
                     $dados_editar .= " <thead>";
                     // echo '<tr>';
@@ -478,8 +478,14 @@ function dados_pdf($id_programa)
                 $pegar_texto = pegar_texto_avaliativo($indicador['id_indicador']);
                 foreach ($pegar_texto as $texto) {
                     $dados->texto_avaliativo_1 = $texto['valor'];
+                    $dados->id_texto_avaliativo = $texto['id_texto_avaliativo'];
+
                     echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1 <br><br>");
-                    $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
+                    // $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
+
+                    $dados_editar .= "<label for='texto_avaliativo'>TEXTOS AVALIATIVO $cont_text:</label><br>"; // Rótulo para o textarea
+                    $dados_editar .= "<textarea id='$dados->id_texto_avaliativo' name='texto_avaliativo' rows='2' cols='30'>  $dados->texto_avaliativo_1  </textarea> <br>";
+
 
                     $cont_text++;
                 }
@@ -487,14 +493,31 @@ function dados_pdf($id_programa)
             $cont_indicador = 1;
         }
     }
+
+    $dados_editar .= "<input type ='button' value='atualizar' onclick='teste()'>"; // Fim do formulário
     $dados_editar .= "</form>"; // Fim do formulário
 
     $dados_editar .= "</body>";
     $dados_editar .= "</html>";
     $dados_pdf .= "</body>";
-    echo ($dados_editar);
+    echo ($dados_editar);   
     return $dados_pdf;
 }
+
+// function atualizar_programa($id_programa, $valor_atualizado){
+//     $con = new Conexao();
+//     $mysqli = $con->connect();
+//     $chave_sql_atualizar = "UPDATE programa SET nome_programa =:nome_programa WHERE id_programa =:id_programa";
+//     $stmt = $mysqli->prepare($chave_sql_atualizar);
+//     $stmt->bindParam(":nome_programa",$nome_programa);
+//     $stmt->bindParam(":id_programa",$id_programa);
+//     $stmt->execute();
+//     $resultado = $stmt->rowCount();
+//     return $resultado;
+// }
+
+
+
 function pegar_metas($id_programa)
 {
 
@@ -542,6 +565,17 @@ function pegar_tabela_contrato_ano($id_indicador)
 
     return $resultado;
 }
+function pegar_tabela_previsoes($id_indicador)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT * FROM tb_previsoes WHERE id_indicador = :id_indicador ";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_indicador", $id_indicador);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+}
 function pegar_elementos_total_por_ano($id_indicador)
 {
     $resultado_pega_contrato = pegar_tabela_contrato_ano($id_indicador);
@@ -570,17 +604,7 @@ function pegar_elementos_total_executados($id_indicador)
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
-function pegar_tabela_previsoes($id_indicador)
-{
-    $con = new Conexao();
-    $mysqli = $con->connect();
-    $chave_sql_verificar = "SELECT * FROM tb_previsoes WHERE id_indicador = :id_indicador ";
-    $stmt = $mysqli->prepare($chave_sql_verificar);
-    $stmt->bindParam(":id_indicador", $id_indicador);
-    $stmt->execute();
-    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $resultado;
-}
+
 function pegar_previsoes_trimestre($id_indicador)
 {
     $resultado_pega_previsoes = pegar_tabela_previsoes($id_indicador);

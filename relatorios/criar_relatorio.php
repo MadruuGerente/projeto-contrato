@@ -81,7 +81,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 
                 <label for="titulo" id="titleLabel">PROGRAMA:</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa<?php echo ($cont); ?>" cols="30" rows="10"
+                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
                     style="resize: none;height: 50px;" required> </textarea>
                 <input type="hidden" name="id_do_programa" value="<?php echo ($cont); ?>">
 

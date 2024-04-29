@@ -12,7 +12,7 @@ function verificaPrograma($programaId)
 
     $chave_sql_verificar = "SELECT COUNT(*) as total FROM programa WHERE id_programa=:id_programa";
     $stmt = $mysqli->prepare($chave_sql_verificar);
-    $stmt->bindParam(":id_programa", $programaId);
+    $stmt->bindParam(":id_programa",$programaId);
     $stmt->execute();
 
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
