@@ -73,7 +73,7 @@ function dados_pdfe($id_programa)
                     // echo ("Preisao inicial : $dados->nome_previsao_inicial <br>");
                     // echo ("previsao final: $dados->nome_previsao_final <br><br>");
 
-                    $dados_pdf .= " Preisao inicial : $dados->nome_previsao_inicial  <br><br>";
+                    $dados_pdf .= " Preisao inicial :$dados->nome_previsao_inicial  <br><br>";
                     $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
 
                     $pegar_elementos_total = pegar_elementos_total_por_ano($indicador['id_indicador']);
@@ -324,11 +324,11 @@ function dados_pdf($id_programa)
                     // echo ("Preisao inicial : $dados->nome_previsao_inicial <br>");
                     // echo ("previsao final: $dados->nome_previsao_final <br><br>");
 
-                    $dados_pdf .= " Preisao inicial : $dados->nome_previsao_inicial  <br><br>";
+                    $dados_pdf .= " Preisao inicial :$dados->nome_previsao_inicial  <br><br>";
                     $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
 
                     $dados_editar .= "<label for='relatorio'>Previsão inicial:</label><br>"; // Rótulo para o textarea
-                    $dados_editar .= "<textarea id=' $dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </textarea> <br>";
+                    $dados_editar .= "<textarea id='$dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </textarea> <br>";
 
                     $dados_editar .= "<label for='relatorio'>Previsão final:</label><br>"; // Rótulo para o textarea
                     $dados_editar .= "<textarea id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </textarea> <br>";

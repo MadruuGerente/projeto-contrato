@@ -224,12 +224,12 @@ function criarPrevisao(metaPertence, indicadorPertecente) {
     div_previsao.style.marginLeft = "40px";
 
     let text_previsao_inicial = document.createElement('textarea');
-    text_previsao_inicial.setAttribute('id', 'text_previsao_inicial' + contPrograma + metaPertence + indicadorPertecente);
+    text_previsao_inicial.setAttribute('id', 'text_previsao_inicial_' + contPrograma + metaPertence + indicadorPertecente);
     //text_previsao_inicial.style.height='20px';
     text_previsao_inicial.style.resize = "none";
 
     let text_previsao_final = document.createElement('textarea');
-    text_previsao_final.setAttribute('id', 'text_previsao_final' + contPrograma + metaPertence + indicadorPertecente);
+    text_previsao_final.setAttribute('id', 'text_previsao_final_' + contPrograma + metaPertence + indicadorPertecente);
     //text_previsao_final.style.height='20px';
     text_previsao_final.style.resize = "none";
 
@@ -581,8 +581,8 @@ function pegaIndicador(i, j, contPrograma) {
     }
 }
 function pegaPrevisao(i, j, contPrograma) {
-    let id_contprevisao_inicial = 'text_previsao_inicial' + contPrograma + i + j;
-    let id_contprevisao_final = 'text_previsao_final' + contPrograma + i + j;
+    let id_contprevisao_inicial = 'text_previsao_inicial_' + contPrograma + i + j;
+    let id_contprevisao_final = 'text_previsao_final_' + contPrograma + i + j;
     let previsao_inicial = document.querySelector(`#${id_contprevisao_inicial}`);
     let previsao_final = document.querySelector(`#${id_contprevisao_final}`);
     if (previsao_inicial != null && previsao_final != null) {
@@ -613,7 +613,7 @@ function pegaElementosTabelaTotal(i, j, contPrograma) {
         const valor = parseFloat(cell.value) || 0; // Converte o valor para um número, ou 0 se não for um número válido
         soma_executados += valor;
     });
-    let id_tabela_total_por_ano = `totaltable${contPrograma}${i}${j}`;
+    let id_tabela_total_por_ano = `totaltable_${contPrograma}${i}${j}`;
     const tabela = document.getElementById(id_tabela_total_por_ano);
     let dados = [];
     let dadosExecutados = [];
@@ -801,7 +801,7 @@ function totalContratosPorAno(metaPertence, indicadorPertecente) {
 
     // Criar a tabela
     const tabela_total_contratos_por_ano = document.createElement('table');
-    tabela_total_contratos_por_ano.setAttribute('id', 'totaltable' + contPrograma + metaPertence + indicadorPertecente);
+    tabela_total_contratos_por_ano.setAttribute('id', 'totaltable_' + contPrograma + metaPertence + indicadorPertecente);
     // tabela_total_contratos_por_ano.innerHTML = `<thead><tr>${anos.map(ano => `<th>${ano}</th>`).join('')}</tr></thead>`;
     // tabela_total_contratos_por_ano.innerHTML += `<tbody><tr>${anos.map(() => '<td id=totalCtd${metaPertence}><input type="text" placeholder="0"></td>').join('')}</tr></tbody>`;
     // tabela_total_contratos_por_ano.innerHTML += `<tbdoy><tr>${anos.map(() => '<td id="totalEtd${index}"><input type="text" placeholder="-"></td>').join('')}</tr></tbody>`;
