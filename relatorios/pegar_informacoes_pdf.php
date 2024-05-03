@@ -436,7 +436,7 @@ function dados_pdf($id_programa)
                     // echo '</thead>';
                     $dados_editar .= "</thead>";
                     // echo '<tbody class="total-por-ano">';
-                    $dados_editar .= "<tbody class='total-por-ano'>";
+                    $dados_editar .= "<tbody class='previsto'>";
                     // echo '<tr>';
                     $dados_editar .= "<tr>";
                     // echo '<th>Total por ano</th>';
@@ -451,7 +451,7 @@ function dados_pdf($id_programa)
                     // echo '</tbody>';
                     $dados_editar .= "</tbody>";
                     // echo '<tfoot class="total-executado">';
-                    $dados_editar .= "<tfoot class='total-executado'>";
+                    $dados_editar .= "<tfoot class='realizado'>";
                     // echo '<tr>';
                     $dados_editar .= "<tr>";
                     // echo '<th>Total executado(ano)</th>';
@@ -480,11 +480,11 @@ function dados_pdf($id_programa)
                     $dados->texto_avaliativo_1 = $texto['valor'];
                     $dados->id_texto_avaliativo = $texto['id_texto_avaliativo'];
 
-                    echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1 <br><br>");
+                    echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1<br><br>");
                     // $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
 
                     $dados_editar .= "<label for='texto_avaliativo'>TEXTOS AVALIATIVO $cont_text:</label><br>"; // Rótulo para o textarea
-                    $dados_editar .= "<textarea id='$dados->id_texto_avaliativo' name='texto_avaliativo' rows='2' cols='30'>  $dados->texto_avaliativo_1  </textarea> <br>";
+                    $dados_editar .= "<textarea id='$dados->id_texto_avaliativo' name='texto_avaliativo' rows='2' cols='30'>$dados->texto_avaliativo_1</textarea> <br>";
 
 
                     $cont_text++;
@@ -494,7 +494,7 @@ function dados_pdf($id_programa)
         }
     }
 
-    $dados_editar .= "<input type ='button' value='atualizar' onclick='teste()'>"; // Fim do formulário
+    $dados_editar .= "<input type ='button' value='atualizar' onclick='recuperar_informações()'>"; // Fim do formulário
     $dados_editar .= "</form>"; // Fim do formulário
 
     $dados_editar .= "</body>";
