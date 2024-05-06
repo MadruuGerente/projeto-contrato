@@ -1,34 +1,48 @@
 <?php
 session_start();
+// session_start();
+require './dompdf/vendor/autoload.php';
+require "pegar_informacoes_pdf.php";
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
+if (isset($_GET['id'])) {
+    $id_programa = $_GET['id'];
+    $options = new Options();
+    $options->setIsRemoteEnabled(true);
+
+    $dompdf = new Dompdf($options);
+
+    $dados_pegos = mostrar_pdf($id_programa);
+}
 // Verificar se o parâmetro relatorio está definido e é um número inteiro
-if (isset($_GET['relatorio']) && is_string($_GET['relatorio'])) {
-    $relatorioId = $_GET['relatorio'];
+// if (isset($_GET['relatorio']) && is_string($_GET['relatorio'])) {
+//     $relatorioId = $_GET['relatorio'];
 
-    // Verificar se o identificador do relatório existe na sessão
-    if (isset($_SESSION['relatorios'][$relatorioId])) {
-        $relatorio = json_decode($_SESSION['relatorios'][$relatorioId], true);
-    } else {
-        echo '<p>Relatório não encontrado.</p>';
-        exit(); // Encerre a execução para evitar a exibição do restante da página
-    }
-} else {
-    echo '<p>Parâmetro de relatório inválido.</p>';
-    exit(); // Encerre a execução para evitar a exibição do restante da página
-}
+//     // Verificar se o identificador do relatório existe na sessão
+//     if (isset($_SESSION['relatorios'][$relatorioId])) {
+//         $relatorio = json_decode($_SESSION['relatorios'][$relatorioId], true);
+//     } else {
+//         echo '<p>Relatório não encontrado.</p>';
+//         exit(); // Encerre a execução para evitar a exibição do restante da página
+//     }
+// } else {
+//     echo '<p>Parâmetro de relatório inválido.</p>';
+//     exit(); // Encerre a execução para evitar a exibição do restante da página
+// }
 
-// Adicionar condição para apagar relatório
-if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio'])) {
-    // Verificar se o identificador do relatório existe na sessão
-    if (isset($_SESSION['relatorios'][$relatorioId])) {
-        // Apagar o relatório específico
-        unset($_SESSION['relatorios'][$relatorioId]);
+// // Adicionar condição para apagar relatório
+// if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio'])) {
+//     // Verificar se o identificador do relatório existe na sessão
+//     if (isset($_SESSION['relatorios'][$relatorioId])) {
+//         // Apagar o relatório específico
+//         unset($_SESSION['relatorios'][$relatorioId]);
 
-        // Redirecionar de volta para a página de relatórios após apagar o relatório
-        header("Location: relatorios.php");
-        exit();
-    }
-}
+//         // Redirecionar de volta para a página de relatórios após apagar o relatório
+//         header("Location: relatorios.php");
+//         exit();
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +51,8 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar Relatório - SergipeTec</title>
+    <script src="scripts/script_editar.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -130,9 +146,9 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio
     <nav>
         <?php
             // Adicionar link para baixar o relatório
-            echo '<p><a href="download_relatorio.php?relatorio=' . $relatorioId . '">Baixar este relatório</a></p>';
+            echo '<p><a href="download_relatorio.php?relatorio= gdsgds">Baixar este relatório</a></p>';
             // Link para apagar o relatório atual
-            echo '<p><a href="mostrar_relatorio.php?acao=apagar&relatorio=' . $relatorioId . '">Apagar este relatório</a></p>';
+            echo '<p><a href="mostrar_relatorio.php?acao=apagar&relatorio=dgf ">Apagar este relatório</a></p>';
             // Link para voltar para a página de relatórios
             echo '<p><a href="relatorios.php">Voltar para Relatórios</a></p>';
         ?>

@@ -91,7 +91,7 @@ if (isset($_SESSION['cpf'])) {
         while ($rgt = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $id_programa = $rgt['id_programa'];
             echo '<p>';
-            echo "<a href='criarel.php?id=$id_programa'> $rgt[nome_programa]</a>||";
+            echo "<a href='mostrar_relatorio.php?id=$id_programa'> $rgt[nome_programa]</a>||";
             echo "<a href='editar_relatorio.php?id=$id_programa'> Editar </a>||";
             echo "<a href='relatorios.php?id=$id_programa'> Deletar </a><br>";
             echo '</p>';

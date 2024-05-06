@@ -20,10 +20,10 @@ function recuperar_informações() {
         // const textareaa =;
         // const pro = "programa_";
         if (textarea.id.startsWith("programa")) {
-            dados.programa_valor = textarea.value;
-            dados.programa_id = textarea.id;
-            console.log(dados.programa_valor);
-            console.log(dados.programa_id);
+            dados["programa_valor"] = textarea.value;
+            dados["programa_id"] = textarea.id;
+            // console.log(dados.programa_valor);
+            // console.log(dados.programa_id);
         } else if (textarea.id.startsWith("meta")) {
             const meta_valor = `meta_valor_${cont_meta}`;
             const meta_cont_id = `meta_id_${cont_meta}`;
@@ -72,8 +72,9 @@ function recuperar_informações() {
             console.log(dados[text_texto_avaliativo_id]);
             tt++;
         }
+        
     });
-    console.error(tt,"fffffffffffffffffffffffffffffffffffffff")
+    console.error(tt, "fffffffffffffffffffffffffffffffffffffff")
     let dados_total = [];
     let ids_total = [];
     let valor_dados_executados = [];
@@ -125,10 +126,8 @@ function recuperar_informações() {
                     dadosExecutados.push(inputExecutado.value);
                     ids_executados.push(inputExecutado.id);
                 });
-
                 // Fazendo algo com o array de dadosExecutados
                 // console.log(`${id_tabela_total_por_ano}`);
-
             }
             valor_dados_executados.push(dadosExecutados);
             id_dados_executados.push(ids_executados);
@@ -181,13 +180,17 @@ function recuperar_informações() {
         console.log("Após atribuição:", dados["valor_executado_id2411"]);
     }
     let dadosPrevistos = [];
+    let dadosPrevistosId = [];
     let dadosRealizados = [];
+    let dadosRealizadosId = [];
     let acumulativo = 0;
     for (let i = 0; i < tabela_total.length; i++) {
         // console.log(tabela_total.length);
         const tabela = tabela_total[i];
         id_tabela_previsoes = tabela.id;
         // console.log(id_tabela_previsoes);
+        let resto_id = tabela.id.slice(-3);
+
         if (tabela.id.startsWith("previsto_")) {
             console.log(id_tabela_previsoes);
             if (tabela) {
@@ -195,6 +198,8 @@ function recuperar_informações() {
                 linhasPrevisto.forEach((linha, index) => {
 
                     let dadosLinhaPrevisto = [];
+                    let dadosLinhaPrevistoId = [];
+
 
                     // Obtendo todas as células da linha
                     let celulas = linha.querySelectorAll('td');
@@ -203,23 +208,31 @@ function recuperar_informações() {
                     celulas.forEach((celula, index) => {
                         // Obtendo o valor do input na célula
                         let valor = celula.querySelector('input');
+                        let valor_id = 0;
                         if (valor) {
+                            valor_id = valor.id;
                             valor = valor.value;
                         }
                         // Adicionando o valor ao array de dados da linha
                         dadosLinhaPrevisto.push(valor);
+                        dadosLinhaPrevistoId.push(valor_id);
                     });
 
                     // Adicionando o array de dados da linha ao array principal de previsto
                     dadosPrevistos.push(dadosLinhaPrevisto);
-                    
-                    console.error("GDSGDSFGDFSG" ,dadosPrevistos);
+                    dadosPrevistosId.push(dadosLinhaPrevistoId);
+
+                    console.error("GDSGDSFGDFSG", dadosPrevistos);
+                    console.error("GDSGDSFGDFSG", dadosLinhaPrevistoId);
+
                 });
 
                 // Obtendo as linhas de realizado
                 let linhasRealizado = tabela.querySelectorAll('tfoot.realizado tr');
                 linhasRealizado.forEach((linha, index) => {
                     let dadosLinhaRealizado = [];
+                    let dadosLinhaRealizadoId = [];
+
 
                     // Obtendo todas as células da linha
                     let celulas = linha.querySelectorAll('td');
@@ -229,15 +242,18 @@ function recuperar_informações() {
                         // Obtendo o valor do input na célula
                         let valor = celula.querySelector('input');
                         if (valor) {
+                            valor.id = valor.id;
                             valor = valor.value;
                         }
 
                         // Adicionando o valor ao array de dados da linha
                         dadosLinhaRealizado.push(valor);
+                        dadosLinhaRealizadoId.push(valor.id);
                     });
 
                     // Adicionando o array de dados da linha ao array principal de realizado
                     dadosRealizados.push(dadosLinhaRealizado);
+                    dadosRealizadosId.push(dadosLinhaRealizado);
                     acumulativo = dadosRealizados[dadosRealizados.length - 1];
                     acumulativo = acumulativo[acumulativo.length - 1];
                     console.error(acumulativo);
@@ -246,15 +262,17 @@ function recuperar_informações() {
                 // console.log('Dados Previstos:', dadosPrevistos);
                 // console.log('Dados Realizados:', dadosRealizados);
 
-                dados[`previstos`] = dadosPrevistos;
-                dados[`realizados}`] = dadosRealizados;
+                dados[`previstos${resto_id}`] = dadosPrevistos;
+                dados[`previstos_id${resto_id}`] = dadosPrevistosId;
+                dados[`realizados${resto_id}`] = dadosRealizados;
+                dados[`realizados_id${resto_id}`] = dadosRealizadosId;
 
 
                 console.log(dadosRealizados);
                 console.log(dadosPrevistos);
 
                 console.log(dados);
-               
+
                 // return {
                 //     id: `${id_tabela_previsoes}`,
                 //     dados_previstos: `${dadosPrevistos}`,
@@ -270,15 +288,17 @@ function recuperar_informações() {
     }
     mandar_informacoes(dados);
 }
-function mandar_informacoes(objeto){
+function mandar_informacoes(objeto) {
+    console.log("OBJETO",objeto);
     $.ajax({
         url: 'atualizar_programa.php',
         method: 'POST',
-        data: objeto,   
-        processData: false,
-        contentType: false,
+        data: objeto,
         success: function (resposta) {
             console.log(resposta);
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro ao enviar Ajax:", status, error);
         }
     });
 }
