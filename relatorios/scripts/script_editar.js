@@ -1,4 +1,3 @@
-
 function recuperar_informações() {
     // Pega o formulário pelo ID
     const form = document.getElementById("formCriarRelatorio");
@@ -301,4 +300,14 @@ function mandar_informacoes(objeto) {
             console.error("Erro ao enviar Ajax:", status, error);
         }
     });
+}
+function passa_pagina(param){
+    if (typeof param === "string") {
+        console.log("Recebi uma string: " + param);
+        window.location.href = `criarel.php?id=${param}`;
+    } else if (param instanceof HTMLElement) {
+        console.log("Recebi um elemento HTML com texto: " + param.innerText);
+    } else {
+        console.log("Tipo desconhecido.");
+    }
 }

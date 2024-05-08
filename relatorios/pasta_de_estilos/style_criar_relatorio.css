@@ -1,16 +1,8 @@
 table {
-    /* margin-left: 40px;
-             margin-right: 1px; */
     width: 600px;
     max-width: 0.5px;
     overflow: auto;
     margin-bottom: 10px;
-    /* ou outro valor desejado 
-            background-color: #fff;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;*/
-
 }
 
 th,

@@ -47,11 +47,17 @@ if (isset($_GET['id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar Relatório - SergipeTec</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="scripts/script_editar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 
     <style>
         body {
@@ -68,56 +74,37 @@ if (isset($_GET['id'])) {
         .content {
             position: relative;
             width: 80%;
-            max-width: 800px;
+            max-width: 600px;
+            min-width: 100px;
+            /* Limita o tamanho máximo do contêiner */
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            text-align: left;
-            margin: auto;
-            margin-top: 20px;
-        }
-
-        h1, h2, p, table {
-            color: #333; /* Cor neutra */
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            font-weight: bold; /* Negrito */
-            font-family: 'Times New Roman', serif; /* Fonte diferente, ajuste conforme necessário */
-        }
-
-        h2 {
-            font-size: 1.5em;
-            font-family: 'Times New Roman', serif; /* Fonte diferente, ajuste conforme necessário */
-        }
-
-        p {
-            font-size: 1em;
-            line-height: 1.6;
+            margin: 20px auto;
         }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            width: auto;
+            max-width: 0.5px;
+            overflow: auto;
+            margin-bottom: 10px;
         }
 
-        table, th, td {
+        th,
+        td {
             border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #7B68EE;
+            color: #fff;
+            font-weight: bold;
         }
+
 
         nav {
             position: fixed;
@@ -140,17 +127,68 @@ if (isset($_GET['id'])) {
         nav a:hover {
             background-color: #555;
         }
+
+        .programa {
+            /* color: #4D4DFF; */
+            background-color: beige;
+            font-size: 30px;
+            font-weight: bold;
+
+        }
+
+        .programa-valor {
+            font-weight: normal;
+            background-color: bisque;
+            border: 2px;
+            /* color: #9932CD; */
+            font-size: 30px;
+        }
+
+        .meta {
+            font-weight: bold;
+            /* margin-left: 15px; */
+            font-size: 25px;
+        }
+
+        .meta-valor {
+            /* margin-left: px; */
+            font-size: 25px;
+        }
+
+        .indicador {
+            font-weight: bold;
+            margin-left: 15px;
+            font-size: 20px;
+        }
+
+        .indicador-valor {
+            font-size: 20px;
+        }
+
+        .preisao {
+            font-weight: bold;
+            margin-left: 30px;
+            font-size: 20px;
+        }
+
+        .preisao-valor {
+            font-size: 20px;
+        }
+        .nao-previsto{
+
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <?php
-            // Adicionar link para baixar o relatório
-            echo '<p><a href="download_relatorio.php?relatorio= gdsgds">Baixar este relatório</a></p>';
-            // Link para apagar o relatório atual
-            echo '<p><a href="mostrar_relatorio.php?acao=apagar&relatorio=dgf ">Apagar este relatório</a></p>';
-            // Link para voltar para a página de relatórios
-            echo '<p><a href="relatorios.php">Voltar para Relatórios</a></p>';
+        // Adicionar link para baixar o relatório
+        echo '<p><a href="download_relatorio.php?relatorio= gdsgds">Baixar este relatório</a></p>';
+        // Link para apagar o relatório atual
+        echo '<p><a href="mostrar_relatorio.php?acao=apagar&relatorio=dgf ">Apagar este relatório</a></p>';
+        // Link para voltar para a página de relatórios
+        echo '<p><a href="relatorios.php">Voltar para Relatórios</a></p>';
         ?>
     </nav>
 
@@ -180,24 +218,23 @@ if (isset($_GET['id'])) {
         echo '</table>';
 
         // Exibir informações de metas em uma tabela
-if (isset($relatorio['metas'])) {
-    echo '<h3>Metas:</h3>';
-    echo '<table>';
-    echo '<tr><th>Meta</th><th>Prazo</th><th>Andamento</th><th>Objetivo</th></tr>';
-    foreach ($relatorio['metas'] as $index => $meta) {
-        // Verificar se as informações da meta estão presentes
-        if (!empty($meta)) {
-            echo '<tr>';
-            echo '<td>' . $meta . '</td>';
-            echo '<td>' . $relatorio['prazos'][$index] . '</td>';
-            echo '<td>' . $relatorio['andamentos'][$index] . '</td>';
-            echo '<td>' . $relatorio['objetivos'][$index] . '</td>';
-            echo '</tr>';
+        if (isset($relatorio['metas'])) {
+            echo '<h3>Metas:</h3>';
+            echo '<table>';
+            echo '<tr><th>Meta</th><th>Prazo</th><th>Andamento</th><th>Objetivo</th></tr>';
+            foreach ($relatorio['metas'] as $index => $meta) {
+                // Verificar se as informações da meta estão presentes
+                if (!empty($meta)) {
+                    echo '<tr>';
+                    echo '<td>' . $meta . '</td>';
+                    echo '<td>' . $relatorio['prazos'][$index] . '</td>';
+                    echo '<td>' . $relatorio['andamentos'][$index] . '</td>';
+                    echo '<td>' . $relatorio['objetivos'][$index] . '</td>';
+                    echo '</tr>';
+                }
+            }
+            echo '</table>';
         }
-    }
-    echo '</table>';
-}
-
         if (isset($relatorio['comentarios'])) {
             echo '<p><strong>Comentários:</strong> ' . $relatorio['comentarios'] . '</p>';
         }
@@ -216,4 +253,5 @@ if (isset($relatorio['metas'])) {
         ?>
     </div>
 </body>
+
 </html>

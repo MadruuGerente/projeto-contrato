@@ -532,6 +532,7 @@ function mostrar_pdf($id_programa){
         $stmt->execute();
         $resultados_prog_met = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $cont_meta = 1;
+        $id = $id_programa;
         //BOTA NO PDF 
         $dados_editar = "<!DOCTYPE html>";
         $dados_editar .= "<html lang='pt-br'>";
@@ -539,24 +540,24 @@ function mostrar_pdf($id_programa){
         $dados_editar .= "<meta charset='UTF-8'>";
         $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
         $dados_editar .= "<title>Relatórios</title>";
-        $dados_editar .= "<head>";
-    
         $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
-        $dados_editar .= "<label for='relatorio'> <h1>Programa:</h1></label>"; // Rótulo para o textarea  
-     
+        $dados_editar .= "<br>"; // Rótulo para o textarea  
+        $dados_editar .= "<img src='../imagens/logopdf.png'><br><br>";
+        $dados_editar .= "<label class='programa' for='relatorio'> Programa:</label>"; // Rótulo para o textarea  
+        
         foreach ($resultados_prog_met as $resultado) {
             $cont_indicador = 1;
             $cont_meta = 1;
             $metas = pegar_metas($resultado['id_programa']);
             $dados = new stdClass();
             $dados_pdf = new stdClass();
-            $dados->nome_programa = $resultado['nome_programa'];
+            $dados->nome_programa = $resultado['nome_programa'];    
             $dados->id_programa = $resultado['id_programa'];
             // echo ("<img src='https://sergipetec.org.br/uploads/2017/08/Logo_SergipeTec.jpg'>");
             // echo ("<h3 style='color: blue;> PROGRAMA: $dados->nome_programa  </h3><br>");
     
             // $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa </h4>";
-            $dados_editar .= "<h4 id='$dados->id_programa' name='relatorio' rows='2' cols='30'>$dados->nome_programa</4h>";
+            $dados_editar .= "<label class='programa-valor' id='$dados->id_programa'name='relatorio'>$dados->nome_programa</label><br>";
             $dados_editar .= "<br>";
             foreach ($metas as $meta) {
                 $indicadores = pegar_indicadores($meta['id_meta']);
@@ -567,14 +568,14 @@ function mostrar_pdf($id_programa){
                 // echo ("NOME META $cont_meta: $dados->nome_meta <br><br>");
     
                 // $dados_pdf .= "META $cont_meta: $dados->nome_meta ";
-                $dados_editar .= "<label for='relatorio'>Meta $cont_meta:</label><br>"; // Rótulo para o textarea
-                $dados_editar .= "<textarea id='$dados->id_meta' name='relatorio' rows='2' cols='30'>$dados->nome_meta </textarea> <br>";
+                $dados_editar .= "<label class='meta' for='relatorio' > Meta $cont_meta:</label>"; // Rótulo para o textarea
+                $dados_editar .= "<label class='meta-valor' id='$dados->id_meta' name='relatorio' >$dados->nome_meta </label> <br>";
     
                 if ($meta['tem_indicador'] == 0) {
                     // $dados_pdf .= "<h5 style='color: red';> NÃO PREVISTA PARA O PERÍODO </h5>";
                 }
                 $cont_meta++;
-                foreach ($indicadores as $indicador) {
+                foreach ($indicadores as $indicador) { 
     
                     $dados->nome_indicador = $indicador['nome'];
                     $dados->id_indicador = $indicador['id_indicador'];
@@ -584,8 +585,8 @@ function mostrar_pdf($id_programa){
     
                     // $dados_pdf .= " <br><br>INDICADOR $cont_indicador: $dados->nome_indicador <br><br>";
     
-                    $dados_editar .= "<label for='relatorio'>Indicador $cont_indicador:</label><br>"; // Rótulo para o textarea
-                    $dados_editar .= "<textarea id='$dados->id_indicador' name='relatorio' rows='2' cols='30'>$dados->nome_indicador </textarea> <br>";
+                    $dados_editar .= "<label class='indicador' for='relatorio'>Indicador $cont_indicador:</label>"; // Rótulo para o textarea
+                    $dados_editar .= "<label class='indicador-valor' id='$dados->id_indicador' name='relatorio' rows='2' cols='30'>$dados->nome_indicador </label> <br>";
     
                     //    echo ("ID INDICADOR: $dados->id_indicador <br><br>");
                     $cont_indicador++;
@@ -605,11 +606,11 @@ function mostrar_pdf($id_programa){
                         // $dados_pdf .= " Preisao inicial :$dados->nome_previsao_inicial  <br><br>";
                         // $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
     
-                        $dados_editar .= "<label for='relatorio'>Previsão inicial:</label><br>"; // Rótulo para o textarea
-                        $dados_editar .= "<textarea id='$dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </textarea> <br>";
+                        $dados_editar .= "<label class='preisao' for='relatorio'>Previsão inicial:</label>"; // Rótulo para o textarea
+                        $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </label> <br><br>";
     
-                        $dados_editar .= "<label for='relatorio'>Previsão final:</label><br>"; // Rótulo para o textarea
-                        $dados_editar .= "<textarea id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </textarea> <br>";
+                        $dados_editar .= "<label class='preisao' for='relatorio'>Previsão final:</label>"; // Rótulo para o textarea
+                        $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </label><br><br> ";
     
                         $pegar_elementos_total = pegar_elementos_total_por_ano($indicador['id_indicador']);
                         $pegar_elemento_total = $pegar_elementos_total[0];
@@ -656,7 +657,7 @@ function mostrar_pdf($id_programa){
                         $dados_editar .= "<th>Total por ano</th> ";
                         foreach ($pegar_elementos_total as $ano) {
                             // echo "<td>" . "$ano[valor]" . "</td>";
-                            $dados_editar .= "<td> <input id='$ano[id_total_por_ano]' style='font-size: 15px;' value='$ano[valor]'> </td> ";
+                            $dados_editar .= "<td> $ano[valor]</td> ";
                             // $dados_editar .= " $ano[valor] <br><br>";
                         }
                         // echo '</tr>';
@@ -673,7 +674,7 @@ function mostrar_pdf($id_programa){
                         foreach ($pegar_elementos_executados as $ano) {
     
                             // echo "<td>" . "$ano[valor]" . "</td>";
-                            $dados_editar .= "<td> <input id='$ano[id_total_executados]' style='font-size: 15px;' value='$ano[valor]'> </td>";
+                            $dados_editar .= "<td>$ano[valor]</td>";
     
                         }
                         // echo '</tr>';
@@ -721,7 +722,7 @@ function mostrar_pdf($id_programa){
                         $dados_editar .= "<th> Previsto no trimestre </th>";
                         foreach ($previsoes_trimestre as $trimestre) {
                             // echo "<td>" . "$trimestre[valor]" . "</td>";
-                            $dados_editar .= "<td> <input id='$trimestre[id_previsto]'style='font-size: 15px;' value='$trimestre[valor]'>  </td>";
+                            $dados_editar .= "<td> $trimestre[valor]</td>";
     
                         }
                         // echo '</tr>';
@@ -736,10 +737,10 @@ function mostrar_pdf($id_programa){
                         $dados_editar .= "<th> Realizado no trimestre </th>";
                         foreach ($realizados_trimestre as $trimestre) {
                             // echo "<td>" . "$trimestre[valor]" . "</td>";
-                            $dados_editar .= "<td> <input $trimestre[id_realizado] style='font-size: 15px;' value='$trimestre[valor]'> </td>";
+                            $dados_editar .= "<td> $trimestre[valor]</td>";
                         }
                         // echo "<td>" . "$acumulativo" . "</td>";
-                        $dados_editar .= "<td>  <input style='font-size: 15px;' value='$acumulativo'>  </td>";
+                        $dados_editar .= "<td> $acumulativo  </td>";
                         // echo '</tr>';
                         $dados_editar .= "</tr>";
                         // echo '</tfoot>';
@@ -758,7 +759,7 @@ function mostrar_pdf($id_programa){
                         $dados->texto_avaliativo_1 = $texto['valor'];
                         $dados->id_texto_avaliativo = $texto['id_texto_avaliativo'];
     
-                        echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1<br><br>");
+                        // echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1<br><br>");
                         // $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
     
                         $dados_editar .= "<label for='texto_avaliativo'>TEXTOS AVALIATIVO $cont_text:</label><br>"; // Rótulo para o textarea
@@ -772,12 +773,13 @@ function mostrar_pdf($id_programa){
             }
         }
     
-        $dados_editar .= "<input type ='button' value='atualizar' onclick='recuperar_informações()'>"; // Fim do formulário
+        $dados_editar .= "<input type ='button' value='$id'  onclick='passa_pagina($id)'>"; // Fim do formulário
         $dados_editar .= "</form>"; // Fim do formulário
     
         $dados_editar .= "</body>";
         $dados_editar .= "</html>";
         // $dados_pdf .= "</body>";
+        
         echo ($dados_editar);
         // return $dados_pdf;
     }
