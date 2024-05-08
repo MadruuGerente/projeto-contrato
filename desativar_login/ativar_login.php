@@ -12,7 +12,6 @@ if (isset($_POST['login']) && isset($_POST['cpf'])) {
     $stmt->bind_param("ss", $login, $cpf);
     $stmt->execute();
     $result = $stmt->get_result();
-
     // Verificar se o usuário existe
     if ($result->num_rows > 0) {
         // Usuário encontrado, agora você pode executar o DELETE se desejar
