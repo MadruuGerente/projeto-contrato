@@ -19,10 +19,30 @@ function dados_pdfe($id_programa)
     $dados_pdf .= "<meta charset='UTF-8'>";
     $dados_pdf .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
     $dados_pdf .= "<title>Relatórios</title>";
+    $dados_pdf .= "<style>
+    table {
+        margin-left: 20px;
+        width: auto;
+        overflow: auto;
+        margin-bottom: 10px;
+    }
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+    }
+    th {
+        background-color: #7B68EE;
+        color: #fff;
+        font-weight: bold;
+    }
+</style>";
     $dados_pdf .= "</head>";
     $dados_pdf .= "<body>";
     $dados_pdf .= "<input type='text'>";
-
+    $dados_pdf .= "<img src='../imagens/logopdf.png'><br><br>";
     $dados_pdf .= "<form class='content'id='mostrar'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
     $dados_pdf .= "<h1 style='color: red;'> TESTANDO PDF </h1>";
     // $dados_pdf .= '<img src="imagens/logo.png">';
@@ -95,6 +115,7 @@ function dados_pdfe($id_programa)
 
                     $dados_pdf .= " Total contratos: $total_contratos <br><br>";
                     $dados_pdf .= " Total contratos executados: $total_executadas <br><br>";
+                    $dados_pdf .= " <label>Tabela Total</label>";
 
                     // echo '<table border="1">';
                     $dados_pdf .= " <table border='1'>";
@@ -158,6 +179,8 @@ function dados_pdfe($id_programa)
                     $acumulativo = $pegar_tabela_previsoes[0]['acumulativo'];
                     $previsoes_trimestre = pegar_previsoes_trimestre($indicador['id_indicador']);
                     $realizados_trimestre = pegar_realizados_trimestre($indicador['id_indicador']);
+
+                    $dados_pdf .= " <label>Tabela Previsto </label>";
 
                     // echo '<table border="1">';
                     $dados_pdf .= " <table border='1'>";
@@ -522,268 +545,272 @@ function dados_pdf($id_programa)
 // }
 
 
-function mostrar_pdf($id_programa){
-    {
-        $con = new Conexao();
-        $mysqli = $con->connect();
-        $chave_sql_verificar = "SELECT * FROM programa WHERE id_programa =:id_programa";
-        $stmt = $mysqli->prepare($chave_sql_verificar);
-        $stmt->bindParam(":id_programa", $id_programa);
-        $stmt->execute();
-        $resultados_prog_met = $stmt->fetchAll(PDO::FETCH_ASSOC);
+function mostrar_pdf($id_programa)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT * FROM programa WHERE id_programa =:id_programa";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_programa", $id_programa);
+    $stmt->execute();
+    $resultados_prog_met = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $cont_meta = 1;
+    $id = $id_programa;
+    //BOTA NO PDF 
+    $dados_editar = "<!DOCTYPE html>";
+    $dados_editar .= "<html lang='pt-br'>";
+    $dados_editar .= "<head>";
+    $dados_editar .= "<meta charset='UTF-8'>";
+    $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+    $dados_editar .= "<title>Relatórios</title>";
+ // Estilos antes do conteúdo
+    $dados_editar .= "</head>";
+
+    $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
+    // Início do formulário
+    $dados_editar .= "<br>"; // Rótulo para o textarea  
+    $dados_editar .= "<img src='../imagens/logopdf.png'><br><br>";
+    $dados_editar .= "<label class='programa' for='relatorio'> Programa:</label>"; // Rótulo para o textarea  
+
+    foreach ($resultados_prog_met as $resultado) {
+        $cont_indicador = 1;
         $cont_meta = 1;
-        $id = $id_programa;
-        //BOTA NO PDF 
-        $dados_editar = "<!DOCTYPE html>";
-        $dados_editar .= "<html lang='pt-br'>";
-        $dados_editar .= "<head>";
-        $dados_editar .= "<meta charset='UTF-8'>";
-        $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-        $dados_editar .= "<title>Relatórios</title>";
-        $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
-        $dados_editar .= "<br>"; // Rótulo para o textarea  
-        $dados_editar .= "<img src='../imagens/logopdf.png'><br><br>";
-        $dados_editar .= "<label class='programa' for='relatorio'> Programa:</label>"; // Rótulo para o textarea  
-        
-        foreach ($resultados_prog_met as $resultado) {
-            $cont_indicador = 1;
-            $cont_meta = 1;
-            $metas = pegar_metas($resultado['id_programa']);
-            $dados = new stdClass();
-            $dados_pdf = new stdClass();
-            $dados->nome_programa = $resultado['nome_programa'];    
-            $dados->id_programa = $resultado['id_programa'];
-            // echo ("<img src='https://sergipetec.org.br/uploads/2017/08/Logo_SergipeTec.jpg'>");
-            // echo ("<h3 style='color: blue;> PROGRAMA: $dados->nome_programa  </h3><br>");
-    
-            // $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa </h4>";
-            $dados_editar .= "<label class='programa-valor' id='$dados->id_programa'name='relatorio'>$dados->nome_programa</label><br>";
-            $dados_editar .= "<br>";
-            foreach ($metas as $meta) {
-                $indicadores = pegar_indicadores($meta['id_meta']);
-                $dados->nome_meta = $meta['nome_meta'];
-                $dados->id_meta = $meta['id_meta'];
-    
-                // echo ("ID META $cont_meta: $dados->id_meta <br>");
-                // echo ("NOME META $cont_meta: $dados->nome_meta <br><br>");
-    
-                // $dados_pdf .= "META $cont_meta: $dados->nome_meta ";
-                $dados_editar .= "<label class='meta' for='relatorio' > Meta $cont_meta:</label>"; // Rótulo para o textarea
-                $dados_editar .= "<label class='meta-valor' id='$dados->id_meta' name='relatorio' >$dados->nome_meta </label> <br>";
-    
-                if ($meta['tem_indicador'] == 0) {
-                    // $dados_pdf .= "<h5 style='color: red';> NÃO PREVISTA PARA O PERÍODO </h5>";
-                }
-                $cont_meta++;
-                foreach ($indicadores as $indicador) { 
-    
-                    $dados->nome_indicador = $indicador['nome'];
-                    $dados->id_indicador = $indicador['id_indicador'];
-    
-    
-                    // echo ("NOME INDICADOR $cont_indicador: $dados->nome_indicador <br><br>");
-    
-                    // $dados_pdf .= " <br><br>INDICADOR $cont_indicador: $dados->nome_indicador <br><br>";
-    
-                    $dados_editar .= "<label class='indicador' for='relatorio'>Indicador $cont_indicador:</label>"; // Rótulo para o textarea
-                    $dados_editar .= "<label class='indicador-valor' id='$dados->id_indicador' name='relatorio' rows='2' cols='30'>$dados->nome_indicador </label> <br>";
-    
-                    //    echo ("ID INDICADOR: $dados->id_indicador <br><br>");
-                    $cont_indicador++;
-                    $previsoes = pegar_previsoes($indicador['id_indicador']);
-                    $cont_text = 1;
-                    foreach ($previsoes as $preisao) {
-                        $dados->nome_previsao_inicial = $preisao['nome_previsao_inicial'];
-                        $dados->id_previsao_inicial = $preisao['id_previsao_inicial'];
-                        $dados->nome_previsao_final = $preisao['nome_previsao_final'];
-                        $dados->id_previsao_final = $preisao['id_previsao_final'];
-    
-    
-                        // echo (" CRONOGRAMA DE EXECUÇÃO: <br>");
-                        // echo ("Preisao inicial : $dados->nome_previsao_inicial <br>");
-                        // echo ("previsao final: $dados->nome_previsao_final <br><br>");
-    
-                        // $dados_pdf .= " Preisao inicial :$dados->nome_previsao_inicial  <br><br>";
-                        // $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
-    
-                        $dados_editar .= "<label class='preisao' for='relatorio'>Previsão inicial:</label>"; // Rótulo para o textarea
-                        $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </label> <br><br>";
-    
-                        $dados_editar .= "<label class='preisao' for='relatorio'>Previsão final:</label>"; // Rótulo para o textarea
-                        $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </label><br><br> ";
-    
-                        $pegar_elementos_total = pegar_elementos_total_por_ano($indicador['id_indicador']);
-                        $pegar_elemento_total = $pegar_elementos_total[0];
-                        $pegar_elementos_executados = pegar_elementos_total_executados($indicador['id_indicador']);
-                        $pegar_elementos_executado = $pegar_elementos_executados[0];
-    
-                        $pegar_total_contratos = pegar_tabela_contrato_ano($indicador['id_indicador']);
-                        $id_tabela_contratos = ($pegar_total_contratos[0]['id_tabela']);
-    
-                        $total_contratos = $pegar_total_contratos[0]['total_contratos'];
-                        $total_executadas = $pegar_total_contratos[0]['total_executados'];
-    
-    
-    
-                        // echo ("<br>Total contratos: $total_contratos<br>");
-                        // echo ("<br>Total contratos executados: $total_executadas<br>");
-    
-                        // $dados_pdf .= " Total contratos: $total_contratos <br><br>";
-                        // $dados_pdf .= " Total contratos executados: $total_executadas <br><br>";
-                        $dados_editar .= "Total de contratos <br>";
-                        // echo '<table border="1">';
-                        $dados_editar .= " <table id='$id_tabela_contratos' border='1'>";
-                        // echo '<thead>';
-                        $dados_editar .= " <thead> ";
-                        // echo '<tr>';
-                        $dados_editar .= " <tr> ";
-                        // echo '<td></td>';
-                        $dados_editar .= " <td></td> ";
-                        foreach ($pegar_elementos_total as $ano) {
-                            // echo '<th>' . $ano['ano'] . '</th>';
-                            $dados_editar .= "<th> $ano[ano] </th> ";
-                            //$dados_editar .= "  $ano[ano] <br><br>";
-                        }
-                        // echo '</tr>';
-                        $dados_editar .= "</tr>";
-                        $dados_editar .= " </thead> ";
-                        // echo '</thead>';
-    
-                        // echo '<tbody class="total-por-ano">';
-                        $dados_editar .= "<tbody class='total-por-ano'> ";
-                        // echo '<tr>';
-                        $dados_editar .= "<tr> ";
-                        // echo '<th>Total por ano</th>';
-                        $dados_editar .= "<th>Total por ano</th> ";
-                        foreach ($pegar_elementos_total as $ano) {
-                            // echo "<td>" . "$ano[valor]" . "</td>";
-                            $dados_editar .= "<td> $ano[valor]</td> ";
-                            // $dados_editar .= " $ano[valor] <br><br>";
-                        }
-                        // echo '</tr>';
-                        $dados_editar .= "</tr> ";
-                        // echo '</tbody>';
-                        $dados_editar .= "</tbody> ";
-                        // echo '<tfoot class="total-executado">';
-                        $dados_editar .= "<tfoot class='total-executado'>";
-                        // echo '<tr>';
-                        $dados_editar .= "<tr>";
-                        // echo '<th>Total executado(ano)</th>';
-                        $dados_editar .= "<th>Total executado(ano)</th>";
-    
-                        foreach ($pegar_elementos_executados as $ano) {
-    
-                            // echo "<td>" . "$ano[valor]" . "</td>";
-                            $dados_editar .= "<td>$ano[valor]</td>";
-    
-                        }
-                        // echo '</tr>';
-                        $dados_editar .= " </tr> ";
-                        // echo '</tfoot>';
-                        $dados_editar .= " </tfoot> ";
-                        // echo '</table>';
-                        $dados_editar .= " </table> <br>";
-                        // echo "</tr>";
-                        // echo "<tr>";
-    
-                        // echo "</tr>";
-                        // echo "<br>";
-    
-                        $pegar_tabela_previsoes = pegar_tabela_previsoes($indicador['id_indicador']);
-                        $id_tabela_previsoes = ($pegar_tabela_previsoes[0]['id_tabela']);
-    
-                        $acumulativo = $pegar_tabela_previsoes[0]['acumulativo'];
-                        $previsoes_trimestre = pegar_previsoes_trimestre($indicador['id_indicador']);
-                        $realizados_trimestre = pegar_realizados_trimestre($indicador['id_indicador']);
-    
-                        // echo '<table border="1">';
-                        $dados_editar .= " <table id='$id_tabela_previsoes' border='1'>";
-                        // echo '<thead>';
-                        $dados_editar .= " <thead>";
-                        // echo '<tr>';
-                        $dados_editar .= " <tr>";
-                        // echo '<td></td>';
-                        $dados_editar .= " <td></td>";
-                        foreach ($previsoes_trimestre as $trimestre) {
-                            // echo '<th>' . $trimestre['bimestre_trimestre'] . '</th>';
-                            $dados_editar .= " <th> $trimestre[bimestre_trimestre] </th>";
-                        }
-                        // echo '<th>' . "Acumulativo" . '</th>';
-                        $dados_editar .= " <th> Acumulativo </th>";
-                        // echo '</tr>';
-                        $dados_editar .= "</tr>";
-                        // echo '</thead>';
-                        $dados_editar .= "</thead>";
-                        // echo '<tbody class="total-por-ano">';
-                        $dados_editar .= "<tbody class='previsto'>";
-                        // echo '<tr>';
-                        $dados_editar .= "<tr>";
-                        // echo '<th>Total por ano</th>';
-                        $dados_editar .= "<th> Previsto no trimestre </th>";
-                        foreach ($previsoes_trimestre as $trimestre) {
-                            // echo "<td>" . "$trimestre[valor]" . "</td>";
-                            $dados_editar .= "<td> $trimestre[valor]</td>";
-    
-                        }
-                        // echo '</tr>';
-                        $dados_editar .= "</tr>";
-                        // echo '</tbody>';
-                        $dados_editar .= "</tbody>";
-                        // echo '<tfoot class="total-executado">';
-                        $dados_editar .= "<tfoot class='realizado'>";
-                        // echo '<tr>';
-                        $dados_editar .= "<tr>";
-                        // echo '<th>Total executado(ano)</th>';
-                        $dados_editar .= "<th> Realizado no trimestre </th>";
-                        foreach ($realizados_trimestre as $trimestre) {
-                            // echo "<td>" . "$trimestre[valor]" . "</td>";
-                            $dados_editar .= "<td> $trimestre[valor]</td>";
-                        }
-                        // echo "<td>" . "$acumulativo" . "</td>";
-                        $dados_editar .= "<td> $acumulativo  </td>";
-                        // echo '</tr>';
-                        $dados_editar .= "</tr>";
-                        // echo '</tfoot>';
-                        $dados_editar .= "</tfoot>";
-    
-                        // echo '</table>';
-                        $dados_editar .= "</table> <br>";
-    
-                        // echo "</tr>";
-                        // echo "<tr>";
-                        // echo "<br>";
-    
-                    }
-                    $pegar_texto = pegar_texto_avaliativo($indicador['id_indicador']);
-                    foreach ($pegar_texto as $texto) {
-                        $dados->texto_avaliativo_1 = $texto['valor'];
-                        $dados->id_texto_avaliativo = $texto['id_texto_avaliativo'];
-    
-                        // echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1<br><br>");
-                        // $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
-    
-                        $dados_editar .= "<label for='texto_avaliativo'>TEXTOS AVALIATIVO $cont_text:</label><br>"; // Rótulo para o textarea
-                        $dados_editar .= "<textarea id='$dados->id_texto_avaliativo' name='texto_avaliativo' rows='2' cols='30'>$dados->texto_avaliativo_1</textarea> <br>";
-    
-    
-                        $cont_text++;
-                    }
-                }
-                $cont_indicador = 1;
+        $metas = pegar_metas($resultado['id_programa']);
+        $dados = new stdClass();
+        $dados_pdf = new stdClass();
+        $dados->nome_programa = $resultado['nome_programa'];
+        $dados->id_programa = $resultado['id_programa'];
+        // echo ("<img src='https://sergipetec.org.br/uploads/2017/08/Logo_SergipeTec.jpg'>");
+        // echo ("<h3 style='color: blue;> PROGRAMA: $dados->nome_programa  </h3><br>");
+
+        // $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa </h4>";
+        $dados_editar .= "<label class='programa-valor' id='$dados->id_programa'name='relatorio'>$dados->nome_programa</label><br>";
+        $dados_editar .= "<br>";
+        foreach ($metas as $meta) {
+            $indicadores = pegar_indicadores($meta['id_meta']);
+            $dados->nome_meta = $meta['nome_meta'];
+            $dados->id_meta = $meta['id_meta'];
+
+            // echo ("ID META $cont_meta: $dados->id_meta <br>");
+            // echo ("NOME META $cont_meta: $dados->nome_meta <br><br>");
+
+            // $dados_pdf .= "META $cont_meta: $dados->nome_meta ";
+            $dados_editar .= "<label class='meta' for='relatorio' > Meta $cont_meta:</label>"; // Rótulo para o textarea
+            $dados_editar .= "<label class='meta-valor' id='$dados->id_meta' name='relatorio' >$dados->nome_meta </label> <br>";
+
+            if ($meta['tem_indicador'] == 0) {
+                // $dados_pdf .= "<h5 style='color: red';> NÃO PREVISTA PARA O PERÍODO </h5>";
             }
+            $cont_meta++;
+            foreach ($indicadores as $indicador) {
+
+                $dados->nome_indicador = $indicador['nome'];
+                $dados->id_indicador = $indicador['id_indicador'];
+
+
+                // echo ("NOME INDICADOR $cont_indicador: $dados->nome_indicador <br><br>");
+
+                // $dados_pdf .= " <br><br>INDICADOR $cont_indicador: $dados->nome_indicador <br><br>";
+
+                $dados_editar .= "<label class='indicador' for='relatorio'>Indicador $cont_indicador:</label>"; // Rótulo para o textarea
+                $dados_editar .= "<label class='indicador-valor' id='$dados->id_indicador' name='relatorio' rows='2' cols='30'>$dados->nome_indicador </label> <br>";
+
+                //    echo ("ID INDICADOR: $dados->id_indicador <br><br>");
+                $cont_indicador++;
+                $previsoes = pegar_previsoes($indicador['id_indicador']);
+                $cont_text = 1;
+                foreach ($previsoes as $preisao) {
+                    $dados->nome_previsao_inicial = $preisao['nome_previsao_inicial'];
+                    $dados->id_previsao_inicial = $preisao['id_previsao_inicial'];
+                    $dados->nome_previsao_final = $preisao['nome_previsao_final'];
+                    $dados->id_previsao_final = $preisao['id_previsao_final'];
+
+
+                    // echo (" CRONOGRAMA DE EXECUÇÃO: <br>");
+                    // echo ("Preisao inicial : $dados->nome_previsao_inicial <br>");
+                    // echo ("previsao final: $dados->nome_previsao_final <br><br>");
+
+                    // $dados_pdf .= " Preisao inicial :$dados->nome_previsao_inicial  <br><br>";
+                    // $dados_pdf .= " previsao final: $dados->nome_previsao_final  <br><br>";
+
+                    $dados_editar .= "<label class='preisao' for='relatorio'>Previsão inicial:</label>"; // Rótulo para o textarea
+                    $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_inicial' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_inicial </label> <br><br>";
+
+                    $dados_editar .= "<label class='preisao' for='relatorio'>Previsão final:</label>"; // Rótulo para o textarea
+                    $dados_editar .= "<label class='preisao-valor' id='$dados->id_previsao_final' name='relatorio' rows='2' cols='30'>$dados->nome_previsao_final </label><br><br> ";
+
+                    $pegar_elementos_total = pegar_elementos_total_por_ano($indicador['id_indicador']);
+                    $pegar_elemento_total = $pegar_elementos_total[0];
+                    $pegar_elementos_executados = pegar_elementos_total_executados($indicador['id_indicador']);
+                    $pegar_elementos_executado = $pegar_elementos_executados[0];
+
+                    $pegar_total_contratos = pegar_tabela_contrato_ano($indicador['id_indicador']);
+                    $id_tabela_contratos = ($pegar_total_contratos[0]['id_tabela']);
+
+                    $total_contratos = $pegar_total_contratos[0]['total_contratos'];
+                    $total_executadas = $pegar_total_contratos[0]['total_executados'];
+
+
+
+                    // echo ("<br>Total contratos: $total_contratos<br>");
+                    // echo ("<br>Total contratos executados: $total_executadas<br>");
+
+                    // $dados_pdf .= " Total contratos: $total_contratos <br><br>";
+                    // $dados_pdf .= " Total contratos executados: $total_executadas <br><br>";
+                    $dados_editar .= " <label  style='font-size:20px; margin-left: 20px;'>Total de contratos</label><br>";
+                    // echo '<table border="1">';
+                    $dados_editar .= " <table id='$id_tabela_contratos' border='1'>";
+                    // echo '<thead>';
+                    $dados_editar .= " <thead> ";
+                    // echo '<tr>';
+                    $dados_editar .= " <tr> ";
+                    // echo '<td></td>';
+                    $dados_editar .= " <td></td> ";
+                    foreach ($pegar_elementos_total as $ano) {
+                        // echo '<th>' . $ano['ano'] . '</th>';
+                        $dados_editar .= "<th> $ano[ano] </th> ";
+                        //$dados_editar .= "  $ano[ano] <br><br>";
+                    }
+                    // echo '</tr>';
+                    $dados_editar .= "</tr>";
+                    $dados_editar .= " </thead> ";
+                    // echo '</thead>';
+
+                    // echo '<tbody class="total-por-ano">';
+                    $dados_editar .= "<tbody class='total-por-ano'> ";
+                    // echo '<tr>';
+                    $dados_editar .= "<tr> ";
+                    // echo '<th>Total por ano</th>';
+                    $dados_editar .= "<th>Total por ano</th> ";
+                    foreach ($pegar_elementos_total as $ano) {
+                        // echo "<td>" . "$ano[valor]" . "</td>";
+                        $dados_editar .= "<td> $ano[valor]</td> ";
+                        // $dados_editar .= " $ano[valor] <br><br>";
+                    }
+                    // echo '</tr>';
+                    $dados_editar .= "</tr> ";
+                    // echo '</tbody>';
+                    $dados_editar .= "</tbody> ";
+                    // echo '<tfoot class="total-executado">';
+                    $dados_editar .= "<tfoot class='total-executado'>";
+                    // echo '<tr>';
+                    $dados_editar .= "<tr>";
+                    // echo '<th>Total executado(ano)</th>';
+                    $dados_editar .= "<th>Total executado(ano)</th>";
+
+                    foreach ($pegar_elementos_executados as $ano) {
+
+                        // echo "<td>" . "$ano[valor]" . "</td>";
+                        $dados_editar .= "<td>$ano[valor]</td>";
+
+                    }
+                    // echo '</tr>';
+                    $dados_editar .= " </tr> ";
+                    // echo '</tfoot>';
+                    $dados_editar .= " </tfoot> ";
+                    // echo '</table>';
+                    $dados_editar .= " </table> <br>";
+                    // echo "</tr>";
+                    // echo "<tr>";
+
+                    // echo "</tr>";
+                    // echo "<br>";
+
+                    $pegar_tabela_previsoes = pegar_tabela_previsoes($indicador['id_indicador']);
+                    $id_tabela_previsoes = ($pegar_tabela_previsoes[0]['id_tabela']);
+
+                    $acumulativo = $pegar_tabela_previsoes[0]['acumulativo'];
+                    $previsoes_trimestre = pegar_previsoes_trimestre($indicador['id_indicador']);
+                    $realizados_trimestre = pegar_realizados_trimestre($indicador['id_indicador']);
+
+                    // echo '<table border="1">';
+                    $dados_editar .= " <table id='$id_tabela_previsoes' border='1'>";
+                    // echo '<thead>';
+                    $dados_editar .= " <thead>";
+                    // echo '<tr>';
+                    $dados_editar .= " <tr>";
+                    // echo '<td></td>';
+                    $dados_editar .= " <td></td>";
+                    foreach ($previsoes_trimestre as $trimestre) {
+                        // echo '<th>' . $trimestre['bimestre_trimestre'] . '</th>';
+                        $dados_editar .= " <th> $trimestre[bimestre_trimestre] </th>";
+                    }
+                    // echo '<th>' . "Acumulativo" . '</th>';
+                    $dados_editar .= " <th> Acumulativo </th>";
+                    // echo '</tr>';
+                    $dados_editar .= "</tr>";
+                    // echo '</thead>';
+                    $dados_editar .= "</thead>";
+                    // echo '<tbody class="total-por-ano">';
+                    $dados_editar .= "<tbody class='previsto'>";
+                    // echo '<tr>';
+                    $dados_editar .= "<tr>";
+                    // echo '<th>Total por ano</th>';
+                    $dados_editar .= "<th> Previsto no trimestre </th>";
+                    foreach ($previsoes_trimestre as $trimestre) {
+                        // echo "<td>" . "$trimestre[valor]" . "</td>";
+                        $dados_editar .= "<td> $trimestre[valor]</td>";
+
+                    }
+                    // echo '</tr>';
+                    $dados_editar .= "</tr>";
+                    // echo '</tbody>';
+                    $dados_editar .= "</tbody>";
+                    // echo '<tfoot class="total-executado">';
+                    $dados_editar .= "<tfoot class='realizado'>";
+                    // echo '<tr>';
+                    $dados_editar .= "<tr>";
+                    // echo '<th>Total executado(ano)</th>';
+                    $dados_editar .= "<th> Realizado no trimestre </th>";
+                    foreach ($realizados_trimestre as $trimestre) {
+                        // echo "<td>" . "$trimestre[valor]" . "</td>";
+                        $dados_editar .= "<td> $trimestre[valor]</td>";
+                    }
+                    // echo "<td>" . "$acumulativo" . "</td>";
+                    $dados_editar .= "<td> $acumulativo  </td>";
+                    // echo '</tr>';
+                    $dados_editar .= "</tr>";
+                    // echo '</tfoot>';
+                    $dados_editar .= "</tfoot>";
+
+                    // echo '</table>';
+                    $dados_editar .= "</table> <br>";
+
+                    // echo "</tr>";
+                    // echo "<tr>";
+                    // echo "<br>";
+
+                }
+                $pegar_texto = pegar_texto_avaliativo($indicador['id_indicador']);
+                foreach ($pegar_texto as $texto) {
+                    $dados->texto_avaliativo_1 = $texto['valor'];
+                    $dados->id_texto_avaliativo = $texto['id_texto_avaliativo'];
+
+                    // echo ("<br>TEXTOS AVALIATIVO: $dados->texto_avaliativo_1<br><br>");
+                    // $dados_editar .= " TEXTOS AVALIATIVO $cont_text: $dados->texto_avaliativo_1 <br><br>";
+
+                    $dados_editar .= "<label class='texto-avaliativo' for='texto_avaliativo'>TEXTOS AVALIATIVO $cont_text:</label>"; // Rótulo para o textarea
+                    $dados_editar .= "<label class='texto-avaliativo-valor' id='$dados->id_texto_avaliativo' name='texto_avaliativo' rows='2' cols='30'>$dados->texto_avaliativo_1</label  > <br>";
+
+
+                    $cont_text++;
+                }
+            }
+            $cont_indicador = 1;
         }
-    
-        $dados_editar .= "<input type ='button' value='$id'  onclick='passa_pagina($id)'>"; // Fim do formulário
-        $dados_editar .= "</form>"; // Fim do formulário
-    
-        $dados_editar .= "</body>";
-        $dados_editar .= "</html>";
-        // $dados_pdf .= "</body>";
-        
-        echo ($dados_editar);
-        // return $dados_pdf;
     }
+
+    // $dados_editar .= "<input type ='button' value='$id'  onclick='passa_pagina($id)'>"; // Fim do formulário
+    $dados_editar .= "</form>"; // Fim do formulário
+
+    $dados_editar .= "</body>";
+    $dados_editar .= "</html>";
+    // $dados_pdf .= "</body>";
+
+    // echo ($dados_editar);
+    return $dados_editar;
 }
+
 function pegar_metas($id_programa)
 {
 

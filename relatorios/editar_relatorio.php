@@ -9,8 +9,6 @@ $mysqli = $con->connect();
 if (isset($_GET['id'])) {
     $id_programa = $_GET['id'];
     $dados_pegos = dados_pdf($id_programa);
-
-
 }
 
 $chave_verificar_tb_contratos = "SELECT * FROM programa";

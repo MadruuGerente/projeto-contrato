@@ -42,8 +42,8 @@ function recuperar_informações() {
             console.log(dados[indicador_cont_id]);
             cont_indicador++;
         } else if (textarea.id.startsWith("text_previsao_inicial_")) {
-            const text_inicial_valor = `text_inicial_valor${cont_meta - 1}${cont_indicador - 1}`;
-            const text_inicial_cont_id = `text_inicial_cont_id${cont_meta - 1}${cont_indicador - 1}`;
+            const text_inicial_valor = `text_inicial_valor_${cont_meta - 1}${cont_indicador - 1}`;
+            const text_inicial_cont_id = `text_inicial_cont_id_${cont_meta - 1}${cont_indicador - 1}`;
 
             dados[text_inicial_valor] = textarea.value;
             dados[text_inicial_cont_id] = textarea.id;
@@ -51,8 +51,8 @@ function recuperar_informações() {
             console.log(dados[text_inicial_valor]);
             console.log(dados[text_inicial_cont_id]);
         } else if (textarea.id.startsWith("text_previsao_final_")) {
-            const text_final_valor = `text_final_valor${cont_meta - 1}${cont_indicador - 1}`;
-            const text_final_cont_id = `text_final_cont_id${cont_meta - 1}${cont_indicador - 1}`;
+            const text_final_valor = `text_final_valor_${cont_meta - 1}${cont_indicador - 1}`;
+            const text_final_cont_id = `text_final_cont_id_${cont_meta - 1}${cont_indicador - 1}`;
 
             dados[text_final_valor] = textarea.value;
             dados[text_final_cont_id] = textarea.id;

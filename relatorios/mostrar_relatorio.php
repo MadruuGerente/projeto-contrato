@@ -5,7 +5,7 @@ require './dompdf/vendor/autoload.php';
 require "pegar_informacoes_pdf.php";
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+$id_programa = 0;
 if (isset($_GET['id'])) {
     $id_programa = $_GET['id'];
     $options = new Options();
@@ -14,6 +14,7 @@ if (isset($_GET['id'])) {
     $dompdf = new Dompdf($options);
 
     $dados_pegos = mostrar_pdf($id_programa);
+    echo($dados_pegos);
 }
 // Verificar se o parâmetro relatorio está definido e é um número inteiro
 // if (isset($_GET['relatorio']) && is_string($_GET['relatorio'])) {
@@ -56,9 +57,6 @@ if (isset($_GET['id'])) {
     <script src="scripts/script_editar.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
     <style>
         body {
             margin: 0;
@@ -85,6 +83,7 @@ if (isset($_GET['id'])) {
         }
 
         table {
+            margin-left: 20px;
             width: auto;
             max-width: 0.5px;
             overflow: auto;
@@ -130,18 +129,18 @@ if (isset($_GET['id'])) {
 
         .programa {
             /* color: #4D4DFF; */
-            background-color: beige;
-            font-size: 30px;
+            /* background-color: beige; */
+            font-size: 25px;
             font-weight: bold;
 
         }
 
         .programa-valor {
             font-weight: normal;
-            background-color: bisque;
+            /* background-color: bisque; */
             border: 2px;
             /* color: #9932CD; */
-            font-size: 30px;
+            font-size: 25px;
         }
 
         .meta {
@@ -163,6 +162,8 @@ if (isset($_GET['id'])) {
 
         .indicador-valor {
             font-size: 20px;
+            margin-left: 15px;
+
         }
 
         .preisao {
@@ -174,6 +175,14 @@ if (isset($_GET['id'])) {
         .preisao-valor {
             font-size: 20px;
         }
+        .texto-avaliativo{
+            font-size: 20px;
+            margin-left: 20px;
+        }
+        .texto-avaliativo-valor{
+            font-size: 20px;
+            margin-left: 20px;
+        }
         .nao-previsto{
 
         }
@@ -184,7 +193,7 @@ if (isset($_GET['id'])) {
     <nav>
         <?php
         // Adicionar link para baixar o relatório
-        echo '<p><a href="download_relatorio.php?relatorio= gdsgds">Baixar este relatório</a></p>';
+        echo "<p><a href='criarel.php?id=$id_programa'>Baixar este relatório</a></p>";
         // Link para apagar o relatório atual
         echo '<p><a href="mostrar_relatorio.php?acao=apagar&relatorio=dgf ">Apagar este relatório</a></p>';
         // Link para voltar para a página de relatórios
