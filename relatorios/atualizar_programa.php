@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $indicador_valor = $_POST["indicador_valor_$meta_cont$indicador_cont"] ?? 0;
                     $indicador_id = $_POST["indicador_id_$meta_cont$indicador_cont"] ?? 0;
-                    
+
                     if ($indicador_id != 0) {
                         echo ("$indicador_valor -- $indicador_id\n");
                         atualizar_indicador($indicador_id, $indicador_valor);
@@ -39,10 +39,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo ("INICIAL $previsao_inicial_id FINAL $previsao_final_id");
                         echo ("TRVOOO$teste");
-                        previsoes($previsao_inicial_id, $previsao_final_id,$previsao_inicial_valor,$previsao_final_valor);
-
+                        atualizar_previsoes($previsao_inicial_id, $previsao_final_id, $previsao_inicial_valor, $previsao_final_valor);
+                        $text_avaliativo_cont = 1;
+                        do {
+                            $text_avaliativo_valor = $_POST["text_texto_avaliativo_$meta_cont$indicador_cont$text_avaliativo_cont"] ?? 0;
+                            $text_avaliativo_id = $_POST["text_texto_avaliativo_id_$meta_cont$indicador_cont$text_avaliativo_cont"] ?? 0;
+                            echo ("BUTTO:$text_avaliativo_valor$text_avaliativo_id");
+                            echo("YESHUAA". atualizar_text_avaliativo($text_avaliativo_valor,$text_avaliativo_id));    
+                            $text_avaliativo_cont++;
+                        } while ($text_avaliativo_valor != 0);
                         $indicador_cont++;
-
                     }
 
                 } while ($indicador_valor != 0);
@@ -96,7 +102,7 @@ function atualizar_indicador($id_indicador, $valor_atualizado)
     $rgt = $stmt->rowCount();
     return ($rgt);
 }
-function previsoes($id_inicial,$id_final, $valor_inicial, $valor_final)
+function atualizar_previsoes($id_inicial, $id_final, $valor_inicial, $valor_final)
 {
     $con = new Conexao();
     $mysqli = $con->connect();
@@ -109,6 +115,21 @@ function previsoes($id_inicial,$id_final, $valor_inicial, $valor_final)
     $stmt->execute();
     $rgt = $stmt->rowCount();
     echo ("Valor inicial$valor_inicial valorfinal$valor_final id inicial$id_inicial id final$id_final$rgt");
+    return ($rgt);
+}
+function atualizar_text_avaliativo($id_text_avaliativo, $valor_atualizado)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave = "UPDATE texto_avaliativo SET valor = :valor_atualizado WHERE id_texto_avaliativo = :id_texto_avaliativo";
+    $stmt = $mysqli->prepare($chave);
+    $stmt->bindParam(":valor_atual izado", $valor_atualizado);
+    $stmt->bindParam(":id_texto_avaliativo", $id_text_avaliativo);
+    // echo "SQL: $chave";
+
+    $stmt->execute();
+    $rgt = $stmt->rowCount();
+    echo ("Valor inicial$valor_atualizado valorfinal$id_text_avaliativo FOIII: $rgt ");
     return ($rgt);
 }
 ?>

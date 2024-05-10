@@ -1,6 +1,6 @@
 table {
     width: 600px;
-    max-width: 0.5px;
+    max-width: 0.5  px;
     overflow: auto;
     margin-bottom: 10px;
 }
@@ -130,6 +130,12 @@ h3 {
         display: block;
         width: 100%;
         box-sizing: border-box;
+    }
+    #formCriarRelatorio{
+    max-width: 300px;
+    }
+    table{
+        
     }
 }
 

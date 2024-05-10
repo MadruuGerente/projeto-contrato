@@ -121,7 +121,7 @@ h3 {
   display: none;
   /* Menu oculto por padrão */
   position: fixed;
-  top: 6.2%;
+  top: 50px;
   left: 0;
   height: 100%;
   width: 200px;

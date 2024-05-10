@@ -12,6 +12,7 @@ function recuperar_informações() {
 
     let cont_meta = 1;
     let cont_indicador = 1;
+    let cont_text_avaliativo = 1;
     let tt = 0;
     textareas.forEach((textarea) => {
 
@@ -60,15 +61,16 @@ function recuperar_informações() {
             console.log(dados[text_final_valor]);
             console.log(dados[text_final_cont_id]);
         } else if (textarea.id.startsWith("text_texto_")) {
-            let resto_id = textarea.id.slice(-3);
-            const text_texto_avaliativo = `text_texto_avaliativo${cont_meta - 1}${cont_indicador - 1}${resto_id}`;
-            const text_texto_avaliativo_id = `text_texto_avaliativo_id${cont_meta - 1}${cont_indicador - 1}${resto_id}`;
+            // let resto_id = textarea.id.slice(-3);
+            const text_texto_avaliativo = `text_texto_avaliativo_${cont_meta - 1}${cont_indicador - 1}${cont_text_avaliativo}`;
+            const text_texto_avaliativo_id = `text_texto_avaliativo_id_${cont_meta - 1}${cont_indicador - 1}${cont_text_avaliativo}`;
 
             dados[text_texto_avaliativo] = textarea.value;
             dados[text_texto_avaliativo_id] = textarea.id;
 
             console.log(dados[text_texto_avaliativo]);
             console.log(dados[text_texto_avaliativo_id]);
+            cont_text_avaliativo++;
             tt++;
         }
         
