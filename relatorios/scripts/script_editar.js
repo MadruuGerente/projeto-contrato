@@ -17,6 +17,7 @@ function recuperar_informações() {
     textareas.forEach((textarea) => {
 
         console.log(textarea.id);
+
         // const textareaa =;
         // const pro = "programa_";
         if (textarea.id.startsWith("programa")) {
@@ -73,7 +74,8 @@ function recuperar_informações() {
             cont_text_avaliativo++;
             tt++;
         }
-        
+
+
     });
     console.error(tt, "fffffffffffffffffffffffffffffffffffffff")
     let dados_total = [];
@@ -142,11 +144,11 @@ function recuperar_informações() {
 
             // let id_labela_total = `id_labela_total${cont_meta - 1}${cont_indicador - 1}`;
 
-            let valor_total = `valor_total${cont_indicador - 1}${resto_id}`;
-            let valor_total_id = `valor_total_id${cont_indicador - 1}${resto_id}`;
+            let valor_total = `valor_total_${resto_id}`;
+            let valor_total_id = `valor_total_id_${resto_id}`;
 
-            let valor_executado = `valor_executado${cont_indicador - 1}${resto_id}`
-            let valor_executado_id = `valor_executado_id${cont_indicador - 1}${resto_id}`
+            let valor_executado = `valor_executado_${resto_id}`
+            let valor_executado_id = `valor_executado_id_${resto_id}`
 
             dados[valor_total] = dados_total[0];;
             dados[valor_total_id] = ids_total[0];
@@ -180,6 +182,7 @@ function recuperar_informações() {
         id_dados_executados.length = 0;
         console.log("Após atribuição:", dados["valor_executado_id2411"]);
     }
+
     let dadosPrevistos = [];
     let dadosPrevistosId = [];
     let dadosRealizados = [];
@@ -217,12 +220,14 @@ function recuperar_informações() {
                         // Adicionando o valor ao array de dados da linha
                         dadosLinhaPrevisto.push(valor);
                         dadosLinhaPrevistoId.push(valor_id);
+                        console.error("tetrtetewtewtewtertetewtetetertwetert",valor, valor_id);
                     });
 
                     // Adicionando o array de dados da linha ao array principal de previsto
                     dadosPrevistos.push(dadosLinhaPrevisto);
                     dadosPrevistosId.push(dadosLinhaPrevistoId);
-
+                    // dados[`previstos_${resto_id}`] = dadosPrevistos;
+                    // dados[`previstos_id_${resto_id}`] = dadosPrevistosId;
                     console.error("GDSGDSFGDFSG", dadosPrevistos);
                     console.error("GDSGDSFGDFSG", dadosLinhaPrevistoId);
 
@@ -254,19 +259,17 @@ function recuperar_informações() {
 
                     // Adicionando o array de dados da linha ao array principal de realizado
                     dadosRealizados.push(dadosLinhaRealizado);
-                    dadosRealizadosId.push(dadosLinhaRealizado);
+                    dadosRealizadosId.push(dadosLinhaRealizadoId);
                     acumulativo = dadosRealizados[dadosRealizados.length - 1];
                     acumulativo = acumulativo[acumulativo.length - 1];
                     console.error(acumulativo);
-
                 });
                 // console.log('Dados Previstos:', dadosPrevistos);
                 // console.log('Dados Realizados:', dadosRealizados);
 
-                dados[`previstos${resto_id}`] = dadosPrevistos;
-                dados[`previstos_id${resto_id}`] = dadosPrevistosId;
-                dados[`realizados${resto_id}`] = dadosRealizados;
-                dados[`realizados_id${resto_id}`] = dadosRealizadosId;
+                
+                dados[`realizados_${resto_id}`] = dadosRealizados;
+                dados[`realizados_id_${resto_id}`] = dadosRealizadosId;
 
 
                 console.log(dadosRealizados);
@@ -290,7 +293,7 @@ function recuperar_informações() {
     mandar_informacoes(dados);
 }
 function mandar_informacoes(objeto) {
-    console.log("OBJETO",objeto);
+    console.log("OBJETO", objeto);
     $.ajax({
         url: 'atualizar_programa.php',
         method: 'POST',
@@ -298,12 +301,12 @@ function mandar_informacoes(objeto) {
         success: function (resposta) {
             console.log(resposta);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("Erro ao enviar Ajax:", status, error);
         }
     });
 }
-function passa_pagina(param){
+function passa_pagina(param) {
     if (typeof param === "string") {
         console.log("Recebi uma string: " + param);
         window.location.href = `criarel.php?id=${param}`;

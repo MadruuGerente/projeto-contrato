@@ -22,7 +22,7 @@ function dados_pdfe($id_programa)
     $dados_pdf .= "<style>
     table {
         margin-left: 20px;
-        width: auto;
+        width: 700px;
         overflow: auto;
         margin-bottom: 10px;
     }
