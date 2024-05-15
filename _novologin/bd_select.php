@@ -9,8 +9,8 @@ public function selectlogin($cpf){
 
         $conectado= $con->connect();
         //senao tive vazio continue
-        SELECT cadastro.nome,login.login, login.senha FROM cadastro INNER JOIN login ON
-       cadastro.cpf= login.cpf
+    //     SELECT cadastro.nome,login.login, login.senha FROM cadastro INNER JOIN login ON
+    //    cadastro.cpf= login.cpf
 
         if(!empty($conectado)){
             $sql= "SELECT cadastro.nome,login.login, login.senha FROM cadastro INNER JOIN login ON
