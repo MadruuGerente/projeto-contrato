@@ -38,7 +38,7 @@ $login = $_SESSION['cpf'];
 try {
     $conexao = new Conexao();
     $conn = $conexao->connect();
- 
+
     // Consultar informações do usuário usando o campo de login
     $sql = "SELECT * FROM login WHERE cpf = :cpf";
     $stmt = $conn->prepare($sql);
@@ -73,16 +73,21 @@ if (isset($_GET['id'])) {
 
     }
 }
+$perfil = 0;
 if (isset($_SESSION['cpf'])) {
-
+    $perfil = "Mega Gestor";
+    $cpf_criador = $_SESSION["cpf"];
     $con = new Conexao();
     $mysqli = $con->connect();
+    $chave_selecionar_mega = "SELECT * FROM login WHERE perfil=:perfil";
+    $stmt_mega = $mysqli->prepare($chave_selecionar_mega);
+    $stmt_mega->bindParam(":perfil", $perfil);
+    $stmt_mega->execute();
 
-
-    $chave_verificar_tb_contratos = "SELECT * FROM programa";
+    $chave_verificar_tb_contratos = "SELECT * FROM programa WHERE cpf_criador= :cpf_criador";
     $stmt = $mysqli->prepare($chave_verificar_tb_contratos);
     // $stmt->bindParam(":id_tabela", $id_tabela_total);
-// $stmt->bindParam(":ano", $ano);
+    $stmt->bindParam(":cpf_criador", $cpf_criador);
     $stmt->execute();
     $count = $stmt->rowCount();
     if ($count > 0) {
@@ -93,7 +98,8 @@ if (isset($_SESSION['cpf'])) {
             echo '<p>';
             echo "<a href='mostrar_relatorio.php?id=$id_programa'> $rgt[nome_programa]</a>||";
             echo "<a href='editar_relatorio.php?id=$id_programa'> Editar </a>||";
-            echo "<a href='relatorios.php?id=$id_programa'> Deletar </a><br>";
+            echo "<a href='relatorios.php?id=$id_programa'> Deletar </a> ||";
+            echo "<a href='#' name='$id_programa'id='tag_enviar'> Enviar </a><br>";
             echo '</p>';
         }
     } else {
@@ -112,7 +118,7 @@ if (isset($_SESSION['cpf'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pasta_de_estilos/stylerelatorios.css">
     <link rel="stylesheet" href="..\menu/pasta_de_estilos/stylemenu.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Relatórios</title>
 </head>
 
@@ -135,7 +141,6 @@ if (isset($_SESSION['cpf'])) {
                 echo ' | ';
                 echo '<a href="editar_relatorio.php?relatorio=' . $index . '">Editar</a>';
                 echo '</p>';
-
             }
         } else {
             echo '<p>Nenhum relatório disponível.</p>';
@@ -162,17 +167,71 @@ if (isset($_SESSION['cpf'])) {
         <a href="..\atividades/atividades.php">Atividades</a>
         <a href="..\menu/menu.php?i=0">sair</a>
         <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
-    </div>S=
+    </div>
+    <div class="modal" id="modal">
+        <?php
+        while ($rgt_mega = $stmt_mega->fetch(PDO::FETCH_ASSOC)) {
+            $nome = $rgt_mega["nome"];
+            $id = $rgt_mega["login"];
+            // echo " <input type='checkbox' id='interest' name='interest' value='$nome'> $nome";
+            ?>
+            <input type="checkbox" class="checkboxes" id="<?php echo $id; ?>" name="" value="<?php echo $nome; ?>">
+            <label for="<?php echo $id; ?>"> <?php echo $nome; ?> </label><br>
+            <?php
+        }
+        ?>
+        <button class="button_modal"> enviar</button>
+    </div>
     <script>
+        let link_enviar = document.querySelector("#tag_enviar");
+        let id_programa = 0;
+        if (link_enviar) {
+            id_programa = link_enviar.name;
+            link_enviar.addEventListener("click", function () {
+                let modal = document.querySelector("#modal");
+
+                modal.style.display = "block";
+            });
+        }
+
+        let info = {};
+        document.querySelector('.button_modal').addEventListener('click', function () {
+            let checkboxes = document.querySelectorAll('.checkboxes');
+            let selectedCheckboxes = [];
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedCheckboxes.push(checkbox.id);
+                }
+            });
+            info.array_login = selectedCheckboxes;
+            info.id_programa = id_programa;
+            console.log("Checkboxes selecionados:", selectedCheckboxes);
+            console.log("Checkboxes :", id_programa);
+            enviar(info);
+        });
+        function enviar(objeto) {
+            console.log("OBJETO", objeto);
+            $.ajax({
+                url: 'enviar_programa.php',
+                method: 'POST',
+                data: objeto,
+                success: function (resposta) {
+                    alert(resposta);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erro ao enviar Ajax:", status, error);
+                }
+            });
+        };
+
+
         var sidebar = document.getElementById("sidebar");
         var menuTrigger = document.querySelector(".imagem-menu");
         let meuPerfil = document.querySelector("#perfil");
         meuPerfil.addEventListener("click", function () {
             document.location.href = "../perfil/perfil.php";
         });
-
-
-
         menuTrigger.addEventListener("click", function () {
             if (sidebar.style.display === "none" || sidebar.style.display === "") {
                 sidebar.style.display = "block"; /* Mostra o menu lateral */

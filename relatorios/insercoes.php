@@ -176,7 +176,7 @@ function verificaDadosExecutados($id_tabela_total, $ano)
     return $rgt;
 }
 
-function inserirPrograma($programaId, $programaValor, $data)
+function inserirPrograma($programaId,$cpf_criador, $programaValor, $data)
 {
     $con = new Conexao();
     $mysqli = $con->connect();
@@ -197,10 +197,11 @@ function inserirPrograma($programaId, $programaValor, $data)
         return (1);
     } elseif ($verificar == 0) {
         echo ("TSTANDO OOOOO O O O O O O OO  ");
-        $chave_inserir_programa = "INSERT INTO programa(id_programa, nome_programa, data_criada) VALUES(:id_programa, :nome, :data_criada)";
+        $chave_inserir_programa = "INSERT INTO programa(id_programa, nome_programa, cpf_criador, data_criada) VALUES(:id_programa,:nome,:cpf_criador,:data_criada)";
         $stmt = $mysqli->prepare($chave_inserir_programa);
         $stmt->bindParam(":id_programa", $programaId);
         $stmt->bindParam(":nome", $programaValor);
+        $stmt->bindParam(":cpf_criador", $cpf_criador);
         $stmt->bindParam(":data_criada", $data);
         $stmt->execute();
 

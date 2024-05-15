@@ -52,38 +52,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resto_id = substr($indicador_id, -3);
 
                         $cont_test = 0;
-                        do {
-                            $pegar_array_total_valor = $_POST["valor_total_$resto_id"] ?? 0;
-                            $pegar_array_total_id = $_POST["valor_total_id_$resto_id"] ?? 0;
+                        // do {
+                        //     $pegar_array_total_valor = $_POST["valor_total_$resto_id"] ?? 0;
+                        //     $pegar_array_total_id = $_POST["valor_total_id_$resto_id"] ?? 0;
 
-                            $pegar_array_total_executado_valor = $_POST["valor_executado_$resto_id"] ?? 0;
-                            $pegar_array_total_executado_id = $_POST["valor_executado_id_$resto_id"] ?? 0;
+                        //     $pegar_array_total_executado_valor = $_POST["valor_executado_$resto_id"] ?? 0;
+                        //     $pegar_array_total_executado_id = $_POST["valor_executado_id_$resto_id"] ?? 0;
 
-                            $pegar_array_previsto_valor = $_POST["previstos_$resto_id"] ?? 0;
-                            $pegar_array_previsto_id = $_POST["previstos_id_$resto_id"] ?? 0;
+                        //     $pegar_array_previsto_valor = $_POST["previstos_$resto_id"] ?? 0;
+                        //     $pegar_array_previsto_id = $_POST["previstos_id_$resto_id"] ?? 0;
 
-                            $pegar_array_realizado_valor = $_POST["realizados_$resto_id"] ?? 0;
-                            $pegar_array_realizados_id = $_POST["realizados_id_$resto_id"] ?? 0;
+                        //     $pegar_array_realizado_valor = $_POST["realizados_$resto_id"] ?? 0;
+                        //     $pegar_array_realizados_id = $_POST["realizados_id_$resto_id"] ?? 0;
 
-                            $pegar_array_previsto_id = $pegar_array_previsto_id[$cont_test] ?? 0;
-                            $pegar_array_previsto_valor = $pegar_array_previsto_valor[$cont_test] ?? 0;
+                        //     $pegar_array_previsto_id = $pegar_array_previsto_id[$cont_test] ?? 0;
+                        //     $pegar_array_previsto_valor = $pegar_array_previsto_valor[$cont_test] ?? 0;
 
-                            $pegar_array_realizado_valor = $pegar_array_realizado_valor[$cont_test] ?? 0;
-                            $pegar_array_realizado_id = $pegar_array_realizado_id[$cont_test] ?? 0;
+                        //     $pegar_array_realizado_valor = $pegar_array_realizado_valor[$cont_test] ?? 0;
+                        //     $pegar_array_realizado_id = $pegar_array_realizado_id[$cont_test] ?? 0;
 
-                            for ($i=0; $i < count($pegar_array_previsto_id); $i++) {
-                                echo ("\n$pegar_array_previsto_valor[$i] -- $pegar_array_previsto_id[$i] \n");
-                                // echo ("\n$pegar_array_realizado_valor[$i] -- $pegar_array_realizado_id[$i] \n");
-                            }
+                        //     for ($i=0; $i < count($pegar_array_realizados_id); $i++) {
+                        //         echo ("\n$pegar_array_previsto_valor[$i] -- $pegar_array_previsto_id[$i] \n");
+                        //         // echo ("\n$pegar_array_realizado_valor[$i] -- $pegar_array_realizado_id[$i] \n");
+                        //     }
 
-                            for ($i = 0; $i < count($pegar_array_total_valor); $i++) {
-                                // echo ("\n$pegar_array_total_valor[$i] -- $pegar_array_total_id[$i] \n");
-                                atualizar_valor_tabela_total($pegar_array_total_id[$i], $pegar_array_total_valor[$i], $pegar_array_total_executado_id[$i], $pegar_array_total_executado_valor[$i]);
-                                // echo ("$pegar_array_total_executado_valor[$i] -- $pegar_array_total_executado_id[$i]\n");
-                                // echo("$pegar_array_total_valor\n");
-                            }
-                            $cont_test++;
-                        } while ($pegar_array_total_executado_id[0] = !0);
+                        //     for ($i = 0; $i < count($pegar_array_total_valor); $i++) {
+                        //         // echo ("\n$pegar_array_total_valor[$i] -- $pegar_array_total_id[$i] \n");
+                        //         atualizar_valor_tabela_total($pegar_array_total_id[$i], $pegar_array_total_valor[$i], $pegar_array_total_executado_id[$i], $pegar_array_total_executado_valor[$i]);
+                        //         // echo ("$pegar_array_total_executado_valor[$i] -- $pegar_array_total_executado_id[$i]\n");
+                        //         // echo("$pegar_array_total_valor\n");
+                        //     }
+                        //     $cont_test++;
+                        // } while ($pegar_array_total_executado_id[0] = !0);
 
                         $indicador_cont++;
                     }

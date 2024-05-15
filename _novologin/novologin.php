@@ -51,8 +51,8 @@
         <div>
         <label for="perfil">Perfil:</label>
         <select name = "perfil">
-            <Option>funcionario</Option>
-            <option>gestor</option>
+            <Option>Gestor</Option>
+            <option>Mega Gestor</option>
         </select required><br><br>
         </div>
 

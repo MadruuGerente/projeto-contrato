@@ -108,6 +108,7 @@ try {
         <a href="..\relatorios/relatorios.php">Relatórios</a>
         <a href="..\perfil/perfil.php">Perfil</a>
         <a href="..\atividades/atividades.php">Atividades</a>
+        <a href="..\projetos/antes_projetos.php">Projetos</a>
         <a href="menu.php?i=0">sair</a>
         <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
     </div>

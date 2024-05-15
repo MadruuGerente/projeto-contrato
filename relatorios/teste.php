@@ -1,6 +1,12 @@
 <?php
 require_once "insercoes.php";
 require_once "pegar_informacoes_pdf.php";
+session_start();
+$cpf_criador = 0;
+if (isset($_SESSION["cpf"])){
+    $cpf_criador = $_SESSION["cpf"];
+    echo($cpf_criador. "CPF CRIADOR");
+}
 date_default_timezone_set("America/Sao_Paulo");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pega_id_programa'])) {
@@ -152,7 +158,7 @@ if ($programaId != null) {
     echo ("AAAAAAAAAA $resultado_verifica_programa");
     if ($resultado_verifica_programa == 0) {
         echo ("PASSSOUUUU");
-        $verifica_inserido_programa = inserirPrograma($programaId, $programaValor, $data);
+        $verifica_inserido_programa = inserirPrograma($programaId,$cpf_criador, $programaValor, $data);
         if ($verifica_inserido_programa == 0) {
             echo "Erro ao inserir programa.";
             exit; // Sai do script se houver erro
