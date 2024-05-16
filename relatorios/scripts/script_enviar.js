@@ -1,7 +1,7 @@
 let links_enviar = document.querySelectorAll(".bt");
 let id_programa = 0;
 if (links_enviar) {
-    links_enviar.forEach(function(link_enviar) {
+    links_enviar.forEach(function (link_enviar) {
         link_enviar.addEventListener("click", function () {
             console.log("Foi, entrou!");
             id_programa = this.getAttribute("name");
@@ -9,7 +9,7 @@ if (links_enviar) {
             modal.style.display = "block";
         });
     });
-}else {
+} else {
 }
 
 let info = {};
@@ -36,11 +36,12 @@ function enviar(objeto) {
         method: 'POST',
         data: objeto,
         success: function (resposta) {
-            if (resposta == 1) {
-                let modal = document.querySelector("#modal");
-                modal.style.display = "none";
-                entrou();
-            }
+            console.log(resposta);
+
+            let modal = document.querySelector("#modal");
+            modal.style.display = "none";
+            entrou();
+
         },
         error: function (xhr, status, error) {
             console.error("Erro ao enviar Ajax:", status, error);
@@ -62,7 +63,6 @@ menuTrigger.addEventListener("click", function () {
         sidebar.style.display = "none"; /* Esconde o menu lateral */
     }
 });
-
 
 function entrou() {
     const Toast = Swal.mixin({

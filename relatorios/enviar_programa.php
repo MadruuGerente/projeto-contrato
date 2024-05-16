@@ -34,6 +34,8 @@ function enviar_programa($login_de, $login_para, $id_programa, $dt_atual)
         $stmt->execute();
         $rgt = $stmt->rowCount();
         return 1;   
+    }else{
+        return 1;
     }
 }
 ?>
