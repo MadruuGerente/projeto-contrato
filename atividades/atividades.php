@@ -3,22 +3,29 @@ require_once "..\bancodedados/bd_conectar.php";
 session_start();
 
 $login = $_SESSION['login'];
-$chave_sql = "SELECT col_projeto.*, projetos.* FROM col_projeto
-              INNER JOIN projetos ON projetos.id_projeto = col_projeto.id_projeto
-              WHERE col_projeto.login_colaborador = ?";
-$stmt = $mysqli->prepare($chave_sql);
-$stmt->bind_param("s", $login);
+// $chave_sql = "SELECT col_projeto.*, projetos.* FROM col_projeto
+//               INNER JOIN projetos ON projetos.id_projeto = col_projeto.id_projeto
+//               WHERE col_projeto.login_colaborador = ?";
+$chave_programa = "SELECT enviar_programas.*, programa.nome_programa, login.nome FROM enviar_programas
+               INNER JOIN programa ON enviar_programas.id_programa_enviado = programa.id_programa
+               INNER JOIN login ON enviar_programas.login_de = login.login
+               WHERE enviar_programas.login_para = ?";
+$stmt = $mysqli->prepare($chave_programa);
+$stmt->bind_param("s", $login); 
 $stmt->execute();
 $resultado = $stmt->get_result();
+// foreach($resultado as $row){
+//     echo"".$row["id_programa_enviado"]."".$row["login_de"]."";
+// }
 // Após inserir os dados do novo projeto no banco de dados
-$id_projeto = $mysqli->insert_id;  // Obtém o ID do projeto recém-inserido
+// $id_projeto = $mysqli->insert_id;  // Obtém o ID do projeto recém-inserido
 
 // Criação do diretório para o projeto
-$caminho_projeto_fisico = '..\projetos/projetos/' . $id_projeto;
+// $caminho_projeto_fisico = '..\projetos/projetos/' . $id_projeto;
 
-if (!is_dir($caminho_projeto_fisico)) {
-    mkdir($caminho_projeto_fisico, 0777, true);  // Certifique-se de ter as permissões adequadas
-}
+// if (!is_dir($caminho_projeto_fisico)) {
+//     mkdir($caminho_projeto_fisico, 0777, true);  // Certifique-se de ter as permissões adequadas
+// }
 if ($resultado->num_rows >= 1) {
     echo "<h4>Você está em projeto(s):</h4>";
 } else {
@@ -26,43 +33,46 @@ if ($resultado->num_rows >= 1) {
 }
 $idsEncontrados = array();
 while ($dados = $resultado->fetch_assoc()) {
-    if (!in_array($dados['id_projeto'], $idsEncontrados)) {
-        $idsEncontrados[] = $dados['id_projeto'];
-        $id_projeto = $dados['id_projeto'];
-        $nome_projeto = $dados['nome_projeto'];
-        $objetivo = $dados['objetivo'];
-        $view = $dados['view_projeto'];
+    // if (!in_array($dados['id_projeto'], $idsEncontrados)) {
+        // $idsEncontrados[] = $dados['id_projeto'];
+            // $id_projeto = $dados['id_projeto'];
+            // $nome_projeto = $dados['nome_projeto'];
+            // $objetivo = $dados['objetivo'];
+            $view = $dados['view'];
+
+        $id_programa = $dados['id_programa_enviado'];
+        $login_de = $dados['login_de'];
+        $nome_programa = $dados['nome_programa'];
+        $nome_remetente = $dados['nome'];
 
         echo '<div class="project-box">';
         if ($view == 0) {
             echo '<div class="notification-badge"></div>';
         }
         echo '<form method="POST">';
-        echo '<div class="project-title">' . $nome_projeto . '</div>';
-        echo '<div class="project-description">Objetivo: ' . $objetivo . '</div>';
-        echo '<input type="hidden" name="data-id" value="' . $id_projeto . '">';
-        echo '<button type="submit" name="botao_submit" class="project-button">Ver mais</button>';
+        echo '<div class="project-title">' . $nome_programa . '</div>';
+        echo '<div class="project-description">Remetente: ' . $nome_remetente . '</div>';
+        echo '<input type="hidden" name="data-id" value="' . $id_programa . '">';
+        echo '<button type="submit" name="botao_submit" class="project-button">Ver programa</button>';
         echo '</form>';
         echo '</div>';
 
-        if (isset($_POST['botao_submit']) && $_POST['data-id'] == $id_projeto) {
+        if (isset($_POST['botao_submit']) && $_POST['data-id'] == $id_programa) {
             $view = 1;
-            $_SESSION['id_projeto'] = $id_projeto;
-            $_SESSION['nome_projeto'] = $nome_projeto;
-            $_SESSION['objetivo'] = $objetivo;
+            $_SESSION['id_programa'] = $id_programa;
 
-            $chave_atualizar = "UPDATE col_projeto SET view_projeto = ? WHERE id_projeto = ?";
+            $chave_atualizar = "UPDATE enviar_programas SET view = ? WHERE id_programa_enviado = ?";
             $stmt_atualizar = $mysqli->prepare($chave_atualizar);
-            $stmt_atualizar->bind_param("ii", $view, $id_projeto);
-
-            if ($stmt_atualizar->execute()) {
-                header("Location: versetores.php");
+            $stmt_atualizar->bind_param("ii", $view, $id_programa);
+           
+            if($stmt_atualizar->execute()) {
+                header("Location: verprogramas.php");
                 exit();
             } else {
-                // Lidar com erro na execução da atualização
+                echo("erro");
             }
         }
-    }
+    // }
 }
 echo "</div>";
 ?>

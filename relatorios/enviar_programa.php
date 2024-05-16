@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $logins = $_POST['array_login'] ?? "Nome não definido";
     foreach ($logins as $login) {
         // echo "" . $login . "" . $id_programa . "" . $login_de . "\n";
-        enviar_programa($login_de, $login, $id_programa, $dt_atual);
+        echo(enviar_programa($login_de, $login, $id_programa, $dt_atual));
     }
     // echo"peguei".($).""; 
 }
@@ -24,9 +24,7 @@ function enviar_programa($login_de, $login_para, $id_programa, $dt_atual)
     $stmt_verifica->bindParam(":id_programa_enviado", $id_programa);
     $stmt_verifica->execute();
     $rgt = $stmt_verifica->rowCount();
-    echo("foi");
     if ($rgt == 0) {
-
         $chave = "INSERT INTO enviar_programas (login_de, login_para, id_programa_enviado, dt_envio) VALUES (:login_de, :login_para, :id_programa_enviado, :dt_envio)";
         $stmt = $mysqli->prepare($chave);
         $stmt->bindParam(":login_de", $login_de);
@@ -35,6 +33,7 @@ function enviar_programa($login_de, $login_para, $id_programa, $dt_atual)
         $stmt->bindParam(":dt_envio", $dt_atual);
         $stmt->execute();
         $rgt = $stmt->rowCount();
+        return 1;   
     }
 }
 ?>

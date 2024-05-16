@@ -93,7 +93,7 @@ try {
 
         <!-- <a href="..\perfil/perfil.php">Meu perfil</a> -->
         <!-- <?php
-        if ($usuario['perfil'] == 'gestor') {
+        if ($usuario['perfil'] == 'Gestor') {
             echo '<a id = "ger" href = "..\gerenciaratividades/ger_atividades.php">Gerenciar atividades</a>';
             echo '<a href="..\projetos/antes_projetos.php">Projetos</a>';
         } else if ($usuario['perfil'] == 'funcionario') {
@@ -108,7 +108,8 @@ try {
     <div class="sidebar" id="sidebar">
         <a href="..\relatorios/relatorios.php">Relatórios</a>
         <a href="..\perfil/perfil.php">Perfil</a>
-        <a href="..\atividades/atividades.php">Atividades</a>
+        <!-- <a href="..\atividades/atividades.php">Atividades</a> -->
+        <a href="..\atividades/atividades.php">Recebidos</a>
         <a href="..\projetos/antes_projetos.php">Projetos</a>
         <a href="menu.php?i=0">sair</a>
         <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>

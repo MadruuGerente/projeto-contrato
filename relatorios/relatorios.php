@@ -90,16 +90,18 @@ if (isset($_SESSION['cpf'])) {
     $stmt->bindParam(":cpf_criador", $cpf_criador);
     $stmt->execute();
     $count = $stmt->rowCount();
+    $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($count > 0) {
         echo "<h1>Relatórios:</h1>";
         echo "<p>Total de relatórios encontrados: $count</p>";
-        while ($rgt = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+        foreach ($dados as $rgt) {
             $id_programa = $rgt['id_programa'];
             echo '<p>';
             echo "<a href='mostrar_relatorio.php?id=$id_programa'> $rgt[nome_programa]</a>||";
             echo "<a href='editar_relatorio.php?id=$id_programa'> Editar </a>||";
             echo "<a href='relatorios.php?id=$id_programa'> Deletar </a> ||";
-            echo "<a href='#' name='$id_programa'id='tag_enviar'> Enviar </a><br>";
+            echo "<a href='#' class='bt'name='$id_programa'id='tag_enviar'> Enviar </a><br>";
             echo '</p>';
         }
     } else {
@@ -107,8 +109,6 @@ if (isset($_SESSION['cpf'])) {
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -118,6 +118,8 @@ if (isset($_SESSION['cpf'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pasta_de_estilos/stylerelatorios.css">
     <link rel="stylesheet" href="..\menu/pasta_de_estilos/stylemenu.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Relatórios</title>
 </head>
@@ -182,66 +184,7 @@ if (isset($_SESSION['cpf'])) {
         ?>
         <button class="button_modal"> enviar</button>
     </div>
-    <script>
-        let link_enviar = document.querySelector("#tag_enviar");
-        let id_programa = 0;
-        if (link_enviar) {
-            id_programa = link_enviar.name;
-            link_enviar.addEventListener("click", function () {
-                let modal = document.querySelector("#modal");
-
-                modal.style.display = "block";
-            });
-        }
-
-        let info = {};
-        document.querySelector('.button_modal').addEventListener('click', function () {
-            let checkboxes = document.querySelectorAll('.checkboxes');
-            let selectedCheckboxes = [];
-
-            checkboxes.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    selectedCheckboxes.push(checkbox.id);
-                }
-            });
-            info.array_login = selectedCheckboxes;
-            info.id_programa = id_programa;
-            console.log("Checkboxes selecionados:", selectedCheckboxes);
-            console.log("Checkboxes :", id_programa);
-            enviar(info);
-        });
-        function enviar(objeto) {
-            console.log("OBJETO", objeto);
-            $.ajax({
-                url: 'enviar_programa.php',
-                method: 'POST',
-                data: objeto,
-                success: function (resposta) {
-                    alert(resposta);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Erro ao enviar Ajax:", status, error);
-                }
-            });
-        };
-
-
-        var sidebar = document.getElementById("sidebar");
-        var menuTrigger = document.querySelector(".imagem-menu");
-        let meuPerfil = document.querySelector("#perfil");
-        meuPerfil.addEventListener("click", function () {
-            document.location.href = "../perfil/perfil.php";
-        });
-        menuTrigger.addEventListener("click", function () {
-            if (sidebar.style.display === "none" || sidebar.style.display === "") {
-                sidebar.style.display = "block"; /* Mostra o menu lateral */
-            } else {
-                sidebar.style.display = "none"; /* Esconde o menu lateral */
-            }
-        });
-    </script>
-
+<script src="scripts/script_enviar.js"></script>
+<!-- <script src=""></script> -->
 </body>
-
-
 </html>

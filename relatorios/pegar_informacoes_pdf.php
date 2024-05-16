@@ -273,9 +273,10 @@ function dados_pdf($id_programa)
     $dados_editar .= "<head>";
     $dados_editar .= "<meta charset='UTF-8'>";
     $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+    $dados_editar .= "<body class='body'>"; 
     $dados_editar .= "<title>Relatórios</title>";
     $dados_editar .= "<head>";
-
+    
     $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
     $dados_editar .= "<label for='relatorio'>Programa:</label><br>"; // Rótulo para o textarea  
     // Criação do textarea
@@ -291,6 +292,7 @@ function dados_pdf($id_programa)
     $dados_pdf .= "<title>Relatórios</title>";
     $dados_pdf .= "<head>";
     $dados_pdf .= "<body>";
+    // $dados_pdf .= "<form class ='content'>";
     $dados_pdf .= "<h1 style='color: red;'> TESTANDO PDF </h1>";
     $dados_pdf .= '<img src="imagens/logo.png">';
 
@@ -851,7 +853,7 @@ function pegar_tabela_contrato_ano($id_indicador)
     $mysqli = $con->connect();
     $chave_sql_verificar = "SELECT * FROM tb_contratos WHERE id_indicador = :id_indicador ";
     $stmt = $mysqli->prepare($chave_sql_verificar);
-    echo ($id_indicador);
+    // echo ($id_indicador);
     $stmt->bindParam(":id_indicador", $id_indicador);
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -896,9 +898,7 @@ function pegar_elementos_total_executados($id_indicador)
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
-}
-
-function pegar_previsoes_trimestre($id_indicador)
+}function pegar_previsoes_trimestre($id_indicador)
 {
     $resultado_pega_previsoes = pegar_tabela_previsoes($id_indicador);
     $id_tabela = $resultado_pega_previsoes[0]["id_tabela"];
@@ -931,7 +931,7 @@ function pegar_texto_avaliativo($id_indicador)
     $mysqli = $con->connect();
     $chave_sql_verificar = "SELECT * FROM texto_avaliativo WHERE id_indicador = :id_indicador ";
     $stmt = $mysqli->prepare($chave_sql_verificar);
-    echo ($id_indicador);
+    // echo ($id_indicador);
     $stmt->bindParam(":id_indicador", $id_indicador);
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
