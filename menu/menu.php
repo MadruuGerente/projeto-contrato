@@ -9,6 +9,7 @@ if (!isset($_SESSION['cpf'])) {
     header("Location: ..\login/login.php?c=0");
     exit();
 }
+//olá mundo
 
 // Incluir o arquivo de conexão com o banco de dados
 require_once "..\bancodedados/bd_conectar.php";
