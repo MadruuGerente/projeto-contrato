@@ -201,66 +201,6 @@ if (isset($_GET['id'])) {
         ?>
     </nav>
 
-    <!-- Conteúdo da Página -->
-    <div class="content">
-        <h1>SergipeTec</h1>
-        <h2>Relatório</h2>
-        <?php
-        // Exibir detalhes do relatório
-        if (isset($relatorio['titulo'])) {
-            echo '<h2>' . $relatorio['titulo'] . '</h2>';
-        }
-
-        if (isset($relatorio['observacao'])) {
-            echo '<p><strong>Observação:</strong> ' . $relatorio['observacao'] . '</p>';
-        }
-
-        // Exibir informações do projeto em uma tabela
-        echo '<h3>Informações do Projeto:</h3>';
-        echo '<table>';
-        echo '<tr><th>Nome do Projeto</th><th>Data</th><th>% de Conclusão</th></tr>';
-        echo '<tr>';
-        echo '<td>' . (isset($relatorio['nome_projeto']) ? $relatorio['nome_projeto'] : '') . '</td>';
-        echo '<td>' . (isset($relatorio['data_projeto']) ? $relatorio['data_projeto'] : '') . '</td>';
-        echo '<td>' . (isset($relatorio['conclusao_projeto']) ? $relatorio['conclusao_projeto'] . '%' : '') . '</td>';
-        echo '</tr>';
-        echo '</table>';
-
-        // Exibir informações de metas em uma tabela
-        if (isset($relatorio['metas'])) {
-            echo '<h3>Metas:</h3>';
-            echo '<table>';
-            echo '<tr><th>Meta</th><th>Prazo</th><th>Andamento</th><th>Objetivo</th></tr>';
-            foreach ($relatorio['metas'] as $index => $meta) {
-                // Verificar se as informações da meta estão presentes
-                if (!empty($meta)) {
-                    echo '<tr>';
-                    echo '<td>' . $meta . '</td>';
-                    echo '<td>' . $relatorio['prazos'][$index] . '</td>';
-                    echo '<td>' . $relatorio['andamentos'][$index] . '</td>';
-                    echo '<td>' . $relatorio['objetivos'][$index] . '</td>';
-                    echo '</tr>';
-                }
-            }
-            echo '</table>';
-        }
-        if (isset($relatorio['comentarios'])) {
-            echo '<p><strong>Comentários:</strong> ' . $relatorio['comentarios'] . '</p>';
-        }
-
-        // Exibir os anexos e fornecer links para download
-        if (isset($relatorio['anexos']) && is_array($relatorio['anexos']) && count($relatorio['anexos']) > 0) {
-            echo '<h3>Anexos:</h3>';
-            foreach ($relatorio['anexos'] as $index => $anexo) {
-                echo '<p><a href="download_anexo.php?relatorio=' . $relatorioId . '&anexo=' . $index . '">Download Anexo ' . ($index + 1) . '</a></p>';
-            }
-        } else {
-            echo '<p>Nenhum anexo disponível.</p>';
-        }
-
-        echo '<p><a href="' . $anexo . '" target="_blank">' . basename($anexo) . '</a></p>';
-        ?>
-    </div>
 </body>
 
 </html>

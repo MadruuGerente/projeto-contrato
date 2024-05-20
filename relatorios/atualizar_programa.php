@@ -1,7 +1,6 @@
 <?php
 require_once "..\bancodedados/bd_conectar.php";
-use FTP\Connection;
-
+// header('Content-Type: application/json');    
 echo ("fhfghfd");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $programa_valor = $_POST['programa_valor'] ?? "Nome não definido";
@@ -50,53 +49,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         } while ($text_avaliativo_valor != 0);
                         $text_avaliativo_cont--;
                         $resto_id = substr($indicador_id, -3);
+                        $resto_id = strval($resto_id);
+                        echo ("RESTO DO ID " . $resto_id);
 
-                        $cont_test = 0;
-                        // do {
-                        //     $pegar_array_total_valor = $_POST["valor_total_$resto_id"] ?? 0;
-                        //     $pegar_array_total_id = $_POST["valor_total_id_$resto_id"] ?? 0;
+                        $cont_test = -1;
+                        do {
+                            $pegar_array_total_valor = $_POST["valor_total_$resto_id"] ?? 0;
+                            $pegar_array_total_id = $_POST["valor_total_id_$resto_id"] ?? 0;
 
-                        //     $pegar_array_total_executado_valor = $_POST["valor_executado_$resto_id"] ?? 0;
-                        //     $pegar_array_total_executado_id = $_POST["valor_executado_id_$resto_id"] ?? 0;
+                            $pegar_array_total_executado_valor = $_POST["valor_executado_$resto_id"] ?? 0;
+                            $pegar_array_total_executado_id = $_POST["valor_executado_id_$resto_id"] ?? 0;
 
-                        //     $pegar_array_previsto_valor = $_POST["previstos_$resto_id"] ?? 0;
-                        //     $pegar_array_previsto_id = $_POST["previstos_id_$resto_id"] ?? 0;
+                            $cont_test++;
 
-                        //     $pegar_array_realizado_valor = $_POST["realizados_$resto_id"] ?? 0;
-                        //     $pegar_array_realizados_id = $_POST["realizados_id_$resto_id"] ?? 0;
+                            if (isset($pegar_array_total_valor[$cont_test])) {
+                                echo ("\n TOTAL " . $pegar_array_total_valor[$cont_test] . "---" . $pegar_array_total_id[$cont_test] . "\n");
+                                echo ("\n EXECUTADOS " . $pegar_array_total_executado_valor[$cont_test] . "---" . $pegar_array_total_executado_id[$cont_test] . "\n");
+                                atualizar_valor_tabela_total($pegar_array_total_id[$cont_test], $pegar_array_total_valor[$cont_test], $pegar_array_total_executado_id[$cont_test], $pegar_array_total_executado_valor[$cont_test]);
+                            } else {
+                                break;
+                            }
+                        } while ($pegar_array_total_id[$cont_test] != 0);
+                        $cont_test_previstos = -1;
+                        do {
+                            $pegar_array_previsto_valor = $_POST["valor_previsto_$resto_id"] ?? 0;
+                            $pegar_array_previsto_id = $_POST["valor_previsto_id_$resto_id"] ?? 0;
 
-                        //     $pegar_array_previsto_id = $pegar_array_previsto_id[$cont_test] ?? 0;
-                        //     $pegar_array_previsto_valor = $pegar_array_previsto_valor[$cont_test] ?? 0;
+                            $pegar_array_realizado_valor = $_POST["valor_realizado_$resto_id"] ?? 0;
+                            $pegar_array_realizado_id = $_POST["valor_realizado_id_$resto_id"] ?? 0;
 
-                        //     $pegar_array_realizado_valor = $pegar_array_realizado_valor[$cont_test] ?? 0;
-                        //     $pegar_array_realizado_id = $pegar_array_realizado_id[$cont_test] ?? 0;
+                            $acumulativo = end($pegar_array_realizado_valor);
+                            $acumulativo_id = end($pegar_array_realizado_id);
+                            $cont_test_previstos++;
 
-                        //     for ($i=0; $i < count($pegar_array_realizados_id); $i++) {
-                        //         echo ("\n$pegar_array_previsto_valor[$i] -- $pegar_array_previsto_id[$i] \n");
-                        //         // echo ("\n$pegar_array_realizado_valor[$i] -- $pegar_array_realizado_id[$i] \n");
-                        //     }
+                            if (isset($pegar_array_previsto_id[$cont_test_previstos])) {
+                                echo ("\n TOTAL " . $pegar_array_previsto_valor[$cont_test_previstos] . "---" . $pegar_array_previsto_id[$cont_test_previstos] . "\n");
+                                echo ("\n EXECUTADOS " . $pegar_array_realizado_valor[$cont_test_previstos] . "---" . $pegar_array_realizado_id[$cont_test_previstos] . "\n");
+                                atualizar_valor_tabela_previstos($pegar_array_previsto_id[$cont_test_previstos], $pegar_array_previsto_valor[$cont_test_previstos], $pegar_array_realizado_id[$cont_test_previstos], $pegar_array_realizado_valor[$cont_test_previstos]);
+                            } else {
+                                atualizar_acumulativo($acumulativo_id, $acumulativo);
+                                break;
+                            }
+                        } while ($pegar_array_previsto_id[$cont_test_previstos] != 0);
 
-                        //     for ($i = 0; $i < count($pegar_array_total_valor); $i++) {
-                        //         // echo ("\n$pegar_array_total_valor[$i] -- $pegar_array_total_id[$i] \n");
-                        //         atualizar_valor_tabela_total($pegar_array_total_id[$i], $pegar_array_total_valor[$i], $pegar_array_total_executado_id[$i], $pegar_array_total_executado_valor[$i]);
-                        //         // echo ("$pegar_array_total_executado_valor[$i] -- $pegar_array_total_executado_id[$i]\n");
-                        //         // echo("$pegar_array_total_valor\n");
-                        //     }
-                        //     $cont_test++;
-                        // } while ($pegar_array_total_executado_id[0] = !0);
+
 
                         $indicador_cont++;
                     }
-
                 } while ($indicador_valor != 0);
-
             }
-
-
         } while ($meta_valor != 0); // Continua enquanto o contador for menor que 5
     }
-
-
 } else {
     echo "A solicitação não é POST.";
 }
@@ -156,19 +159,31 @@ function atualizar_previsoes($id_inicial, $id_final, $valor_inicial, $valor_fina
 }
 function atualizar_text_avaliativo($id_text_avaliativo, $valor_atualizado)
 {
+    // Cria uma nova instância da classe Conexao e obtém a conexão PDO
     $con = new Conexao();
     $mysqli = $con->connect();
+
+    // Define a consulta SQL com parâmetros nomeados
     $chave = "UPDATE texto_avaliativo SET valor = :valor_atualizado WHERE id_texto_avaliativo = :id_texto_avaliativo";
+
+    // Prepara a consulta
     $stmt = $mysqli->prepare($chave);
+
+    // Associa os parâmetros
     $stmt->bindParam(":valor_atualizado", $valor_atualizado);
     $stmt->bindParam(":id_texto_avaliativo", $id_text_avaliativo);
-    // echo "SQL: $chave";
 
+    // Executa a consulta
     $stmt->execute();
+
+    // Obtém o número de linhas afetadas
     $rgt = $stmt->rowCount();
+
+    // Debugging e retorno de resultado
     echo ("rrrrr\n$id_text_avaliativo\n");
-    echo ("Valor inicial  $valor_atualizado valorfinal$id_text_avaliativo FOIII: $rgt ");
-    return ($rgt);
+    echo ("Valor inicial $valor_atualizado valorfinal $id_text_avaliativo FOIII: $rgt ");
+    return $rgt;
+
 }
 
 function atualizar_valor_tabela_total($id_valor_total, $valor_atualizado_total, $id_valor_executado, $valor_atualizado_executado)
@@ -188,5 +203,45 @@ function atualizar_valor_tabela_total($id_valor_total, $valor_atualizado_total, 
     $stmt_executado->execute();
     $rgt = $stmt_executado->rowCount();
     echo ("gdgdf");
+}
+function atualizar_valor_tabela_previstos($id_valor_previsto, $valor_atualizado_previsto, $id_valor_realizado, $valor_atualizado_realizado)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_total = "UPDATE previstos_no_trimestre SET valor = :valor_atualizado WHERE id_previsto = :id_previsto";
+    $stmt_total = $mysqli->prepare($chave_total);
+    $stmt_total->bindParam(":valor_atualizado", $valor_atualizado_previsto);
+    $stmt_total->bindParam(":id_previsto", $id_valor_previsto);
+    $stmt_total->execute();
+
+    $chave_executado = "UPDATE realizados_no_trimestre SET valor = :valor_atualizado WHERE id_realizado = :id_realizado";
+    $stmt_executado = $mysqli->prepare($chave_executado);
+    $stmt_executado->bindParam(":valor_atualizado", $valor_atualizado_realizado);
+    $stmt_executado->bindParam(":id_realizado", $id_valor_realizado);
+    $stmt_executado->execute();
+    $rgt = $stmt_executado->rowCount();
+    echo ("gdgdf");
+}
+function atualizar_acumulativo($id_acumulativo, $valor_acumulativo)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+
+    // Define a consulta SQL com parâmetros nomeados
+    $chave = "UPDATE tb_previsoes SET acumulativo = :valor_acumulativo WHERE id_tabela = :id_acumulativo";
+
+    // Prepara a consulta
+    $stmt = $mysqli->prepare($chave);
+
+    // Associa os parâmetros
+    $stmt->bindParam(":valor_acumulativo", $valor_acumulativo);
+    $stmt->bindParam(":id_acumulativo", $id_acumulativo);
+
+    // Executa a consulta
+    $stmt->execute();
+
+    // Obtém o número de linhas afetadas
+    $rgt = $stmt->rowCount();
+    return $rgt;
 }
 ?>

@@ -488,10 +488,10 @@ function dados_pdf($id_programa)
                     $dados_editar .= "<th> Realizado no trimestre </th>";
                     foreach ($realizados_trimestre as $trimestre) {
                         // echo "<td>" . "$trimestre[valor]" . "</td>";
-                        $dados_editar .= "<td> <input $trimestre[id_realizado] style='font-size: 15px;' value='$trimestre[valor]'> </td>";
+                        $dados_editar .= "<td> <input id='$trimestre[id_realizado]'style='font-size: 15px;' value='$trimestre[valor]'> </td>";
                     }
                     // echo "<td>" . "$acumulativo" . "</td>";
-                    $dados_editar .= "<td>  <input style='font-size: 15px;' value='$acumulativo'>  </td>";
+                    $dados_editar .= "<td>  <input  id='$id_tabela_previsoes'style='font-size: 15px;' value='$acumulativo'>  </td>";
                     // echo '</tr>';
                     $dados_editar .= "</tr>";
                     // echo '</tfoot>';

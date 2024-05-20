@@ -1,6 +1,6 @@
 function recuperar_informações() {
     // Pega o formulário pelo ID
-    const form = document.getElementById("formCriarRelatorio");
+    const form = document.getElementById("formCriarRelatorio"); 
     console.log("este");
 
     // Objeto para armazenar os valores dos campos
@@ -135,7 +135,7 @@ function recuperar_informações() {
             valor_dados_executados.push(dadosExecutados);
             id_dados_executados.push(ids_executados);
 
-            console.log('Dados Executados por ano:', ids_executados);
+            console.error('Dados Executados por ano:', ids_executados);
             console.log('Dados Executados por ano:', ids_total);
 
             console.log('Dados Executados por ano:', dadosExecutados.length);
@@ -187,109 +187,77 @@ function recuperar_informações() {
     let dadosPrevistosId = [];
     let dadosRealizados = [];
     let dadosRealizadosId = [];
-    let acumulativo = 0;
+
+    // Iterar sobre todas as tabelas
     for (let i = 0; i < tabela_total.length; i++) {
-        // console.log(tabela_total.length);
         const tabela = tabela_total[i];
-        id_tabela_previsoes = tabela.id;
-        // console.log(id_tabela_previsoes);
         let resto_id = tabela.id.slice(-3);
 
+        // Verificar se é uma tabela de previsão
         if (tabela.id.startsWith("previsto_")) {
-            console.log(id_tabela_previsoes);
-            if (tabela) {
-                let linhasPrevisto = tabela.querySelectorAll('tbody.previsto tr');
-                linhasPrevisto.forEach((linha, index) => {
+            // Iterar sobre as linhas de previsão
+            let linhasPrevisto = tabela.querySelectorAll('tbody.previsto tr');
+            linhasPrevisto.forEach((linha, index) => {
+                let dadosLinhaPrevisto = [];
+                let dadosLinhaPrevistoId = [];
 
-                    let dadosLinhaPrevisto = [];
-                    let dadosLinhaPrevistoId = [];
+                // Iterar sobre as células da linha
+                let celulas = linha.querySelectorAll('td');
+                celulas.forEach((celula, index) => {
+                    // Obter o valor do input na célula
+                    let valor = celula.querySelector('input').value;
+                    let valor_id = celula.querySelector('input').id;
 
+                    // Adicionar o valor ao array de dados da linha
 
-                    // Obtendo todas as células da linha
-                    let celulas = linha.querySelectorAll('td');
-
-                    // Iterando sobre as células
-                    celulas.forEach((celula, index) => {
-                        // Obtendo o valor do input na célula
-                        let valor = celula.querySelector('input');
-                        let valor_id = 0;
-                        if (valor) {
-                            valor_id = valor.id;
-                            valor = valor.value;
-                        }
-                        // Adicionando o valor ao array de dados da linha
-                        dadosLinhaPrevisto.push(valor);
-                        dadosLinhaPrevistoId.push(valor_id);
-                        console.error("tetrtetewtewtewtertetewtetetertwetert",valor, valor_id);
-                    });
-
-                    // Adicionando o array de dados da linha ao array principal de previsto
-                    dadosPrevistos.push(dadosLinhaPrevisto);
-                    dadosPrevistosId.push(dadosLinhaPrevistoId);
-                    // dados[`previstos_${resto_id}`] = dadosPrevistos;
-                    // dados[`previstos_id_${resto_id}`] = dadosPrevistosId;
-                    console.error("GDSGDSFGDFSG", dadosPrevistos);
-                    console.error("GDSGDSFGDFSG", dadosLinhaPrevistoId);
-
+                    dadosLinhaPrevisto.push(valor);
+                    dadosLinhaPrevistoId.push(valor_id);
                 });
+                let valor_previsto = `valor_previsto_${resto_id}`;
+                dados[valor_previsto] = dadosLinhaPrevisto;
 
-                // Obtendo as linhas de realizado
-                let linhasRealizado = tabela.querySelectorAll('tfoot.realizado tr');
-                linhasRealizado.forEach((linha, index) => {
-                    let dadosLinhaRealizado = [];
-                    let dadosLinhaRealizadoId = [];
+                let id_previsto = `valor_previsto_id_${resto_id}`;
+                dados[id_previsto] = dadosLinhaPrevistoId;
 
+                // Adicionar o array de dados da linha ao array principal de previsto
+                dadosPrevistos.push(dadosLinhaPrevisto);
+                dadosPrevistosId.push(dadosLinhaPrevistoId);
+            });
+            let linhasRealizado = tabela.querySelectorAll('tfoot.realizado tr');
+            linhasRealizado.forEach((linha, index) => {
+                let dadosLinhaRealizado = [];
+                let dadosLinhaRealizadoId = [];
 
-                    // Obtendo todas as células da linha
-                    let celulas = linha.querySelectorAll('td');
+                // Iterar sobre as células da linha
+                let celulas = linha.querySelectorAll('td');
+                celulas.forEach((celula, index) => {
+                    // Obter o valor do input na célula
+                    let valor = celula.querySelector('input').value;
+                    let valor_id = celula.querySelector('input').id;
 
-                    // Iterando sobre as células
-                    celulas.forEach((celula, index) => {
-                        // Obtendo o valor do input na célula
-                        let valor = celula.querySelector('input');
-                        if (valor) {
-                            valor.id = valor.id;
-                            valor = valor.value;
-                        }
-
-                        // Adicionando o valor ao array de dados da linha
-                        dadosLinhaRealizado.push(valor);
-                        dadosLinhaRealizadoId.push(valor.id);
-                    });
-
-                    // Adicionando o array de dados da linha ao array principal de realizado
-                    dadosRealizados.push(dadosLinhaRealizado);
-                    dadosRealizadosId.push(dadosLinhaRealizadoId);
-                    acumulativo = dadosRealizados[dadosRealizados.length - 1];
-                    acumulativo = acumulativo[acumulativo.length - 1];
-                    console.error(acumulativo);
+                    // Adicionar o valor ao array de dados da linha
+                    dadosLinhaRealizado.push(valor);
+                    dadosLinhaRealizadoId.push(valor_id);
+                    console.error(dadosLinhaRealizadoId);
                 });
-                // console.log('Dados Previstos:', dadosPrevistos);
-                // console.log('Dados Realizados:', dadosRealizados);
+                // dadosLinhaRealizado.pop();
+                // dadosLinhaRealizadoId.pop();
+                let valor_realizado = `valor_realizado_${resto_id}`;
+                dados[valor_realizado] = dadosLinhaRealizado;
 
-                
-                dados[`realizados_${resto_id}`] = dadosRealizados;
-                dados[`realizados_id_${resto_id}`] = dadosRealizadosId;
+                let id_realizado = `valor_realizado_id_${resto_id}`;
+                dados[id_realizado] = dadosLinhaRealizadoId;
 
-
-                console.log(dadosRealizados);
-                console.log(dadosPrevistos);
-
-                console.log(dados);
-
-                // return {
-                //     id: `${id_tabela_previsoes}`,
-                //     dados_previstos: `${dadosPrevistos}`,
-                //     dados_realizados: `${dadosRealizados}`,
-                //     soma_previstos: `${soma_previstos}`,
-                //     soma_realizados: `${soma_realizados}`,
-                //     acumulativo: acumulativo
-                // }
-            }
-            // console.log("Após atribuição:", dados["valor_executado_id2411"]);
-
-        };
+                // Adicionar o array de dados da linha ao array principal de realizados
+                dadosRealizados.push(dadosLinhaRealizado);
+                dadosRealizadosId.push(dadosLinhaRealizadoId);
+            });
+        }
     }
+
+    // Exibir os dados previstos
+    console.log('Dados Previstos:', dadosPrevistos);
+    console.log('IDs dos Dados Previstos:', dadosPrevistosId);
     mandar_informacoes(dados);
 }
 function mandar_informacoes(objeto) {
@@ -299,6 +267,7 @@ function mandar_informacoes(objeto) {
         method: 'POST',
         data: objeto,
         success: function (resposta) {
+            console.log("fg0");
             console.log(resposta);
         },
         error: function (xhr, status, error) {
