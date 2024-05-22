@@ -3,9 +3,9 @@ require_once "insercoes.php";
 require_once "pegar_informacoes_pdf.php";
 session_start();
 $cpf_criador = 0;
-if (isset($_SESSION["cpf"])){
+if (isset($_SESSION["cpf"])) {
     $cpf_criador = $_SESSION["cpf"];
-    echo($cpf_criador. "CPF CRIADOR");
+    echo ($cpf_criador . "CPF CRIADOR");
 }
 date_default_timezone_set("America/Sao_Paulo");
 
@@ -14,17 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pega_id_programa'])) {
     $id_programa = $_POST['pega_id_programa'];
 
     $verifica_delete = deletePrograma($id_programa);
-    if($verifica_delete >0){
+    if ($verifica_delete > 0) {
         echo "Programa com ID $id_programa foi apagado com sucesso.$id_programa";
-    }else{
-        echo("não foi meu nobre $verifica_delete");
+    } else {
+        echo ("não foi meu nobre $verifica_delete");
     }
-   
+
 } else {
     // Responde ao JavaScript que a requisição não foi feita corretamente
     echo "Requisição inválida.";
 }
-echo("");
+echo ("");
 
 
 $guardar = 1;
@@ -119,7 +119,7 @@ if (count($pegarElementosIndicador) != 0 && $pegarElementosIndicador['id'] != nu
     $elementos_realizados_trimestre = $pegarElementosPrevisoes['dados_realizados'];
     $elementos_realizados_trimestre = explode(",", $elementos_realizados_trimestre);
 
-    
+
     $id_tabela_previsoes = $pegarElementosPrevisoes['id'];
 
     $total_previstos = 0;
@@ -158,7 +158,7 @@ if ($programaId != null) {
     echo ("AAAAAAAAAA $resultado_verifica_programa");
     if ($resultado_verifica_programa == 0) {
         echo ("PASSSOUUUU");
-        $verifica_inserido_programa = inserirPrograma($programaId,$cpf_criador, $programaValor, $data);
+        $verifica_inserido_programa = inserirPrograma($programaId, $cpf_criador, $programaValor, $data);
         if ($verifica_inserido_programa == 0) {
             echo "Erro ao inserir programa.";
             exit; // Sai do script se houver erro
@@ -238,10 +238,20 @@ if ($programaId != null) {
 
 
 
-    }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Verifica se o arquivo foi enviado corretamente
+            if (isset($_POST['anexo'])) {
+                $anexo = $_POST['anexo'];
+                echo var_dump($anexo);
+                // $conteudo = file_get_contents($anexo['tmp_name']);
+                // echo "Conteúdo do arquivo: <br>";
+                // echo nl2br(htmlspecialchars($conteudo));
+            } else {
+                echo "Erro ao enviar o arquivo.";
+            }
+        }
 
-} else {
-    echo "Não há dados de programa\n";
+    }
 }
 
 ?>

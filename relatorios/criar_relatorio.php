@@ -100,6 +100,8 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
                 <input type="file" id="anexos" name="anexos[]" multiple>
 
                 <input type="submit" value="Criar Relatório" name="criar_relatorio_form">
+
+                <div id="imageDisplayArea"></div>
             </form>
         </div>
     </div>

@@ -79,7 +79,7 @@ function criarNovaMeta() {
         console.log(ultimoElementoCriado);
     }
     contMeta++;
-    let elementos_texto_avaliativo = document.querySelectorAll("div[id^='div_texto_avaliativo']");
+    let elementos_anexos = document.querySelectorAll("div[id^='div_anexo']");
     let elementos_total_contratos = document.querySelectorAll("div[id^='total_div']");
     let elementos_previsto_trimestre = document.querySelectorAll("div[id^='previsto_div']");
     //Pega os elementos que o id da div comçar com indicador
@@ -114,7 +114,7 @@ function criarNovaMeta() {
     ultimoMeta = elementosMeta[elementosMeta.length - 1];
     //if para posicionr tudo no lugar certo 
     if (elementosIndicador.length >= 1 && ultimoElementoCriado.tipo == 'indicador') {
-        let ultimo_elemento_texto_avaliativo = elementos_texto_avaliativo[elementos_texto_avaliativo.length - 1];
+        let ultimo_elemento_texto_avaliativo = elementos_anexos[elementos_anexos.length - 1];
         form.insertBefore(div_meta, ultimo_elemento_texto_avaliativo.nextSibling);
         console.log("PRIMEIRO IF");
         console.log("Tipo do último elemento criado: " + ultimoElementoCriado.tipo);
@@ -149,8 +149,7 @@ function criarNovaMeta() {
 }
 function adicionarNovoIndicador() {
 
-
-    let elementos_texto_avaliativo = document.querySelectorAll("div[id^='div_texto_avaliativo']");
+    let elementos_anexos = document.querySelectorAll("div[id^='div_anexo']");
     let elementos_previsto_trimestre = document.querySelectorAll("div[id^='previsto_div']");
     //Pega os elementos que o id da div comçar com indicador
     let elementosIndicador = document.querySelectorAll("div[id^='indicadordiv']");
@@ -190,7 +189,7 @@ function adicionarNovoIndicador() {
         form.insertBefore(div_indicador, ultimoMeta.nextSibling);
         console.log('SEGUNDO');
     } else {
-        let ultimo_elemento_texto_avaliativo = elementos_texto_avaliativo[elementos_texto_avaliativo.length - 1];
+        let ultimo_elemento_texto_avaliativo = elementos_anexos[elementos_anexos.length - 1];
         form.insertBefore(div_indicador, ultimo_elemento_texto_avaliativo.nextSibling);
         console.log('TERCEIRO');
     }
@@ -210,6 +209,7 @@ function adicionarNovoIndicador() {
     totalContratosPorAno(contMeta, contIndicador);
     previsto_no_trimestre(contMeta, contIndicador);
     textoAvaliativo(contMeta, contIndicador);
+    botarAnexos(contMeta, contIndicador);
     contIndicador++;
 }
 function criarPrevisao(metaPertence, indicadorPertecente) {
@@ -474,6 +474,7 @@ function verdados() {
         if (guarda != 0) {
             console.error(`CADEEEEEEEEEEEE ${guarda}`);
             for (let j = 1; j <= guarda; j++) {
+                console.error();
                 if (pegaIndicador(i, j, contPrograma)) {
                     // console.error(`rodou ${j}`);
                     console.error("ESSSEEEEEE" + i, j, contIndicador);
@@ -488,6 +489,7 @@ function verdados() {
                     let pegarElementosTotal = JSON.stringify(pegaElementosTabelaTotal(i, j, contPrograma));
                     let pegarElementosTextoAvaliativo = JSON.stringify(pegarTextoAvaliativo(i, j, contPrograma));
                     let pegarElementosIndicador = JSON.stringify(pegaIndicador(i, j, contPrograma));
+                    let pegaAnexo = JSON.stringify(pegarAnexo(i, j - 1, contPrograma));
 
                     // console.log(pegarTextoAvaliativo(i, j, contPrograma));
 
@@ -496,7 +498,8 @@ function verdados() {
                     dados.append('pegarElementosTotal', pegarElementosTotal);
                     dados.append('pegarElementosPrevisoes', pegarElementosPrevisoes);
                     dados.append('pegarElementosTextoAvaliativo', pegarElementosTextoAvaliativo);
-
+                    dados.append('anexo', pegaAnexo);
+             
                     $.ajax({
                         url: 'teste.php',
                         method: 'POST',
@@ -909,6 +912,57 @@ function mandar(quem) {
     apagar_programa(quem);
     voltar();
 }
+function botarAnexos(contMeta, contIndicador) {
+    let elementos_texto_avaliativo = document.querySelectorAll("div[id^='div_texto_avaliativo']");
+    //Cria div
+    let div_anexo = document.createElement("div");
+    div_anexo.id = "div_anexo" + contPrograma + contMeta + contIndicador;
+    div_anexo.style.marginLeft = "40px";
+
+
+    //Cria o label
+    let labelanexo = document.createElement("label");
+    labelanexo.textContent = "anexo";
+    labelanexo.id = "anexolabel" + contPrograma + contMeta + contIndicador; // Corrigir a lógica de atribuição de IDs
+    //Cria o textarea
+    let inputanexo = window.document.createElement("input");
+    inputanexo.id = "anexoinput" + contPrograma + contMeta + contIndicador; // Corrigir a lógica de atribuição de IDs
+    inputanexo.type = "file";
+    inputanexo.multiple = true;
+    //   novo_text.style.resize = "none";
+
+    div_anexo.appendChild(labelanexo);
+    div_anexo.appendChild(inputanexo);
+
+    let ultimo_elemento_texto_avaliativo = elementos_texto_avaliativo[elementos_texto_avaliativo.length - 1];
+
+    form.insertBefore(div_anexo, ultimo_elemento_texto_avaliativo.nextSibling);
+
+}
+function pegarAnexo(i, j, contPrograma) {
+    let id_anexo = 'anexoinput' + contPrograma + i + j;
+    let anexo = document.querySelector(`#${id_anexo}`);
+    const imageDisplayArea = document.querySelector('#imageDisplayArea');
+    if (anexo != null) {
+        if (anexo.files.length > 0) {
+            let anexo_ = anexo.files[0];
+            return {
+                anexo: anexo_,
+                id: id_anexo
+            };
+        } else {
+
+        }
+    } else {
+        // Retorna uma mensagem de erro
+        return {
+            error: "Elemento não encontrado",
+            id: id_anexo
+        };
+    }
+}
+
+
 
 // Chamar a função para criar a tabela
 adicionar_meta.addEventListener('click', adicionarMeta);

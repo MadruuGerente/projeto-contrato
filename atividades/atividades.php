@@ -27,7 +27,7 @@ $resultado = $stmt->get_result();
 //     mkdir($caminho_projeto_fisico, 0777, true);  // Certifique-se de ter as permissões adequadas
 // }
 if ($resultado->num_rows >= 1) {
-    echo "<h4>Você está em projeto(s):</h4>";
+    echo "<h4>Você recebeu programa(s):</h4>";
 } else {
     echo "<h4>No momento você não está em nenhum projeto!<h4>";
 }
@@ -44,6 +44,8 @@ while ($dados = $resultado->fetch_assoc()) {
         $login_de = $dados['login_de'];
         $nome_programa = $dados['nome_programa'];
         $nome_remetente = $dados['nome'];
+        $id_ = $dados["id"];
+        // echo $id_;
 
         echo '<div class="project-box">';
         if ($view == 0) {
@@ -60,10 +62,11 @@ while ($dados = $resultado->fetch_assoc()) {
         if (isset($_POST['botao_submit']) && $_POST['data-id'] == $id_programa) {
             $view = 1;
             $_SESSION['id_programa'] = $id_programa;
+            
 
-            $chave_atualizar = "UPDATE enviar_programas SET view = ? WHERE id_programa_enviado = ?";
+            $chave_atualizar = "UPDATE enviar_programas SET view = ? WHERE id = ?";
             $stmt_atualizar = $mysqli->prepare($chave_atualizar);
-            $stmt_atualizar->bind_param("ii", $view, $id_programa);
+            $stmt_atualizar->bind_param("ii", $view, $id_);
            
             if($stmt_atualizar->execute()) {
                 header("Location: verprogramas.php");
