@@ -235,23 +235,37 @@ if ($programaId != null) {
                 }
             }
         }
-
-
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Verifica se o arquivo foi enviado corretamente
-            if (isset($_POST['anexo'])) {
-                $anexo = $_POST['anexo'];
-                echo var_dump($anexo);
-                // $conteudo = file_get_contents($anexo['tmp_name']);
-                // echo "Conteúdo do arquivo: <br>";
-                // echo nl2br(htmlspecialchars($conteudo));
-            } else {
-                echo "Erro ao enviar o arquivo.";
-            }
-        }
+      
 
     }
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verificar se um arquivo foi enviado
+    if (isset($_FILES['anexo'])) {
+        $anexo = $_FILES['anexo'];
+        $id_anexo = $_POST['id'];
+        $id_indicador = $_POST['id_indicador'];
+
+        // Diretório onde o anexo será salvo (ajuste conforme necessário)
+        $diretorioDestino = '../uploads/';
+        if (!file_exists($diretorioDestino)) {
+            mkdir($diretorioDestino, 0777, true);
+        }
+        // $ponto_posicao = strrpos($anexo['name'], ".");
+        // $tipo = substr($anexo['name'],$ponto_posicao + 1);
+        // Mover o anexo para o diretório de destino
+        if (move_uploaded_file($anexo['tmp_name'], $diretorioDestino . $id_anexo . "-". $anexo['name'])) {
+            $caminhoAnexo = $diretorioDestino . $id_anexo . "-" . $anexo['name'];
+            echo 'anexo enviado com sucesso.' . var_dump($anexo);
+            enviar_anexo($id_anexo,$caminhoAnexo,$id_indicador,$anexo['name'], $data);
+        } else {
+            echo 'Erro ao mover o anexo para o destino.';
+        }
+    } else {
+        echo 'Nenhum arquivo enviado.';
+    }
+} else {
+    echo 'Método de requisição inválido.';
 }
 
 ?>

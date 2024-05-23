@@ -474,7 +474,6 @@ function verdados() {
         if (guarda != 0) {
             console.error(`CADEEEEEEEEEEEE ${guarda}`);
             for (let j = 1; j <= guarda; j++) {
-                console.error();
                 if (pegaIndicador(i, j, contPrograma)) {
                     // console.error(`rodou ${j}`);
                     console.error("ESSSEEEEEE" + i, j, contIndicador);
@@ -484,12 +483,17 @@ function verdados() {
                     console.log(pegarElementosTabelaPrevisoes(i, j, contPrograma));
                     console.log(pegarTextoAvaliativo(i, j, contPrograma));
 
+                    let indicador = pegaIndicador(i, j, contPrograma);
+                    let id_indicador = indicador['id'];
+
+
                     let pegarElementoInicialFinal = JSON.stringify(pegaPrevisao(i, j, contPrograma));
                     let pegarElementosPrevisoes = JSON.stringify(pegarElementosTabelaPrevisoes(i, j, contPrograma));
                     let pegarElementosTotal = JSON.stringify(pegaElementosTabelaTotal(i, j, contPrograma));
                     let pegarElementosTextoAvaliativo = JSON.stringify(pegarTextoAvaliativo(i, j, contPrograma));
                     let pegarElementosIndicador = JSON.stringify(pegaIndicador(i, j, contPrograma));
-                    let pegaAnexo = JSON.stringify(pegarAnexo(i, j - 1, contPrograma));
+                    let pegaAnexo = pegarAnexo(i, j, contPrograma, id_indicador);
+
 
                     // console.log(pegarTextoAvaliativo(i, j, contPrograma));
 
@@ -498,8 +502,7 @@ function verdados() {
                     dados.append('pegarElementosTotal', pegarElementosTotal);
                     dados.append('pegarElementosPrevisoes', pegarElementosPrevisoes);
                     dados.append('pegarElementosTextoAvaliativo', pegarElementosTextoAvaliativo);
-                    dados.append('anexo', pegaAnexo);
-             
+
                     $.ajax({
                         url: 'teste.php',
                         method: 'POST',
@@ -513,6 +516,7 @@ function verdados() {
 
                         }
                     });
+
                 }
             }
         }
@@ -902,7 +906,7 @@ function teste() {
     });
 }
 function abrirPagina() {
-    window.location.href = "relatorios.php";
+    // window.location.href = "relatorios.php";
 }
 function voltar() {
     abrirPagina();
@@ -939,20 +943,34 @@ function botarAnexos(contMeta, contIndicador) {
     form.insertBefore(div_anexo, ultimo_elemento_texto_avaliativo.nextSibling);
 
 }
-function pegarAnexo(i, j, contPrograma) {
+function pegarAnexo(i, j, contPrograma, id_indicador) {
     let id_anexo = 'anexoinput' + contPrograma + i + j;
     let anexo = document.querySelector(`#${id_anexo}`);
-    const imageDisplayArea = document.querySelector('#imageDisplayArea');
-    if (anexo != null) {
-        if (anexo.files.length > 0) {
-            let anexo_ = anexo.files[0];
-            return {
-                anexo: anexo_,
-                id: id_anexo
-            };
-        } else {
 
-        }
+    if (anexo != null) {
+        for (let a = 0; a < anexo.files.length; a++) {
+            let formData = new FormData();
+
+            let anexo_ = anexo.files[a];
+            formData.append("anexo", anexo_);
+            formData.append("id", id_anexo);
+            formData.append("id_indicador", id_indicador);
+
+            $.ajax({
+                url: 'teste.php',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resposta) {
+                    console.log(resposta);
+                    console.log(pegaIndicador(i, j, contPrograma));
+                    console.log(i, j, contIndicador);
+                }
+            });
+        };
+        return formData;
+        S
     } else {
         // Retorna uma mensagem de erro
         return {

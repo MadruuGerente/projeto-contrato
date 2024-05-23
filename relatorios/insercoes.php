@@ -529,4 +529,19 @@ function deletePrograma($id_programa)
 
     return $resultado;
 }
+function enviar_anexo($id_anexo, $caminho, $id_indicador, $nome,$data){
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_inserir_anexo = "INSERT INTO anexos(id_anexo,id_indicador,nome_anexo,caminho_anexo,dt_criada) VALUES(:id_anexo,:id_indicador,:nome_anexo,:caminho_anexo,:dt_criada)";
+    $stmt = $mysqli->prepare($chave_inserir_anexo);
+    $stmt->bindParam(":id_anexo", $id_anexo);
+    $stmt->bindParam(":id_indicador", $id_indicador);
+    $stmt->bindParam(":nome_anexo", $nome);
+    $stmt->bindParam(":caminho_anexo", $caminho);
+    $stmt->bindParam(":dt_criada", $data);
+    $stmt->execute();
+    $rgt = $stmt->rowCount();
+    return ($rgt);
+}
+
 ?>
