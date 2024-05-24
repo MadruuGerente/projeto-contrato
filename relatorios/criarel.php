@@ -10,6 +10,7 @@ if (isset($_GET['id'])) {
     echo ($id_programa);
     $options = new Options();
     $options->setIsRemoteEnabled(true);
+    define("DOMPDF_ENABLE_REMOTE", false);
 
     $dompdf = new Dompdf($options);
 

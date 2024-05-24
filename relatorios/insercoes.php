@@ -543,5 +543,4 @@ function enviar_anexo($id_anexo, $caminho, $id_indicador, $nome,$data){
     $rgt = $stmt->rowCount();
     return ($rgt);
 }
-
 ?>

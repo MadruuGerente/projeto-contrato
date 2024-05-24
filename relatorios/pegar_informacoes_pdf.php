@@ -797,6 +797,10 @@ function mostrar_pdf($id_programa)
 
                     $cont_text++;
                 }
+                $pegar_anexos = pegar_anexos($indicador['id_indicador']);
+                foreach ($pegar_anexos as $anexos){
+                    $dados_editar  .= "<a class= 'anexos' href = '$anexos[caminho_anexo]'>$anexos[nome_anexo]</a> <br><br>";
+                }
             }
             $cont_indicador = 1;
         }
@@ -937,18 +941,13 @@ function pegar_texto_avaliativo($id_indicador)
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-
-</body>
-
-</html>
+function pegar_anexos($id_indicador){
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT * FROM anexos WHERE id_indicador = :id_indicador ";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_indicador", $id_indicador);
+    $stmt->execute();
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultados;
+}

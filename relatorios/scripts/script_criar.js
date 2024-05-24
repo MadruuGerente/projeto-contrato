@@ -70,11 +70,11 @@ function adicionarIndicador() {
 }
 function criarNovaMeta() {
     if (ultimoElementoCriado.tipo == 'indicador') {
-        verdados();
+        verdados("sai");
         console.log(ultimoElementoCriado);
         console.log("ERA PARA TER ENVIADO");
     } else {
-        verdados();
+        verdados("sao");
         console.log("num foi");
         console.log(ultimoElementoCriado);
     }
@@ -440,7 +440,7 @@ function textoAvaliativo(metaPertence, indicadorPertecente) {
 // }
 
 //FUNÇÕES PARA VER DADOS 
-function verdados() {
+function verdados(enviado) {
     console.log('bora birls');
 
     for (let i = 1; i <= contMeta; i++) {
@@ -466,7 +466,6 @@ function verdados() {
                 }
             });
         }
-
         if (contIndicador > guarda) {
             guarda = contIndicador;
         }
@@ -486,13 +485,11 @@ function verdados() {
                     let indicador = pegaIndicador(i, j, contPrograma);
                     let id_indicador = indicador['id'];
 
-
                     let pegarElementoInicialFinal = JSON.stringify(pegaPrevisao(i, j, contPrograma));
                     let pegarElementosPrevisoes = JSON.stringify(pegarElementosTabelaPrevisoes(i, j, contPrograma));
                     let pegarElementosTotal = JSON.stringify(pegaElementosTabelaTotal(i, j, contPrograma));
                     let pegarElementosTextoAvaliativo = JSON.stringify(pegarTextoAvaliativo(i, j, contPrograma));
                     let pegarElementosIndicador = JSON.stringify(pegaIndicador(i, j, contPrograma));
-                    let pegaAnexo = pegarAnexo(i, j, contPrograma, id_indicador);
 
 
                     // console.log(pegarTextoAvaliativo(i, j, contPrograma));
@@ -511,8 +508,13 @@ function verdados() {
                         contentType: false,
                         success: function (resposta) {
                             console.log(resposta);
-                            console.log(pegaIndicador(i, j, contPrograma));
-                            console.log(i, j, contIndicador);
+                            if (pegarAnexo(i, j, contPrograma, id_indicador) == "erro") {
+                                erroAnexo();
+                            } else {
+                                if (enviado == "enviar") {
+                                    abrirPagina();
+                                }
+                            }
 
                         }
                     });
@@ -821,13 +823,13 @@ function totalContratosPorAno(metaPertence, indicadorPertecente) {
   <tbody class="total-por-ano">
     <tr>
       <th>Total por ano</th>
-      ${anos.map(() => '<td><input type="text" placeholder="0"></td>').join('')}
-    </tr>
+      ${anos.map(() => '<td><input type="number" placeholder="0"></td>').join('')}
+    </tr>   
   </tbody>
   <tfoot class="total-executado">
     <tr>
       <th>Total executado(ano)</th>
-      ${anos.map(() => '<td><input type="text" placeholder="-"></td>').join('')}
+      ${anos.map(() => '<td><input type="number" placeholder="-"></td>').join('')}
     </tr>
   </tfoot>`;
 
@@ -870,15 +872,15 @@ function previsto_no_trimestre(metaPertence, indicadorPertecente) {
 <tbody class="previsto">
     <tr>
         <th>Previsto no trimestre</th>
-        ${array_timestre.map(() => '<td><input type="text" placeholder="0"></td>').join('')}
+        ${array_timestre.map(() => '<td><input type="number" placeholder="0"></td>').join('')}
         <td></td>
     </tr>
 </tbody>
 <tfoot class="realizado">
     <tr>
         <th>Realizado no trimestre</th>
-        ${array_timestre.map(() => '<td><input type="text" placeholder="0"></td>').join('')}
-        <td><input type="text" placeholder="0"></td>
+        ${array_timestre.map(() => '<td><input type="number" placeholder="0"></td>').join('')}
+        <td><input type="number" placeholder="0"></td>
     </tr>
 </tfoot>`;
 
@@ -906,15 +908,14 @@ function teste() {
     });
 }
 function abrirPagina() {
-    // window.location.href = "relatorios.php";
+    window.location.href = "relatorios.php";
 }
 function voltar() {
     abrirPagina();
 }
 function mandar(quem) {
-    verdados();
+    verdados(quem);
     apagar_programa(quem);
-    voltar();
 }
 function botarAnexos(contMeta, contIndicador) {
     let elementos_texto_avaliativo = document.querySelectorAll("div[id^='div_texto_avaliativo']");
@@ -949,28 +950,37 @@ function pegarAnexo(i, j, contPrograma, id_indicador) {
 
     if (anexo != null) {
         for (let a = 0; a < anexo.files.length; a++) {
+            id_anexo_id = `${id_anexo}${a}`;
+            id_indicadorr = id_indicador;
             let formData = new FormData();
-
             let anexo_ = anexo.files[a];
-            formData.append("anexo", anexo_);
-            formData.append("id", id_anexo);
-            formData.append("id_indicador", id_indicador);
+            let tipo = anexo_.name.split('.').pop().toLowerCase();
+            if (tipo == "pdf" || tipo == "jpeg" || tipo == "png" || tipo == "mp4" ) {
+                formData.append("anexo", anexo_);
+                formData.append("id", id_anexo_id);
+                formData.append("id_indicador", id_indicadorr);
 
-            $.ajax({
-                url: 'teste.php',
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (resposta) {
-                    console.log(resposta);
-                    console.log(pegaIndicador(i, j, contPrograma));
-                    console.log(i, j, contIndicador);
-                }
-            });
+                $.ajax({
+                    url: 'teste.php',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resposta) {
+                        console.log(resposta);
+                        console.log(pegaIndicador(i, j, contPrograma));
+                        console.log(i, j, contIndicador);
+                        return "foii";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                return "erro";
+            }
         };
-        return formData;
-        S
+
     } else {
         // Retorna uma mensagem de erro
         return {
@@ -979,8 +989,14 @@ function pegarAnexo(i, j, contPrograma, id_indicador) {
         };
     }
 }
-
-
+function erroAnexo(){
+    Swal.fire({
+        icon: "error",
+        title: "Oops... anexos não permitidos",
+        text: "PERMITIDOS: JPEG, PNG, PDF,ETC!",
+        // footer: '<a href="#">Why do I have this issue?</a>'
+    });
+}
 
 // Chamar a função para criar a tabela
 adicionar_meta.addEventListener('click', adicionarMeta);

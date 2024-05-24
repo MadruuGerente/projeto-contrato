@@ -186,6 +186,10 @@ if (isset($_GET['id'])) {
         .nao-previsto{
 
         }
+        .anexos{
+            font-size: 20px;
+            margin-left: 20px;
+        }
     </style>
 </head>
 

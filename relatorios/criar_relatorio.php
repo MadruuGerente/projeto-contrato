@@ -31,7 +31,8 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
     <link rel="stylesheet" href="pasta_de_estilos/style_criar_relatorio.css">
     <!-- Inclua o arquivo CSS do Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
     <!-- Inclua o arquivo JavaScript do Bootstrap e dependências -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -90,18 +91,21 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
                 <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_meta" alt="teste"> <br> <br><br>
                 <br>
                 <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_indicador" alt="teste"> <br>
-                <br><br> <br>
+                <br><br>
                 <img src="..\imagens/botao-adicionar.png" class="img" id="imd_deletar_utimo" alt="teste"> <br> <br><br>
                 <br>
                 <button type='submit' id="enviar" form='bora'>enviar</button>
-                <label for="comentarios">Comentários Gerais:</label>
-                <textarea id="comentarios" name="comentarios" required></textarea>
-                <label for="anexos">Anexos:</label>
+                <!-- <label for="comentarios">Comentários Gerais:</label> -->
+                <!-- <textarea id="comentarios" name="comentarios" required></textarea> -->
+                <!-- <label for="anexos">Anexos:</label>
                 <input type="file" id="anexos" name="anexos[]" multiple>
 
                 <input type="submit" value="Criar Relatório" name="criar_relatorio_form">
 
-                <div id="imageDisplayArea"></div>
+                <div id="imageDisplayArea"></div> -->
+                <br><br><br><br><br>
+                
+             
             </form>
         </div>
     </div>

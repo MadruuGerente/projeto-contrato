@@ -34,7 +34,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pasta_de_estilos/style_criar_relatorio.css">
+    <link rel="stylesheet" href="pasta_de_estilos/style_editar_relatorio.css">
     <!-- Inclua o arquivo CSS do Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
