@@ -12,6 +12,12 @@ require "pegar_informacoes_pdf.php";
 if (isset($_GET['id'])) {
     $id_programa = $_GET['id'];
     echo ($id_programa);
+<<<<<<< HEAD
+=======
+    $options = new Options();
+    $options->setIsRemoteEnabled(true);
+    define("DOMPDF_ENABLE_REMOTE", false);
+>>>>>>> cfc569776e34670e14cffe9a01efc487b3d1db9a
 
     // Configurar as opções do Dompdf
     // $options = new Options();
