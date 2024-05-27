@@ -35,6 +35,7 @@ require_once "..\bancodedados/bd_conectar.php";
 // Obter o login do usuário da sessão
 $login = $_SESSION['cpf'];
 // Consultar o banco de dados para obter informações do usuário
+$img_perfil  = "..\imagens/perfil.png";
 try {
     $conexao = new Conexao();
     $conn = $conexao->connect();
@@ -47,7 +48,9 @@ try {
 
     // Obter os resultados da consulta
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    if($usuario['tem_img'] == 1){
+        $img_perfil = $usuario['img_perfil'];
+    }
     // Verificar se a consulta retornou resultados
     if (!$usuario) {
         echo "DEBUG: Usuário não encontrado no banco de dados.";
@@ -160,7 +163,8 @@ if (isset($_SESSION['cpf'])) {
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
         <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
         <h2 class="hs"> SISTEMA DE GESTÃO <h2>
-                <img src="..\imagens/perfil.png" id="perfil" class="perfil-menu" alt="teste">
+        <img src="<?php echo $img_perfil?>" id="perfil" class="perfil-menu" alt="teste">
+
 
     </nav>
     <div class="sidebar" id="sidebar">

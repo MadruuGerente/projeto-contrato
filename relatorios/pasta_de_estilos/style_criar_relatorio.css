@@ -1,5 +1,5 @@
 table {
-    width: 600px;
+    width: 550px;
     max-width: 0.5  px;
     overflow: auto;
     margin-bottom: 10px;
@@ -83,6 +83,7 @@ h3 {
 #formCriarRelatorio {
     width: 100%;
     max-width: 700px;
+    min-width: 400px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -133,9 +134,6 @@ h3 {
     }
     #formCriarRelatorio{
     max-width: 300px;
-    }
-    table{
-        
     }
 }
 

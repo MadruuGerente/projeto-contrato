@@ -6,7 +6,6 @@ if (!isset($_SESSION['cpf'])) {
     header("Location: ..\login/login.php");
     exit();
 }
-
 // Incluir o arquivo de conexão com o banco de dados
 require_once "..\bancodedados/bd_conectar.php";
 
@@ -16,62 +15,11 @@ $cpf = $_SESSION['cpf'];
 // Inicializar variável de status
 $status = '';
 $uploadStatus = '';
+$img_perfil ="..\imagens/perfil.png";
 
-// Processar o envio do formulário de status
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status_form'])) {
-//     // Obter o status do formulário
-//     $novoStatus = $_POST['status'];
-
-//     // Atualizar o status no banco de dados
-//     try {
-//         $conexao = new Conexao();
-//         $conn = $conexao->connect();
-
-//         // Atualizar o status do usuário
-//         $sql = "UPDATE login SET status = :status WHERE cpf = :cpf";
-//         $stmt = $conn->prepare($sql);
-//         $stmt->bindParam(':status', $novoStatus);
-//         $stmt->bindParam(':cpf', $cpf);
-//         $stmt->execute();
-
-//         $status = 'Status atualizado com sucesso.';
-//     } catch (Exception $e) {
-//         echo "DEBUG: Erro de conexão: " . $e->getMessage();
-//         exit();
-//     } finally {
-//         // Fechar a conexão com o banco de dados
-//         $conn = null;
-//     }
-// }
-
-// Processar o envio do formulário de foto de perfil
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['photo_form'])) {
-//     // Diretório onde as fotos de perfil serão armazenadas
-//     $photoDir = 'uploads/profile_photos/';
-
-//     // Nome único para o arquivo de destino
-//     $photoFileName = $login . '_' . time() . '_' . basename($_FILES['photo']['name']);
-//     $photoPath = $photoDir . $photoFileName;
-
-//     // Verificar se o arquivo é uma imagem real
-//     $check = getimagesize($_FILES['photo']['tmp_name']);
-//     if ($check !== false) {
-//         // Tentar mover o arquivo para o diretório de destino
-//         if (move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
-//             $uploadStatus = 'Foto de perfil atualizada com sucesso.';
-//         } else {
-//             $uploadStatus = 'Erro ao fazer o upload da foto de perfil.';
-//         }
-//     } else {
-//         $uploadStatus = 'O arquivo não é uma imagem válida.';
-//     }
-// }
-
-// Consultar o banco de dados para obter informações do usuário
 try {
     $conexao = new Conexao();
     $conn = $conexao->connect();
-
     // Consultar informações do usuário usando o campo de login
     $sql = "SELECT * FROM login WHERE cpf = :cpf";
     $stmt = $conn->prepare($sql);
@@ -80,6 +28,9 @@ try {
 
     // Obter os resultados da consulta
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($usuario['tem_img'] == 1){
+        $img_perfil = $usuario['img_perfil'];
+    }
 
     // Verificar se a consulta retornou resultados
     if (!$usuario) {
@@ -102,6 +53,8 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pasta_de_estilos/styleperfil.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>Perfil</title>
 
 </head>
@@ -121,7 +74,7 @@ try {
             ?>
         </div>
         <h2 class="h">Perfil</h2>
-        <img class="img-perfil" id="imd-perfil" src="..\imagens/perfil.png" alt="teste">
+        <img class="img-perfil" id="imd-perfil" src="<?php echo  $img_perfil ?>" alt="teste">
         <!-- Exibir informações do usuário -->
         <p><strong>Nome:</strong> <?php echo $usuario['nome']; ?></p>
         <p><strong>Login:</strong> <?php echo $usuario['login']; ?></p>
@@ -161,8 +114,8 @@ try {
             <!-- Exibir formulário de foto de perfil -->
             <form action="perfil.php" method="post" id="photoForm" enctype="multipart/form-data">
                 <label for="photo">Escolher uma foto:</label><br>
-                <input type="file" name="photo" id="photo"><br>
-                <input type="submit" value="Atualizar Foto de Perfil" name="photo_form">
+                <input type="file" name="<?php echo "$cpf" ?>" id="photo"><br>
+                <input type="button" value="Atualizar Foto de Perfil" id="button_perfil" name="button_perfil">
             </form>
         </div>
 
@@ -170,8 +123,6 @@ try {
     </div>
 
     <nav class="nav">
-
-
         <!--<a href = "https://sergipetec.org.br"<div id="sergipeTec">Sergipe<span style="color: #2ecc71;">Tec</span></div></a> -->
         <!-- <a href="perfil.php">Perfil</a>-->
         <a href="..\menu/menu.php">Voltar menu</a>
@@ -186,11 +137,46 @@ try {
         ?>
         <!--<a href="https://www.instagram.com/levinxs_14/">cnpjotopow?</a> -->
     </nav>
-    </nav>
+
 
 </body>
 <script>
-    
+    let button_perfil = document.querySelector("#button_perfil");
+    button_perfil.addEventListener("click", function () {
+        let img_perfil = document.querySelector("#photo");
+        let formData = new FormData();
+
+        let cpf = img_perfil.name;
+        img_perfil = img_perfil.files[0];
+        let tipo = img_perfil.name.split('.').pop().toLowerCase();
+        // alert(tipo);
+        if (tipo == "jpg" || tipo == "png" ||tipo == "jpeg") {
+            formData.append("img_perfil", img_perfil);
+            formData.append("cpf_user", cpf);
+            // alert(`fsdfsdfsdg ${cpf}`);
+
+       
+                // Aqui você pode colocar seu código de AJAX
+                $.ajax({
+                    url: 'funcoes.php',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resposta) {
+                        console.log(resposta);
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+        } else {
+            return "erro";
+        }
+    });
+
+
 </script>
 
 </html>

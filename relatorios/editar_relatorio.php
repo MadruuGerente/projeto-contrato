@@ -34,7 +34,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pasta_de_estilos/style_criar_relatorio.css">
+    <link rel="stylesheet" href="pasta_de_estilos/style_editar_relatorio.css">
     <!-- Inclua o arquivo CSS do Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -42,8 +42,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>Criar Relatório - SergipeTec</title>
-    <style>
+   
 
     </style>
 </head>
@@ -52,18 +51,18 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
     <!-- Conteúdo da Página -->
     </div>
     <div class="content">
-        <div id="sergipeTec">SergipeTec</div>
-        <h2>Criar Relatório</h2>
+        <!-- <div id="sergipeTec">SergipeTec</div>
+        <h2>Criar Relatório</h2> -->
         <!-- Formulário de Criação de Relatório -->
-        <div class="container">
+        <!-- <div class="container">
 
             <form id="formCriarRelatorio" action="criar_relatorio.php" method="get" enctype="multipart/form-data">
                 <label for="projeto" id="projeto">Informações do Projeto:</label>
 
 
                 <label for="titulo" id="titleLabel">PROGRAMA:</label>
-                <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa<?php echo ($cont); ?>" cols="30" rows="10"
+              <input type="text" id="titulo" name="titulo" required> -->
+                <!-- <textarea name="titulo" id="programa<?php echo ($cont); ?>" cols="30" rows="10"
                     style="resize: none;height: 50px;" required> </textarea>
                 <input type="hidden" name="id_do_programa" value="<?php echo ($cont); ?>">
 
@@ -74,7 +73,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
                 <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_indicador" alt="teste"> <br>
                 <br><br> <br>
                 <img src="..\imagens/botao-adicionar.png" class="img" id="imd_deletar_utimo" alt="teste"> <br> <br><br>
-                <br>
+                <br>    
                 <button type='submit' id="enviar" form='bora'>enviar</button>
                 <label for="comentarios">Comentários Gerais:</label>
                 <textarea id="comentarios" name="comentarios" required></textarea>
@@ -83,7 +82,7 @@ $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 
                 <input type="submit" value="Criar Relatório" name="criar_relatorio_form">
             </form>
-        </div>
+        </div> -->
     </div>
 
     <nav>

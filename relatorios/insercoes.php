@@ -2,9 +2,6 @@
 require_once "..\bancodedados/bd_conectar.php";
 $con = new Conexao();
 $mysqli = $con->connect();
-
-
-
 function verificaPrograma($programaId)
 {
     $con = new Conexao();
@@ -88,7 +85,6 @@ function verificarTableaContratos($id_tabela_total)
     $rgt = $stmt->rowCount();
     return ($rgt);
 }
-
 function verificaTabelaPrevisoes($id_tabela_previsoes)
 {
     $con = new Conexao();
@@ -543,5 +539,4 @@ function enviar_anexo($id_anexo, $caminho, $id_indicador, $nome,$data){
     $rgt = $stmt->rowCount();
     return ($rgt);
 }
-
 ?>
