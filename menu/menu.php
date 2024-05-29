@@ -16,8 +16,9 @@ require_once "..\bancodedados/bd_conectar.php";
 
 // Obter o login do usuário da sessão
 $cpf = $_SESSION['cpf'];
+$perfil = $_SESSION['perfil'];
 // Consultar o banco de dados para obter informações do usuário
-$img_perfil ="..\imagens/perfil.png";
+$img_perfil = "..\imagens/perfil.png";
 
 try {
     $conexao = new Conexao();
@@ -31,7 +32,7 @@ try {
 
     // Obter os resultados da consulta
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($usuario['tem_img'] == 1){
+    if ($usuario['tem_img'] == 1) {
         $img_perfil = $usuario['img_perfil'];
     }
     // Verificar se a consulta retornou resultados
@@ -68,11 +69,11 @@ try {
     }
     if (isset($_GET['i'])) {
         echo ('<script type="text/javascript"> let v = sair();</script>');
-    } 
-    if (isset($_GET['resultado']) && $_GET['resultado'] ==  "sair") {
+    }
+    if (isset($_GET['resultado']) && $_GET['resultado'] == "sair") {
         header("Location: fechar.php");
-    } 
-     ?>
+    }
+    ?>
     <!-- Conteúdo da Página -->
     <div class="content">
         <h1>Sistema de Gestão</h1>
@@ -90,10 +91,10 @@ try {
         </a> -->
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
         <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
-        <h3 class = "h1_sistema"> SISTEMA DE GESTÃO </h3>
+        <h3 class="h1_sistema"> SISTEMA DE GESTÃO </h3>
         <img src="<?php echo $img_perfil ?>" id="perfil" class="perfil-menu" alt="teste">
         <!-- <h3 class="nome-perfil">perfil</h3> -->
-        
+
 
         <!-- <a href="..\perfil/perfil.php">Meu perfil</a> -->
         <!-- <?php
@@ -110,20 +111,42 @@ try {
     <img src="..\imagens/iconeperfil.png" id="icon.png" class="icon-menu" alt="teste">
 
     <div class="sidebar" id="sidebar">
-        <a href="..\relatorios/relatorios.php">Relatórios</a>
-        <a href="..\perfil/perfil.php">Perfil</a>
+        <?php
+        if ($perfil == "Gestor") {
+            ?>
+            <a href="..\relatorios/relatorios.php">Relatórios</a>
+            <a href="..\perfil/perfil.php">Perfil</a>
+            <!-- <a href="..\atividades/atividades.php">Recebidos</a> -->
+            <a href="..\projetos/antes_projetos.php">Projetos</a>
+            <a href="menu.php?i=0">sair</a>
+            <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+            <?php
+        }elseif($perfil == "Mega Gestor"){   
+            ?>
+            <a href="..\relatorios/relatorios.php">Criar contrato</a>
+            <a href="..\perfil/perfil.php">Perfil</a>
+            <!-- <a href="..\atividades/atividades.php">Atividades</a> -->
+            <a href="..\atividades/atividades.php">Recebidos</a>
+            <a href="..\projetos/antes_projetos.php">Projetos</a>
+            <a href="menu.php?i=0">sair</a>
+            <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+            <?php
+        }
+        ?>
+        <!-- <a href="..\relatorios/relatorios.php">Relatórios</a> -->
+        <!-- <a href="..\perfil/perfil.php">Perfil</a> -->
         <!-- <a href="..\atividades/atividades.php">Atividades</a> -->
-        <a href="..\atividades/atividades.php">Recebidos</a>
-        <a href="..\projetos/antes_projetos.php">Projetos</a>
-        <a href="menu.php?i=0">sair</a>
-        <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+        <!-- <a href="..\atividades/atividades.php">Recebidos</a> -->
+        <!-- <a href="..\projetos/antes_projetos.php">Projetos</a> -->
+        <!-- <a href="menu.php?i=0">sair</a> -->
+        <!-- <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a> -->
     </div>
 
     <div class="content">
         <h1>Bem-vindo ao Meu Site</h1>
         <p>Conteúdo do site aqui.</p>
     </div>
-     <script src="scripts/funcoes.js"></script>
+    <script src="scripts/funcoes.js"></script>
 </body>
 
 </html>

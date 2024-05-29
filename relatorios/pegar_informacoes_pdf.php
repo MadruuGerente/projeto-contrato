@@ -566,7 +566,7 @@ function mostrar_pdf($id_programa)
     $dados_editar .= "<head>";
     $dados_editar .= "<meta charset='UTF-8'>";
     $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-    $dados_editar .= "<title>Relatórios</title>";
+    $dados_editar .= "<title>Relatórios</title>";   
  // Estilos antes do conteúdo
     $dados_editar .= "</head>";
 

@@ -32,6 +32,7 @@ class login
                         $_SESSION['login'] = $dados['login'];
                         $_SESSION['status'] = $dados['status'];
                         $_SESSION['nome'] = $dados['nome'];
+                        $_SESSION['perfil'] = $dados['perfil'];
                         header("Location:..\menu/menu.php?e=1");
                         session_write_close();
                     } else {
