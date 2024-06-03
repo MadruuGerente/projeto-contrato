@@ -28,14 +28,26 @@ if (!isset($_SESSION['cpf'])) {
     header("Location: login.php");
     exit();
 }
-
 // Incluir o arquivo de conexão com o banco de dados
 require_once "..\bancodedados/bd_conectar.php";
 
 // Obter o login do usuário da sessão
 $login = $_SESSION['cpf'];
+$perfil_ent = $_SESSION['perfil'];
+$pagina = "relatorios.php";
+$string_input = "";
+echo ($perfil_ent) . "2222   ";
+if ($perfil_ent == "Gestor") {
+    $pagina = "criar_relatorio.php";
+    $string_input = "Criar relatório";
+
+} elseif ($perfil_ent == "Mega Gestor") {
+    $pagina = "criar_contratos.php";
+    $string_input = "Criar contratos";
+}
+
 // Consultar o banco de dados para obter informações do usuário
-$img_perfil  = "..\imagens/perfil.png";
+$img_perfil = "..\imagens/perfil.png";
 try {
     $conexao = new Conexao();
     $conn = $conexao->connect();
@@ -48,7 +60,7 @@ try {
 
     // Obter os resultados da consulta
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($usuario['tem_img'] == 1){
+    if ($usuario['tem_img'] == 1) {
         $img_perfil = $usuario['img_perfil'];
     }
     // Verificar se a consulta retornou resultados
@@ -154,25 +166,52 @@ if (isset($_SESSION['cpf'])) {
 
         <!-- Adicionar opção para criar relatório -->
         <h3>Criar Relatório</h3>
-        <form action="relatorios.php" method="post">
+        <form action=<?php echo $pagina ?> method="post">
             <!-- <img src='imagens/logo.png'> -->
-            <input type="submit" value="Criar Relatório" name="criar_relatorio_form">
+
+            <?php
+
+            if ($perfil_ent == "Gestor") {
+                ?>
+                <input type="submit" value="Criar relatório" name="criar_relatorio_form">
+                <?php
+            } elseif ($perfil_ent == "Mega Gestor") {
+                ?>
+                <input type="submit" value="Criar Contratos" name="criar_relatorio_form">
+                <?php
+            }
+
+            ?>
+
         </form>
     </div>
     <nav class="nav">
         <img src="..\imagens/barra-de-menu3.png" id="toggle-sidebar" class="imagem-menu" alt="teste">
         <img src="..\imagens/logo.png" id="logo.png" class="logo-menu" alt="teste">
         <h2 class="hs"> SISTEMA DE GESTÃO <h2>
-        <img src="<?php echo $img_perfil?>" id="perfil" class="perfil-menu" alt="teste">
+                <img src="<?php echo $img_perfil ?>" id="perfil" class="perfil-menu" alt="teste">
 
 
     </nav>
     <div class="sidebar" id="sidebar">
-        <a href="..\menu/menu.php">Menu</a>
-        <a href="..\perfil/perfil.php">Perfil</a>
-        <a href="..\atividades/atividades.php">Atividades</a>
-        <a href="..\menu/menu.php?i=0">sair</a>
-        <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+        <?php if ($perfil_ent == "Gestor") {
+            ?>
+            <a href="..\menu/menu.php">Menu</a>
+            <a href="..\perfil/perfil.php">Perfil</a>
+            <!-- <a href="..\atividades/atividades.php">Atividades</a> -->
+            <a href="..\menu/menu.php?i=0">sair</a>
+            <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+            <?php
+        } elseif ($perfil_ent == "Mega Gestor") {
+            ?>
+            <a href="..\menu/menu.php">Menu</a>
+            <a href="..\perfil/perfil.php">Perfil</a>
+            <a href="..\atividades/atividades.php">Recebidos</a>
+            <a href="..\menu/menu.php?i=0">sair</a>
+            <a href="https://www.instagram.com/rafaelpdesantana/">Contato</a>
+            <?php
+        } ?>
+
     </div>
     <div class="modal" id="modal">
         <?php
@@ -188,7 +227,8 @@ if (isset($_SESSION['cpf'])) {
         ?>
         <button class="button_modal"> enviar</button>
     </div>
-<script src="scripts/script_enviar.js"></script>
-<!-- <script src=""></script> -->
+    <script src="scripts/script_enviar.js"></script>
+    <!-- <script src=""></script> -->
 </body>
+
 </html>
