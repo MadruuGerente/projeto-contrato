@@ -29,6 +29,17 @@ $stmt_prog = $mysqli->prepare($chave_programas);
 $stmt_prog->bindParam(":login", $login);
 $stmt_prog->execute();
 
+function limitarString($string, $limite)
+{
+    // Verifica se a string é maior que o limite
+    if (strlen($string) > $limite) {
+        // Corta a string até o limite desejado
+        $string = substr($string, 0, $limite);
+        // Adiciona os três pontos
+        $string .= '...';
+    }
+    return $string;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +48,7 @@ $stmt_prog->execute();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pasta_de_estilos/style_criar_relatorio.css">
+
     <!-- <link rel="stylesheet" href="pasta_de_estilos/stylerelatorio.css"> -->
     <!-- Inclua o arquivo CSS do Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -123,24 +135,10 @@ $stmt_prog->execute();
                     style="resize: none;height: 50px;" required> </textarea>
 
                 <label for="titulo" id="titleLabel"> CONTRATANTE</label>
-                <!-- <input type="text" id="titulo" name="titulo" required> -->
 
-                <!-- <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_meta" alt="teste"> <br> <br><br>
-                <br>
-                <img src="..\imagens/botao-adicionar.png" class="img" id="img_adicionar_indicador" alt="teste"> <br>
-                <br><br>
-                <img src="..\imagens/botao-adicionar.png" class="img" id="imd_deletar_utimo" alt="teste"> <br> <br><br>
-                <br> -->
 
                 <button type='submit' id="enviar" form='bora'>enviar</button>
-                <!-- <label for="comentarios">Comentários Gerais:</label> -->
-                <!-- <textarea id="comentarios" name="comentarios" required></textarea> -->
-                <!-- <label for="anexos">Anexos:</label>
-                <input type="file" id="anexos" name="anexos[]" multiple>
 
-                <input type="submit" value="Criar Relatório" name="criar_relatorio_form">
-
-                <div id="imageDisplayArea"></div> -->
                 <br><br><br><br><br>
 
 
@@ -155,28 +153,49 @@ $stmt_prog->execute();
     </nav>
     <button class="button_modal" id="adricionar_programas">adricionar_programas</button>
 
-    <div class="modal" id="modal">
-        <?php
-        while ($rgt_mega = $stmt_prog->fetch(PDO::FETCH_ASSOC)) {
-            $nome = $rgt_mega["login_de"];
-            $id_programa_enviado = $rgt_mega["id_programa_enviado"];
-            $chave_pegar = "SELECT * FROM programa WHERE id_programa =:id_programa";
-            $stmt_programa = $mysqli->prepare($chave_pegar);
-            $stmt_programa->bindParam(":id_programa", $id_programa_enviado);
-            $stmt_programa->execute();
-            while ($row = $stmt_programa->fetch(PDO::FETCH_ASSOC)) {
-                $nome_programa = $row['nome_programa'];
-                ?>
-                <input type="checkbox" class="checkboxes" id="<?php echo $id; ?>" name="" value="<?php echo $nome; ?>">
-                <label for="<?php echo $id_programa_enviado; ?>"> <?php echo $nome_programa; ?>fghfhfghfh </label><br>
+    <button id="openModal">Abrir Modal</button>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Selecione as opções desejadas:</h2>
+            <div class="checkboxes">
                 <?php
-            }
-           
-        }
-        ?>
-        <button class="button_modal"> enviar</button>
+                while ($rgt_mega = $stmt_prog->fetch(PDO::FETCH_ASSOC)) {
+                    $nome = $rgt_mega["login_de"];
+                    $id_programa_enviado = $rgt_mega["id_programa_enviado"];
+                    $chave_pegar = "SELECT nome_programa, cpf_criador, nome, cpf FROM programa INNER JOIN login on cpf_criador=cpf WHERE id_programa =:id_programa";
+                    $stmt_programa = $mysqli->prepare($chave_pegar);
+                    $stmt_programa->bindParam(":id_programa", $id_programa_enviado);
+                    $stmt_programa->execute();
+                    while ($row = $stmt_programa->fetch(PDO::FETCH_ASSOC)) {
+                        $nome_programa = $row['nome_programa'];
+                        $nome_remetente = $row['nome'];
+                        ?>
+                        <input type="checkbox" id="<?php echo $id_programa_enviado; ?>" name="" value="<?php echo $nome;?>">
+                        <label for="<?php echo $id_programa_enviado; ?>"> <?php echo limitarString($nome_programa, 15); ?>
+                        <label class="remetende"> <?php echo $nome_remetente ?>
+                        </label>
+                        <?php
+                    }
+                }
+                ?>
+                <input type="checkbox" id="option1" name="option1" value="option1">
+                <label for="option1">Opção 1</label><br>
+                <input type="checkbox" id="option2" name="option2" value="option2">
+                <label for="option2">Opção 2</label><br>
+                <input type="checkbox" id="option3" name="option3" value="option3">
+                <label for="option3">Opção 3</label><br>
+                <input type="checkbox" id="option3" name="option3" value="option3">
+                <label for="option3">Opção 3</label><br>
+                <input type="checkbox" id="option3" name="option3" value="option3">
+                <label for="option3">Opção 3</label><br>
+                <input type="checkbox" id="option3" name="option3" value="option3">
+                <label for="option3">Opção 3</label><br>
+            </div>
+            <button id="submit">Enviar</button>
+        </div>
     </div>
-
 
 </body>
 

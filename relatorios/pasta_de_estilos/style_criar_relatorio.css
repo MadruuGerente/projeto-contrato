@@ -142,26 +142,68 @@ h3 {
   height: auto;
   float: right;
 }
+
+/* Estilo para a modal */
 .modal {
-
-    display: none;
-   
-    max-width: 600px;
-    max-height: 300px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    margin-right:250px;
-    margin-top: 250px;
-    margin-left: 250px;
-    margin-top: 250px;
-
-  }
-  .button_modal {
-    float: right;
-  }
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* fundo semi-transparente */
+  overflow: auto;
+  z-index: 9999;
   
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* fundo semi-transparente */
+  z-index: 9998; /* abaixo do modal */
+}
+/* Conteúdo da modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 8px;
+  position: relative;
+  overflow-y: scroll;
+}
 
+/* Botão de fechar */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-  
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo para os checkboxes */
+.checkboxes input[type="checkbox"] {
+  margin-right: 30px;
+}
+.remetende{
+  font-size: 15px;
+  color:#888;
+}
+.checkboxes label {
+  display: block;
+}
