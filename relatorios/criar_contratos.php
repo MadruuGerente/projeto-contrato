@@ -97,9 +97,14 @@ function limitarString($string, $limite)
         <!-- Formulário de Criação de Relatório -->
         <div class="container">
 
-            <form id="formCriarRelatorio" action="criar_relatorio.php" method="get" enctype="multipart/form-data">
+            <form id="formCriarRelatorio" enctype="multipart/form-data">
                 <label for="projeto" id="projeto">Informações do contrato:</label>
                 <label for="titulo" id="titleLabel">Número do contrato:</label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
+                    style="resize: none;height: 50px;" required> </textarea>
+
+                <label for="titulo" id="titleLabel"> TEMPO:</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
                 <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
                     style="resize: none;height: 50px;" required> </textarea>
@@ -136,6 +141,9 @@ function limitarString($string, $limite)
 
                 <label for="titulo" id="titleLabel"> CONTRATANTE</label>
 
+                <label for="titulo" id="programas_selecionados"> Programas:</label>
+
+                <input class="input_open"type="button" id="openModal" value="Selecionar programas">
 
                 <button type='submit' id="enviar" form='bora'>enviar</button>
 
@@ -143,6 +151,7 @@ function limitarString($string, $limite)
 
 
             </form>
+
         </div>
     </div>
     <nav>
@@ -151,14 +160,12 @@ function limitarString($string, $limite)
         <a href="relatorios.php">Relatórios</a>
         <a href="..\atividades/atividades.php">Atividades</a>
     </nav>
-    <button class="button_modal" id="adricionar_programas">adricionar_programas</button>
 
-    <button id="openModal">Abrir Modal</button>
-    
+
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Selecione as opções desejadas:</h2>
+            <h2>Selecione os programas:</h2>
             <div class="checkboxes">
                 <?php
                 while ($rgt_mega = $stmt_prog->fetch(PDO::FETCH_ASSOC)) {
@@ -172,28 +179,16 @@ function limitarString($string, $limite)
                         $nome_programa = $row['nome_programa'];
                         $nome_remetente = $row['nome'];
                         ?>
-                        <input type="checkbox" id="<?php echo $id_programa_enviado; ?>" name="" value="<?php echo $nome;?>">
+                        <input class ="checkbox"type="checkbox" id="<?php echo $id_programa_enviado; ?>" name="<?php echo $nome_programa; ?>" value="<?php echo $nome; ?>">
                         <label for="<?php echo $id_programa_enviado; ?>"> <?php echo limitarString($nome_programa, 15); ?>
-                        <label class="remetende"> <?php echo $nome_remetente ?>
-                        </label>
-                        <?php
+                            <label class="remetende"> <?php echo $nome_remetente ?>
+                            </label>
+                            <?php
                     }
                 }
                 ?>
-                <input type="checkbox" id="option1" name="option1" value="option1">
-                <label for="option1">Opção 1</label><br>
-                <input type="checkbox" id="option2" name="option2" value="option2">
-                <label for="option2">Opção 2</label><br>
-                <input type="checkbox" id="option3" name="option3" value="option3">
-                <label for="option3">Opção 3</label><br>
-                <input type="checkbox" id="option3" name="option3" value="option3">
-                <label for="option3">Opção 3</label><br>
-                <input type="checkbox" id="option3" name="option3" value="option3">
-                <label for="option3">Opção 3</label><br>
-                <input type="checkbox" id="option3" name="option3" value="option3">
-                <label for="option3">Opção 3</label><br>
             </div>
-            <button id="submit">Enviar</button>
+            <button id="pegar_porgrama">Enviar</button>
         </div>
     </div>
 
