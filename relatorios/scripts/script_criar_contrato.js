@@ -1,6 +1,54 @@
+let cont_contrato = window.document.querySelector("input[name='id_do_contrato']").value;
+
+
+let form = document.querySelector("#formCriarRelatorio");
+
+
+// document.querySelector("#enviar").addEventListener("click",function (event) {
+//     event.preventDefault();
+//     let nome_contrato = document.querySelector(`#nome_contrato${cont_contrato}`);
+//     let numero_contrato = document.querySelector(`#numero_contrato`);
+//     let meses_contrato = document.querySelector(`#meses_contrato`);
+//     let bimestre_relatorio = document.querySelector(`#bimestre_relatorio`);
+//     let contratante = document.querySelector(`#contratante`);
+//     let contratado = document.querySelector(`#contratado`);
+//     let periodo_abrangencia = document.querySelector(`#periodo_abrangencia`);
+//     let objetio_contrato_gestao = document.querySelector(`#objetio_contrato_gestao`);
+//     let objetivo_contratodo = document.querySelector(`#objetivo_contratodo`);
+//     let os_contratados = document.querySelector(`#os_contratados`);
+//     let contrato_gestao = document.querySelector(`#contrato_gestao`);
+//     let plano_trabalho = document.querySelector(`#plano_trabalho`);
+
+//     let form
+// });
+document.querySelector("#enviar").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    // Referência para o formulário
+    let formulario = document.getElementById("formCriarRelatorio");
+
+    // Criar um novo objeto FormData com base no formulário
+    let dadosDoFormulario = new FormData(formulario);
+
+    // Exemplo de como acessar os dados do formulário
+    for (let [chave, valor] of dadosDoFormulario.entries()) {
+        console.log(chave, valor);
+    }
+    fetch('salvar_dados_contrato.php', {
+        method: 'POST',
+        body: dadosDoFormulario
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resposta do servidor:', data);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar dados do formulário:', error);
+        });
+});
+
 // Objeto para armazenar o momento em que cada checkbox foi clicado pela primeira vez
 let firstClicks = {};
-
 // Adiciona um evento de clique para cada checkbox
 document.querySelectorAll('.checkbox').forEach(checkbox => {
     checkbox.addEventListener('click', function () {
@@ -13,7 +61,6 @@ document.querySelectorAll('.checkbox').forEach(checkbox => {
     });
 });
 let uncheckedTimestamps = {};
-
 // Adiciona um evento de mudança para cada checkbox
 document.querySelectorAll('.checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function () {
@@ -27,26 +74,20 @@ document.querySelectorAll('.checkbox').forEach(checkbox => {
     });
 });
 
-
 let btnOpenModal = document.getElementById("openModal");
-
 // Pega o elemento da modal
 let modal = document.getElementById("modal");
-
 // Pega o botão de fechar modal
 let spanClose = document.getElementsByClassName("close")[0];
 let overlay = document.getElementById("overlay");
-
 // Quando o usuário clica no botão de abrir, abre a modal
 btnOpenModal.onclick = function () {
     modal.style.display = "block";
 }
-
 // Quando o usuário clica no botão de fechar ou fora da modal, fecha a modal
 spanClose.onclick = function () {
     modal.style.display = "none";
 }
-
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
@@ -66,10 +107,9 @@ document.getElementById('pegar_porgrama').addEventListener('click', function () 
     console.log("Checkboxes selecionados:", selectedCheckboxes);
     modal.style.display = "none";
 });
-
 let valor = 1;
 function mostrar(id, name) {
-    name = limitarCaracteres(name, 8);
+    name = limitarCaracteres(name, 10);
     name = name.trimLeft();
 
     let programa_info = document.createElement("label");
@@ -80,22 +120,11 @@ function mostrar(id, name) {
     programa_info.style.width = "200px";
     programa_info.style.height = "auto";
 
-    // let programa_num = document.createElement("label");
-    // programa_num.setAttribute('id', `${name}`);
-    // programa_num.textContent = 'programa' + valor;
-    // programa_num.setAttribute('value', `${name}`);
-    // programa_num.style.color = "black"; // Exemplo de cor do texto
-    // programa_num.style.width = "250px";
-    // programa_num.style.height = "auto";
-
-
     let modal_content = document.querySelector("#formCriarRelatorio");
     let button_elemento = document.querySelector("#enviar");
     let programas_selecionados = document.querySelector("#programas_selecionados");
     console.log(modal_content, button_elemento);
     // Insere o elemento programa_info antes do botão enviar dentro do modal_content
-
-
     let pega = programas_selecionados.querySelector(`#${id}`);
     if (!pega) {
         // programas_selecionados.append(programa_num);
@@ -110,45 +139,6 @@ function retirar(id, name) {
         retirar.remove();
     }
     return ("blz");
-}
-
-function mostrarf(selecionados) {
-    let valor = 1;
-    selecionados.forEach(selecionado => {
-
-        let programa_info = document.createElement("label");
-        programa_info.setAttribute('id', `${selecionado.id}`);
-        programa_info.textContent = selecionado.name;
-        programa_info.setAttribute('value', `${selecionado.name}`);
-        programa_info.style.color = "blue"; // Exemplo de cor do texto
-        programa_info.style.width = "200px";
-        programa_info.style.height = "auto";
-
-        let programa_num = document.createElement("label");
-        programa_num.setAttribute('id', `programa${valor}`);
-        programa_num.textContent = 'programa' + valor;
-        programa_num.setAttribute('value', `${selecionado.name}`);
-        programa_num.style.color = "black"; // Exemplo de cor do texto
-        programa_num.style.width = "250px";
-        programa_num.style.height = "auto";
-
-
-        let modal_content = document.querySelector("#formCriarRelatorio");
-        let button_elemento = document.querySelector("#enviar");
-        let programas_selecionados = document.querySelector("#programas_selecionados");
-        console.log(modal_content, button_elemento);
-        // Insere o elemento programa_info antes do botão enviar dentro do modal_content
-
-
-        let pega = programas_selecionados.querySelector(`#${selecionado.id}`);
-        if (!pega) {
-            programas_selecionados.append(programa_num);
-            programas_selecionados.append(programa_info);
-            valor++;
-        } else {
-            pega = programa_info;
-        }
-    });
 }
 function limitarCaracteres(texto, limite) {
     if (texto.length <= limite) {

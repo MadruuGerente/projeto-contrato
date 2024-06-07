@@ -40,7 +40,7 @@ function enviar(objeto) {
 
             let modal = document.querySelector("#modal");
             modal.style.display = "none";
-            entrou();
+            entrou("enviar");
 
         },
         error: function (xhr, status, error) {
@@ -64,7 +64,13 @@ menuTrigger.addEventListener("click", function () {
     }
 });
 
-function entrou() {
+function entrou(type) {
+    let mensagem = "";
+    if (type == "enviar") {
+        mensagem = "Enviado com sucesso!";
+    } else if (type == "editar") {
+        mensagem = "Editado com sucesso!";
+    }
     const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -78,6 +84,6 @@ function entrou() {
     });
     Toast.fire({
         icon: "success",
-        title: `Enviado com sucesso!`
+        title: `${mensagem}`
     });
 }

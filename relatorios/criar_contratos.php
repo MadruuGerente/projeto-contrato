@@ -7,7 +7,7 @@ $cont = 1;
 $con = new Conexao();
 $mysqli = $con->connect();
 
-$chave_verificar_tb_contratos = "SELECT * FROM programa";
+$chave_verificar_tb_contratos = "SELECT * FROM contratos";
 $stmt = $mysqli->prepare($chave_verificar_tb_contratos);
 // $stmt->bindParam(":id_tabela", $id_tabela_total);
 // $stmt->bindParam(":ano", $ano);
@@ -16,12 +16,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($result as $row) {
     // Faça algo com os dados de cada linha, por exemplo:
-    $cont = $row["id_programa"];
+    $cont = $row["id_contrato"];
 }
 $ano = date('Y'); // Obtém o ano atual
 $ultimo_digito = substr((string) $cont, -3);
 $id_sequencial = $ultimo_digito + 1; // Começa o ID sequencial de 1 para este ano
 $cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
+// echo($cont. "fjijefksjdiou");
 $ge = 0;
 
 $chave_programas = "SELECT * FROM enviar_programas WHERE login_para = :login";
@@ -63,29 +64,7 @@ function limitarString($string, $limite)
 
     </style>
 </head>
-<script>
-    function toggleMetasVisibility() {
-        var meta2 = document.getElementById('meta2');
-        var prazo2 = document.getElementById('prazo2');
-        var andamento2 = document.getElementById('andamento2');
-        var objetivo2 = document.getElementById('objetivo2');
-        var meta3 = document.getElementById('meta3');
-        var prazo3 = document.getElementById('prazo3');
-        var andamento3 = document.getElementById('andamento3');
-        var objetivo3 = document.getElementById('objetivo3');
-        var checkboxMeta2 = document.getElementById('adicionar_meta2');
-        var checkboxMeta3 = document.getElementById('adicionar_meta3');
-        meta2.style.display = checkboxMeta2.checked ? 'block' : 'none';
-        prazo2.style.display = checkboxMeta2.checked ? 'block' : 'none';
-        andamento2.style.display = checkboxMeta2.checked ? 'block' : 'none';
-        objetivo2.style.display = checkboxMeta2.checked ? 'block' : 'none';
 
-        meta3.style.display = checkboxMeta3.checked ? 'block' : 'none';
-        prazo3.style.display = checkboxMeta3.checked ? 'block' : 'none';
-        andamento3.style.display = checkboxMeta3.checked ? 'block' : 'none';
-        objetivo3.style.display = checkboxMeta3.checked ? 'block' : 'none';
-    }
-</script>
 
 <body>
 
@@ -96,72 +75,91 @@ function limitarString($string, $limite)
         <h2>Criar Contrato</h2>
         <!-- Formulário de Criação de Relatório -->
         <div class="container">
-
             <form id="formCriarRelatorio" enctype="multipart/form-data">
                 <label for="projeto" id="projeto">Informações do contrato:</label>
-                <label for="titulo" id="titleLabel">Número do contrato:</label>
+                <label for="titulo" id="nome_contrato">NOME DO CONTRATO</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
+                <textarea name="nome_contrato" id="nome_contrato<?php echo ($cont); ?>" cols="30" rows="10"
                     style="resize: none;height: 50px;" required> </textarea>
+                <input type="hidden" name="id_do_contrato" value="<?php echo ($cont); ?>">
 
-                <label for="titulo" id="titleLabel"> TEMPO:</label>
+                <label for="titulo" id="numero_contratos">NÚMERO DO CONTRATO</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <textarea name="numero_contrato" id="numero_contrato" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required>JGGHGHFJG </textarea>
+
+                <label for="titulo" id="titleLabel"> MESES DO CONTRATO </label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="meses_contrato" id="meses_contrato" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
+
+                <label for="titulo" id="titleLabel"> BIMESTRE DO RELATÓRIO</label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="bimestre_relatorio" id="bimestre_relatorio" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
 
                 <label for="titulo" id="titleLabel">1.IDENTIFICAÇÃO</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <!-- <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
+                    style="resize: none;height: 50px;" required> </textarea> -->
 
                 <label for="titulo" id="titleLabel"> CONTRATANTE</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <textarea name="contratante" id="contratante" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
+
+                <label for="titulo" id="titleLabel"> CONTRATADO</label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="contratado" id="contratado" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
 
                 <label for="titulo" id="titleLabel"> PERÍODO DE ABRANGÊNCIA DO RELATÓRIO </label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <textarea name="periodo_abrangencia" id="periodo_abrangencia" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
 
                 <label for="titulo" id="titleLabel">2. OBJETIVO DO CONTRATO DE GESTÃO </label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
+                <textarea name="objetio_contrato_gestao" id="objetio_contrato_gestao" cols="30" rows="10"
                     style="resize: none;height: 50px;" required> </textarea>
 
-                <label for="titulo" id="titleLabel"> 3. OBJETIVO DA OS SERGIPETEC </label>
+                <label for="titulo" id="titleLabel"> 3. OBJETIVO DO CONTRATADO </label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <textarea name="objetivo_contratodo" id="objetivo_contratodo" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
 
-                <label for="titulo" id="titleLabel"> 4. OS SERGIPETEC, CONTRATO DE GESTÃO E PLANO DE TRABALHO</label>
+                <label for="titulo" id="titleLabel"> 4. OS CONTRATADOS</label>
                 <!-- <input type="text" id="titulo" name="titulo" required> -->
-                <textarea name="titulo" id="programa_<?php echo ($cont); ?>" cols="30" rows="10"
-                    style="resize: none;height: 50px;" required> </textarea>
+                <textarea name="os_contratados" id="os_contratados" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
 
-                <label for="titulo" id="titleLabel"> CONTRATANTE</label>
+                <label for="titulo" id="titleLabel">CONTRATO DE GESTÃO </label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="contrato_gestao" id="contrato_gestao" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
+
+                <label for="titulo" id="titleLabel">PLANO DE TRABALHO </label>
+                <!-- <input type="text" id="titulo" name="titulo" required> -->
+                <textarea name="plano_trabalho" id="plano_trabalho" cols="30" rows="10" style="resize: none;height: 50px;"
+                    required> </textarea>
+
+                <!-- <label for="titulo" id="titleLabel"> CONTRATANTE</label> -->
 
                 <label for="titulo" id="programas_selecionados"> Programas:</label>
 
-                <input class="input_open"type="button" id="openModal" value="Selecionar programas">
+                <input class="input_open" type="button" id="openModal" value="Selecionar programas">
 
-                <button type='submit' id="enviar" form='bora'>enviar</button>
-
+                <button id="enviar">enviar</button>
                 <br><br><br><br><br>
-
-
             </form>
 
         </div>
     </div>
     <nav>
-
         <a href="..\perfil/perfil.php">Perfil</a>
         <a href="relatorios.php">Relatórios</a>
         <a href="..\atividades/atividades.php">Atividades</a>
     </nav>
-
-
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -179,16 +177,19 @@ function limitarString($string, $limite)
                         $nome_programa = $row['nome_programa'];
                         $nome_remetente = $row['nome'];
                         ?>
-                        <input class ="checkbox"type="checkbox" id="<?php echo $id_programa_enviado; ?>" name="<?php echo $nome_programa; ?>" value="<?php echo $nome; ?>">
-                        <label for="<?php echo $id_programa_enviado; ?>"> <?php echo limitarString($nome_programa, 15); ?>
-                            <label class="remetende"> <?php echo $nome_remetente ?>
-                            </label>
-                            <?php
+                        <div class="checkbox-container">
+                            <input class="checkbox" type="checkbox" id="<?php echo $id_programa_enviado; ?>"
+                                name="<?php echo $nome_programa; ?>" value="<?php echo $nome; ?>">
+                            <label for="<?php echo $id_programa_enviado; ?>"> <?php echo limitarString($nome_programa, 15); ?>
+                                <label class="remetende"> <?php echo $nome_remetente ?>
+                                </label>
+                        </div>
+                        <?php
                     }
                 }
                 ?>
             </div>
-            <button id="pegar_porgrama">Enviar</button>
+            <button id="pegar_contrato">Enviar</button>
         </div>
     </div>
 

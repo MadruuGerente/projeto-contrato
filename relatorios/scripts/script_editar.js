@@ -1,6 +1,6 @@
 function recuperar_informações() {
     // Pega o formulário pelo ID
-    const form = document.getElementById("formCriarRelatorio"); 
+    const form = document.getElementById("formCriarRelatorio");
     console.log("este");
 
     // Objeto para armazenar os valores dos campos
@@ -269,19 +269,13 @@ function mandar_informacoes(objeto) {
         success: function (resposta) {
             console.log("fg0");
             console.log(resposta);
+            passa_pagina();
         },
         error: function (xhr, status, error) {
             console.error("Erro ao enviar Ajax:", status, error);
         }
     });
 }
-function passa_pagina(param) {
-    if (typeof param === "string") {
-        console.log("Recebi uma string: " + param);
-        window.location.href = `criarel.php?id=${param}`;
-    } else if (param instanceof HTMLElement) {
-        console.log("Recebi um elemento HTML com texto: " + param.innerText);
-    } else {
-        console.log("Tipo desconhecido.");
-    }
+function passa_pagina() {
+    window.location.href = `relatorios.php?o=1`;
 }

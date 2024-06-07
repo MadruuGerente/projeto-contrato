@@ -123,6 +123,29 @@ if (isset($_SESSION['cpf'])) {
         echo ("<h2>Nenhum relatório criado</h2>");
     }
 }
+
+function removeParam($param)
+{
+    // Obtém a URL atual
+    $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+    // Faz o parse da URL e da query string
+    $url_parts = parse_url($url);
+    parse_str($url_parts['query'], $query);
+
+    // Remove o parâmetro
+    unset($query[$param]);
+
+    // Reconstrói a query string sem o parâmetro
+    $new_query = http_build_query($query);
+
+    // Reconstrói a URL sem o parâmetro indesejado
+    $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query;
+
+    // Redireciona para a nova URL
+    header("Location: $new_url");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +163,6 @@ if (isset($_SESSION['cpf'])) {
 </head>
 
 <body class="body">
-
     <!-- Conteúdo da Página -->
     <div class="content">
         <h2>Relatórios</h2>
@@ -227,7 +249,22 @@ if (isset($_SESSION['cpf'])) {
         ?>
         <button class="button_modal"> enviar</button>
     </div>
+
+
+
     <script src="scripts/script_enviar.js"></script>
+    <?php
+    if (isset($_GET['o'])) {
+        // Chama a função JavaScript 'entrou' com o parâmetro 'editar'
+        echo '
+    <script type="text/javascript">
+        entrou("editar");
+    </script>';
+    }
+
+    ?>
+
+
     <!-- <script src=""></script> -->
 </body>
 

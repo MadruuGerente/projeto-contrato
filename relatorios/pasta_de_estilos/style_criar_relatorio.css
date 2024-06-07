@@ -83,7 +83,7 @@ h3 {
 #formCriarRelatorio {
   width: 100%;
   max-width: 700px;
-  min-width: 400px;
+  min-width: 500px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -199,13 +199,15 @@ h3 {
 /* Estilo para os checkboxes */
 .checkboxes input[type="checkbox"] {
   margin-right: 30px;
+  width: 50px;
+  height: 40px;
 }
 .remetende{
   font-size: 15px;
   color:#888;
 }
 .checkboxes label {
-  display: block;
+  display:block;
 }
 
 .input_open{
@@ -217,3 +219,16 @@ formCriarRelatorio label{
   width: 40px;
   height: auto;
 }
+.checkbox-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px; /* Espaçamento entre cada checkbox e label */
+    }
+
+    .checkbox {
+        margin-right: 5px; /* Espaçamento entre o checkbox e o label */
+    }
+
+    .remetente {
+        margin-left: 10px; /* Espaçamento entre o nome do programa e o remetente */
+    }
