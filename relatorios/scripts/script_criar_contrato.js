@@ -3,7 +3,6 @@ let cont_contrato = window.document.querySelector("input[name='id_do_contrato']"
 
 let form = document.querySelector("#formCriarRelatorio");
 
-
 // document.querySelector("#enviar").addEventListener("click",function (event) {
 //     event.preventDefault();
 //     let nome_contrato = document.querySelector(`#nome_contrato${cont_contrato}`);
@@ -29,11 +28,12 @@ document.querySelector("#enviar").addEventListener("click", function (event) {
 
     // Criar um novo objeto FormData com base no formulário
     let dadosDoFormulario = new FormData(formulario);
-
     // Exemplo de como acessar os dados do formulário
     for (let [chave, valor] of dadosDoFormulario.entries()) {
         console.log(chave, valor);
     }
+    ids = pegar_programas_selecionados();
+    dadosDoFormulario.append('ids_programas', JSON.stringify(ids));
     fetch('salvar_dados_contrato.php', {
         method: 'POST',
         body: dadosDoFormulario
@@ -100,7 +100,6 @@ document.getElementById('pegar_porgrama').addEventListener('click', function () 
     checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
             selectedCheckboxes.push({ id: checkbox.id, name: checkbox.name });
-
         }
     });
     info.array_login = selectedCheckboxes;
@@ -146,4 +145,15 @@ function limitarCaracteres(texto, limite) {
     } else {
         return texto.slice(0, limite) + '...'; // Retorna o texto truncado com três pontos no final
     }
+}
+function pegar_programas_selecionados(){
+    let label_programas = document.querySelector("#programas_selecionados");
+    let label_programa =  label_programas.querySelectorAll("label");
+    let ids_programas = [];
+    for(let i=0; i< label_programa.length; i++){
+        console.log();
+        ids_programas.push(label_programa[i].id);
+    }
+    console.log(ids_programas);
+    return(ids_programas);
 }

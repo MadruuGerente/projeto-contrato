@@ -19,9 +19,10 @@ foreach ($result as $row) {
     $cont = $row["id_contrato"];
 }
 $ano = date('Y'); // Obtém o ano atual
+$nome = "contrato_";
 $ultimo_digito = substr((string) $cont, -3);
 $id_sequencial = $ultimo_digito + 1; // Começa o ID sequencial de 1 para este ano
-$cont = $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
+$cont = $nome . $ano . '_' . str_pad($id_sequencial, 3, '0', STR_PAD_LEFT);
 // echo($cont. "fjijefksjdiou");
 $ge = 0;
 
