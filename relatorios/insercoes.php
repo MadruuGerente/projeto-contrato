@@ -525,6 +525,21 @@ function deletePrograma($id_programa)
 
     return $resultado;
 }
+function deleteContrato($id_contrato)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+
+    $chave_sql_verificar = "DELETE FROM contratos WHERE id_contrato=:id_contrato";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+
+    $stmt->bindParam(":id_contrato", $id_contrato);
+    $stmt->execute();
+
+    $resultado = $stmt->rowCount();
+
+    return $resultado;
+}
 function enviar_anexo($id_anexo, $caminho, $id_indicador, $nome,$data){
     $con = new Conexao();
     $mysqli = $con->connect();

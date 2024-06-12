@@ -5,16 +5,21 @@ require './dompdf/vendor/autoload.php';
 require "pegar_informacoes_pdf.php";
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
 $id_programa = 0;
 if (isset($_GET['id'])) {
     $id_programa = $_GET['id'];
     $options = new Options();
     $options->setIsRemoteEnabled(true);
-
+    $dados_pegos = 0;
     $dompdf = new Dompdf($options);
+    if ($_SESSION["perfil"] == "Gestor") {
+        $dados_pegos = mostrar_pdf($id_programa);
+    } else {
+        $dados_pegos = mostrar_contrato($id_programa);
 
-    $dados_pegos = mostrar_pdf($id_programa);
-    echo($dados_pegos);
+    }
+    echo ($dados_pegos);
 }
 // Verificar se o parâmetro relatorio está definido e é um número inteiro
 // if (isset($_GET['relatorio']) && is_string($_GET['relatorio'])) {
@@ -175,18 +180,20 @@ if (isset($_GET['id'])) {
         .preisao-valor {
             font-size: 20px;
         }
-        .texto-avaliativo{
-            font-size: 20px;
-            margin-left: 20px;
-        }
-        .texto-avaliativo-valor{
-            font-size: 20px;
-            margin-left: 20px;
-        }
-        .nao-previsto{
 
+        .texto-avaliativo {
+            font-size: 20px;
+            margin-left: 20px;
         }
-        .anexos{
+
+        .texto-avaliativo-valor {
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        .nao-previsto {}
+
+        .anexos {
             font-size: 20px;
             margin-left: 20px;
         }

@@ -273,12 +273,12 @@ function dados_pdf($id_programa)
     $dados_editar .= "<head>";
     $dados_editar .= "<meta charset='UTF-8'>";
     $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-    $dados_editar .= "<body class='body'>"; 
+    $dados_editar .= "<body class='body'>";
     $dados_editar .= "<title>Relatórios</title>";
     $dados_editar .= "<head>";
     $dados_editar .= "<div id='sergipeTec'>SergipeTec</div>";
     $dados_editar .= " <h3>Editar Relatório</h3><br>";
-    
+
     $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
     $dados_editar .= "<label for='relatorio'>Programa:</label><br>"; // Rótulo para o textarea  
     // Criação do textarea
@@ -528,7 +528,7 @@ function dados_pdf($id_programa)
 
     $dados_editar .= "<input class='atualizar'type='button' value='atualizar' onclick='recuperar_informações()'>"; // Fim do formulário
     $dados_editar .= "</form>"; // Fim do formulário
-    
+
     $dados_editar .= "</body>";
     $dados_editar .= "</html>";
     $dados_pdf .= "</body>";
@@ -566,8 +566,8 @@ function mostrar_pdf($id_programa)
     $dados_editar .= "<head>";
     $dados_editar .= "<meta charset='UTF-8'>";
     $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-    $dados_editar .= "<title>Relatórios</title>";   
- // Estilos antes do conteúdo
+    $dados_editar .= "<title>Relatórios</title>";
+    // Estilos antes do conteúdo
     $dados_editar .= "</head>";
 
     $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
@@ -575,7 +575,7 @@ function mostrar_pdf($id_programa)
     $dados_editar .= "<br>"; // Rótulo para o textarea  
     $dados_editar .= "<img src='../imagens/logopdf.png'><br><br>";
     $dados_editar .= "<label class='programa' for='relatorio'> Programa:</label>"; // Rótulo para o textarea  
-    $dados_editar .= " <a href='https://web.whatsapp.com/'>Clique aqui</a>";
+    // $dados_editar .= " <a href='https://web.whatsapp.com/'>Clique aqui</a>";
 
     foreach ($resultados_prog_met as $resultado) {
         $cont_indicador = 1;
@@ -801,8 +801,8 @@ function mostrar_pdf($id_programa)
                     $cont_text++;
                 }
                 $pegar_anexos = pegar_anexos($indicador['id_indicador']);
-                foreach ($pegar_anexos as $anexos){
-                    $dados_editar  .= "<a class= 'anexos' href = '$anexos[caminho_anexo]'>$anexos[nome_anexo]</a> <br><br>";
+                foreach ($pegar_anexos as $anexos) {
+                    $dados_editar .= "<a class= 'anexos' href = '$anexos[caminho_anexo]'>$anexos[nome_anexo]</a> <br><br>";
                 }
             }
             $cont_indicador = 1;
@@ -819,7 +819,6 @@ function mostrar_pdf($id_programa)
     // echo ($dados_editar);
     return $dados_editar;
 }
-
 function pegar_metas($id_programa)
 {
 
@@ -905,7 +904,8 @@ function pegar_elementos_total_executados($id_indicador)
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
-}function pegar_previsoes_trimestre($id_indicador)
+}
+function pegar_previsoes_trimestre($id_indicador)
 {
     $resultado_pega_previsoes = pegar_tabela_previsoes($id_indicador);
     $id_tabela = $resultado_pega_previsoes[0]["id_tabela"];
@@ -944,7 +944,8 @@ function pegar_texto_avaliativo($id_indicador)
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
-function pegar_anexos($id_indicador){
+function pegar_anexos($id_indicador)
+{
     $con = new Conexao();
     $mysqli = $con->connect();
     $chave_sql_verificar = "SELECT * FROM anexos WHERE id_indicador = :id_indicador ";
@@ -953,4 +954,116 @@ function pegar_anexos($id_indicador){
     $stmt->execute();
     $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultados;
+}
+
+function mostrar_contrato($id_contrato)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT * FROM contratos WHERE id_contrato =:id_contrato";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_contrato", $id_contrato);
+    $stmt->execute();
+    $dados_contrato = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //BOTA NO PDF 
+    $dados_editar = "<!DOCTYPE html>";
+    $dados_editar .= "<html lang='pt-br'>";
+    $dados_editar .= "<head>";
+    $dados_editar .= "<meta charset='UTF-8'>";
+    $dados_editar .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+    $dados_editar .= "<title>Relatórios</title>";
+    // Estilos antes do conteúdo
+    $dados_editar .= "</head>";
+
+    $dados_editar .= "<form class='content'id='formCriarRelatorio'  method='post' action='seu_script_de_processamento.php>'"; // Início do formulário
+    // Início do formulário
+    $dados_editar .= "<br>"; // Rótulo para o textarea  
+    $dados_editar .= "<img src='../imagens/logopdf.png'><br><br>";
+    $dados_editar .= "<label class='programa' for='relatorio'> Contrato: </label>"; // Rótulo para o textarea  
+    // $dados_editar .= " <a href='https://web.whatsapp.com/'>Clique aqui</a>";
+
+    foreach ($dados_contrato as $resultado) {
+        $cont_indicador = 1;
+        $cont_meta = 1;
+        // echo ("<img src='https://sergipetec.org.br/uploads/2017/08/Logo_SergipeTec.jpg'>");
+        // echo ("<h3 style='color: blue;> PROGRAMA: $dados->nome_programa  </h3><br>");
+
+        // $dados_pdf .= "<h4 style='color: blue';> PROGRAMA: $dados->nome_programa </h4>";
+        $dados_editar .= "<label class='programa-valor' id='$resultado[id_contrato]'name='relatorio'>$resultado[nome_contrato]</label><br>";
+        $dados_editar .= "<br>";
+
+        // echo ("ID META $cont_meta: $dados->id_meta <br>");
+        // echo ("NOME META $cont_meta: $dados->nome_meta <br><br>");
+
+        // $dados_pdf .= "META $cont_meta: $dados->nome_meta ";
+        $dados_editar .= "<label class='meta' for='relatorio' >Número do contrato:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='numero_contrato' name='relatorio' >$resultado[numero_contrato]</label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio'>1.IDENTIFICAÇÃO:</label> <br>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='indicador' for='relatorio'>CONTRATANETE:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='indicador-valor' id='meses_contrato' name='relatorio' rowsS='2' cols='30'>$resultado[contratante] </label> <br>";
+
+
+        $dados_editar .= "<label class='indicador' for='relatorio'>CONTRADADO: </label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='indicador-valor' id='meses_contrato' name='relatorio' rowsS='2' cols='30'>$resultado[contratado] </label> <br>";
+
+
+        $dados_editar .= "<label class='indicador' for='relatorio'>PERIODO DE ABRANGêNCIA DO RELATÓRIO:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='indicador-valor' id='meses_contrato' name='relatorio' rowsS='2' cols='30'>$resultado[periodo_abrangencia] </label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio' >2. OBJETIVO DO CONTRATO  DE GESTÃO:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='numero_contrato' name='relatorio' >$resultado[objetivo_contrato]</label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio' >3.OBJETIVO DA OS $resultado[contratado]:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='numero_contrato' name='relatorio' >$resultado[objetivo_contratado]</label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio' >4.OS $resultado[contratado]:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='numero_contrato' name='relatorio' >$resultado[os_contratados]</label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio' >CONTRATO DE GESTÃO:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='numero_contrato' name='relatorio' >$resultado[contrato_gestao]</label> <br>";
+
+        $dados_editar .= "<label class='meta' for='relatorio' >PLANO DE TRABALHO:</label>"; // Rótulo para o textarea
+        $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >$resultado[plano_trabalho]</label> <br>";
+
+        $pega = pegar_cont_prog($id_contrato);
+        for ($i = 0; $i < count($pega); $i++) {
+            $cont = $i+1;
+            $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA$cont</label>"; // Rótulo para o textarea
+            $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >." . $pega[$i] . " </label> <br>";
+        }
+        // var_dump($pega);
+
+        $dados_editar .= "</form>"; // Fim do formulário
+        $dados_editar .= "</body>";
+        $dados_editar .= "</html>";
+        // $dados_pdf .= "</body>";
+
+        // echo ($dados_editar);
+        return $dados_editar;
+    }
+}
+function pegar_cont_prog($id_contrato)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT * FROM contratos_programas WHERE id_contrato = :id_contrato ";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_contrato", $id_contrato);
+    $stmt->execute();
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $dados = [];
+    foreach ($resultados as $resultado) {
+        $chave_sql_programa_nome = "SELECT nome_programa FROM programa WHERE id_programa = :id_programa ";
+        $stmt = $mysqli->prepare($chave_sql_programa_nome);
+        $stmt->bindParam(":id_programa", $resultado["id_programa"]);
+        $stmt->execute();
+        $respostas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($respostas as $resposta) {
+            array_push($dados, $resposta["nome_programa"]);
+        }
+
+    }
+    return $dados;
 }

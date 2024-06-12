@@ -16,7 +16,6 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio
     if (isset($_SESSION['relatorios'][$relatorioIndex])) {
         // Apagar o relatório
         unset($_SESSION['relatorios'][$relatorioIndex]);
-
         // Reorganizar os índices do array após a exclusão
         // $_SESSION['relatorios'] = array_values($_SESSION['relatorios']);
     }
@@ -81,9 +80,12 @@ try {
 require_once "..\bancodedados/bd_conectar.php";
 require "insercoes.php";
 if (isset($_GET['id'])) {
-    $id_programa = $_GET['id'];
+    $id = $_GET['id'];
 
-    $resultado_delete = deletePrograma($id_programa);
+    $resultado_delete = deletePrograma($id);
+
+
+    $resultado_delete = deleteContrato($id);
     if ($resultado_delete > 0) {
 
     }
@@ -99,8 +101,8 @@ if (isset($_SESSION['cpf'])) {
     $stmt_mega->bindParam(":perfil", $perfil);
     $stmt_mega->execute();
 
-    $chave_verificar_tb_contratos = "SELECT * FROM programa WHERE cpf_criador= :cpf_criador";
-    $stmt = $mysqli->prepare($chave_verificar_tb_contratos);
+    $chave_verificar_tb_programas = "SELECT * FROM programa WHERE cpf_criador= :cpf_criador";
+    $stmt = $mysqli->prepare($chave_verificar_tb_programas);
     // $stmt->bindParam(":id_tabela", $id_tabela_total);
     $stmt->bindParam(":cpf_criador", $cpf_criador);
     $stmt->execute();
@@ -120,32 +122,37 @@ if (isset($_SESSION['cpf'])) {
             echo '</p>';
         }
     } else {
+        if ($perfil_ent == "Gestor") {
+
+            echo ("<h2>Nenhum relatório criado</h2>");
+        }
+    }
+    $chave_verificar_tb_contratos = "SELECT * FROM contratos WHERE cpf_criador= :cpf_criador";
+    $stmt = $mysqli->prepare($chave_verificar_tb_contratos);
+    // $stmt->bindParam(":id_tabela", $id_tabela_total);
+    $stmt->bindParam(":cpf_criador", $cpf_criador);
+    $stmt->execute();
+    $count_contratos = $stmt->rowCount();
+    $dados_contratos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($count_contratos > 0) {
+        echo "<h1>Contratos:</h1>";
+        echo "<p>Total de contratos encontrados: $count_contratos</p>";
+
+        foreach ($dados_contratos as $rgt) {
+            $id_contrato = $rgt['id_contrato'];
+            echo '<p>';
+            echo "<a href='mostrar_relatorio.php?id=$id_contrato'> $rgt[nome_contrato]</a>||";
+            echo "<a href='editar_relatorio.php?id=$id_contrato'> Editar </a>||";
+            echo "<a href='relatorios.php?id=$id_contrato'> Deletar </a> ";
+            // echo "<a href='#' class='bt'name='$id_contrato'id='tag_enviar'> Enviar </a><br>";
+            echo '</p>';
+        }
+    } else {
         echo ("<h2>Nenhum relatório criado</h2>");
     }
 }
 
-function removeParam($param)
-{
-    // Obtém a URL atual
-    $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-    // Faz o parse da URL e da query string
-    $url_parts = parse_url($url);
-    parse_str($url_parts['query'], $query);
-
-    // Remove o parâmetro
-    unset($query[$param]);
-
-    // Reconstrói a query string sem o parâmetro
-    $new_query = http_build_query($query);
-
-    // Reconstrói a URL sem o parâmetro indesejado
-    $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query;
-
-    // Redireciona para a nova URL
-    header("Location: $new_url");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>

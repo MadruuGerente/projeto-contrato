@@ -1,6 +1,6 @@
 <?php
 require_once "..\bancodedados/bd_conectar.php";
-
+session_start();
 // Verifica se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica se o campo "nome_contrato" foi enviado
@@ -25,16 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ids = json_decode($ids_programas);
         $nome = "id_contrato";
         // programas(4,$nome, "2024-06-15");
-        $test =json_encode(var_dump($id_contrato));
-            // Cria um array associativo com os dados do contrato
-            $dadosDoContrato = array(
-                "nome_contrato" => $nome_contrato
-                ,
-                "id_do_contrato" => $id_contrato,
-                "test" => $test,
-                "ids" => $ids
-            );
 
+        $cpf_criador = $_SESSION['cpf'];
+      
+        
         // Converte o array associativo para JSON
         inserir_contrato(
             $id_contrato,
@@ -50,7 +44,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $os_contratados,
             $contrato_gestao,
             $plano_trabalho,
+            $cpf_criador,
             $dt_criada
+        );
+        foreach ($ids as $id) {
+            comtatos_programas($id_contrato, $id, $dt_criada);
+        }
+          // Cria um array associativo com os dados do contrato
+          $dadosDoContrato = array(
+            "nome_contrato" => $nome_contrato
+            ,
+            "id_do_contrato" => $id_contrato,
+
+            "ids" => $ids,
+            
+            "foi" => 1
         );
         // programas($id_contrato,$ids_programas,$dt_criada);
         $jsonResponse = json_encode($dadosDoContrato);
@@ -81,15 +89,16 @@ function inserir_contrato(
     $os_contratados,
     $contrato_gestao,
     $plano_trabalho,
+    $cpf_criador,
     $dt_criada
 ) {
     $con = new Conexao();
     $mysqli = $con->connect();
     $chave_inserir = "INSERT INTO contratos(id_contrato, nome_contrato,numero_contrato,
     meses,bimestre,contratante,contratado,periodo_abrangencia,objetivo_contrato,objetivo_contratado,
-    os_contratados,contrato_gestao,plano_trabalho,dt_criada) VALUES (:id_contrato,:nome_contrato,:numero_contrato,
+    os_contratados,contrato_gestao,plano_trabalho,cpf_criador,dt_criada) VALUES (:id_contrato,:nome_contrato,:numero_contrato,
     :meses,:bimestre,:contratante,:contratado,:periodo_abrangencia,:objetivo_contrato,:objetivo_contratado,
-    :os_contratados,:contrato_gestao,:plano_trabalho,:dt_criada)";
+    :os_contratados,:contrato_gestao,:plano_trabalho,:cpf_criador,:dt_criada)";
     $stmt = $mysqli->prepare($chave_inserir);
     $stmt->bindParam(':id_contrato', $id_contrato);
     $stmt->bindParam(':nome_contrato', $nome_contrato);
@@ -104,32 +113,37 @@ function inserir_contrato(
     $stmt->bindParam(':os_contratados', $os_contratados);
     $stmt->bindParam(':contrato_gestao', $contrato_gestao);
     $stmt->bindParam(':plano_trabalho', $plano_trabalho);
+    $stmt->bindParam(':cpf_criador', $cpf_criador);
     $stmt->bindParam(':dt_criada', $dt_criada);
     $stmt->execute();
 }
-function programas($t, $g, $h)
+function comtatos_programas($id_contrato, $id_programa, $dt_criada)
 {
     $con = new Conexao();
     $mysqli = $con->connect();
     // Valores que você deseja inserir
-    $id_contrato = 1;
-    $ids = 2;
-    $dt_criada = "2024-06-15";
+    // $id_contrato = 1;
+    // $id_programa = 2;
+    // $dt_criada = "2024-06-15";
 
     // Consulta SQL com marcadores de posição nomeados
     $chave_inserir = "INSERT INTO contratos_programas (id_contrato, id_programa, dt_criada) VALUES (:id_contrato, :id_programa, :dt_criada)";
 
-    // Substituir os marcadores de posição pelos valores reais
-    $chave_inserir = str_replace(
-        [":id_contrato", ":id_programa", ":dt_criada"],
-        [$t, $g, $h],
-        $chave_inserir
-    );
-
     // Preparar a declaração SQL
     $stmt = $mysqli->prepare($chave_inserir);
+    $stmt->bindParam("id_contrato",$id_contrato);
+    $stmt->bindParam("id_programa",$id_programa);
+    $stmt->bindParam("dt_criada",$dt_criada);
 
     // Execute a consulta preparada
     $stmt->execute();
 }
-?>
+// function programas($id_contrato, $id_programa, $dt_criada) {
+//     $con = new Conexao();
+//     $mysqli = $con->connect();
+//     $chave_inserir = "INSERT INTO contratos_programas(id_contrato, id_programa, dt_criada) VALUES (?, ?, ?)";
+//     $stmt = $mysqli->prepare($chave_inserir);
+//     $stmt->bind_param("iis", $id_contrato, $id_programa, $dt_criada);
+//     $stmt->execute();
+// }
+// ?>

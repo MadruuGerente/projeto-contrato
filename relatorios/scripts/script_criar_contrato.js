@@ -41,6 +41,9 @@ document.querySelector("#enviar").addEventListener("click", function (event) {
         .then(response => response.json())
         .then(data => {
             console.log('Resposta do servidor:', data);
+            if (data.foi == 1) {
+                window.location.href = "relatorios.php";
+            }
         })
         .catch(error => {
             console.error('Erro ao enviar dados do formulário:', error);
@@ -146,14 +149,14 @@ function limitarCaracteres(texto, limite) {
         return texto.slice(0, limite) + '...'; // Retorna o texto truncado com três pontos no final
     }
 }
-function pegar_programas_selecionados(){
+function pegar_programas_selecionados() {
     let label_programas = document.querySelector("#programas_selecionados");
-    let label_programa =  label_programas.querySelectorAll("label");
+    let label_programa = label_programas.querySelectorAll("label");
     let ids_programas = [];
-    for(let i=0; i< label_programa.length; i++){
+    for (let i = 0; i < label_programa.length; i++) {
         console.log();
         ids_programas.push(label_programa[i].id);
     }
     console.log(ids_programas);
-    return(ids_programas);
+    return (ids_programas);
 }
