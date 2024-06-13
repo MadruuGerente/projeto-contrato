@@ -89,6 +89,7 @@ function criarNovaMeta() {
     //Cria uma div_meta
     let div_meta = document.createElement("div");
     div_meta.setAttribute('id', 'metadiv' + contMeta);
+    div_meta.setAttribute('class', 'class_meta');
     div_meta.tipo = "meta";
 
     //Cria o label

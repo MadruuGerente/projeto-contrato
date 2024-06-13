@@ -17,7 +17,6 @@ if (isset($_GET['id'])) {
         $dados_pegos = mostrar_pdf($id_programa);
     } else {
         $dados_pegos = mostrar_contrato($id_programa);
-
     }
     echo ($dados_pegos);
 }

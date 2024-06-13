@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/06/2024 às 16:28
+-- Tempo de geração: 12/06/2024 às 16:28
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -49,7 +49,8 @@ INSERT INTO `anexos` (`id_anexo`, `id_indicador`, `nome_anexo`, `caminho_anexo`,
 ('anexoinput2024_008110', 'indicadortextarea2024_00811', 'WhatsApp Video 2024-05-24 at 10.28.09.mp4', '../uploads/anexoinput2024_008110-WhatsApp Video 2024-05-24 at 10.28.09.mp4', '2024-06-07 07:56:24'),
 ('anexoinput2024_008111', 'indicadortextarea2024_00811', 'babuino.jpg', '../uploads/anexoinput2024_008111-babuino.jpg', '2024-06-07 07:56:23'),
 ('anexoinput2024_008120', 'indicadortextarea2024_00812', 'dd.jpeg', '../uploads/anexoinput2024_008120-dd.jpeg', '2024-06-07 07:56:24'),
-('anexoinput2024_009110', 'indicadortextarea2024_00911', 'dd.jpeg', '../uploads/anexoinput2024_009110-dd.jpeg', '2024-06-07 09:56:28');
+('anexoinput2024_009110', 'indicadortextarea2024_00911', 'dd.jpeg', '../uploads/anexoinput2024_009110-dd.jpeg', '2024-06-07 09:56:28'),
+('anexoinput2024_013210', 'indicadortextarea2024_01321', 'VID_20040512_033047_914.mp4', '../uploads/anexoinput2024_013210-VID_20040512_033047_914.mp4', '2024-06-12 11:20:46');
 
 -- --------------------------------------------------------
 
@@ -118,9 +119,48 @@ CREATE TABLE `contratos` (
   `os_contratados` varchar(250) NOT NULL,
   `contrato_gestao` varchar(250) NOT NULL,
   `plano_trabalho` varchar(250) NOT NULL,
+  `cpf_criador` varchar(255) NOT NULL,
   `dt_criada` datetime NOT NULL,
   `dt_atualizada` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `contratos`
+--
+
+INSERT INTO `contratos` (`id_contrato`, `nome_contrato`, `numero_contrato`, `meses`, `bimestre`, `contratante`, `contratado`, `periodo_abrangencia`, `objetivo_contrato`, `objetivo_contratado`, `os_contratados`, `contrato_gestao`, `plano_trabalho`, `cpf_criador`, `dt_criada`, `dt_atualizada`) VALUES
+('contrato_2024_003', ' RELATÓRIO 1º TRIMESTRE 2023_JANEIRO_MARÇO', 'Nº 01/2022\r\n', ' MAIO E JUNHO DE 2022', '  1º BIMESTRE / 2022', ' Secretaria de Estado do Desenvolvimento Econômico e da Ciência e Tecnologia – SEDETEC/SE.', ' Sergipe Parque Tecnológico – SERGIPETEC.', ' \r\n 	\r\nPERÍODO DE ABRANGÊNCIA DO RELATÓRIO \r\n8 de MAIO de 2022 a 30 de JUNHO de 2022.', ' Celebração de Contrato de Gestão com entidade qualificada como organização social, objetivando a continuidade da parceria entre o poder Público Estadual e o Sergipe Parque Tecnológico – SERGIPETEC, com a finalidade de consolidar o Parque Tecnológico para', ' A promoção do desenvolvimento científico e tecnológico local e regional, através do fomento de atividades de pesquisa e de ensino, do apoio a empreendimentos de base técnica e industrial e da implementação de um parque tecnológico que contemple a gestão ', '  \r\n 	\r\nA OS SERGIPETEC é uma instituição de direito privado, sem fins lucrativos, que implementa políticas públicas não exclusivas de governo, em consonância com as diretrizes e políticas do Estado', '  \r\n 	\r\nO CONTRATO DE GESTÃO nº 01/2022, foi firmado por um período de 5 (cinco) anos, com início em 26 de abril de 2022 e término em 25 de abril de 2027', ' O PLANO DE TRABALHO para o período de 2022 a 2027, atende aos objetivos estratégicos do Contrato de Gestão nº 01/2022 e seus aditivos, sendo composto por, metas, atividades, produto, duração prevista, indicador físico de eficiência, unidade e setor ', '069', '2024-06-12 15:11:02', '0000-00-00 00:00:00'),
+('contrato_2024_004', ' terterte', 'JGGHGHFJG ', ' tretete', ' tert', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '069', '2024-06-12 15:39:57', '0000-00-00 00:00:00'),
+('contrato_2024_005', ' Testado do meu celular brother ', 'JGGHGHFJG ', ' Jsjsj', ' Sjshs', ' Hshss', ' Shshs', ' Hshs', ' Hshs', ' Shshsh', 'u eueue', ' Hshs', ' Hshsh', '069', '2024-06-12 16:14:55', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `contratos_programas`
+--
+
+CREATE TABLE `contratos_programas` (
+  `id` int(11) NOT NULL,
+  `id_contrato` varchar(255) NOT NULL,
+  `id_programa` varchar(255) NOT NULL,
+  `dt_criada` datetime NOT NULL,
+  `dt_atualizada` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `contratos_programas`
+--
+
+INSERT INTO `contratos_programas` (`id`, `id_contrato`, `id_programa`, `dt_criada`, `dt_atualizada`) VALUES
+(72, 'contrato_2024_003', 'programa_2024_009', '2024-06-12 15:11:02', '0000-00-00 00:00:00'),
+(73, 'contrato_2024_003', 'programa_2024_008', '2024-06-12 15:11:02', '0000-00-00 00:00:00'),
+(74, 'contrato_2024_003', 'programa_2024_007', '2024-06-12 15:11:02', '0000-00-00 00:00:00'),
+(78, 'contrato_2024_004', 'programa_2024_012', '2024-06-12 15:39:57', '0000-00-00 00:00:00'),
+(79, 'contrato_2024_004', 'programa_2024_011', '2024-06-12 15:39:57', '0000-00-00 00:00:00'),
+(80, 'contrato_2024_004', 'programa_2024_010', '2024-06-12 15:39:57', '0000-00-00 00:00:00'),
+(81, 'contrato_2024_005', 'programa_2024_004', '2024-06-12 16:14:55', '0000-00-00 00:00:00'),
+(82, 'contrato_2024_005', 'programa_2024_005', '2024-06-12 16:14:55', '0000-00-00 00:00:00'),
+(83, 'contrato_2024_005', 'programa_2024_006', '2024-06-12 16:14:55', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -149,7 +189,11 @@ INSERT INTO `enviar_programas` (`id`, `login_de`, `login_para`, `id_programa_env
 (26, '003', '069', 'programa_2024_007', 1, '2024-06-06 16:28:46'),
 (27, '32', '222', 'programa_2024_008', 0, '2024-06-07 13:21:37'),
 (28, '32', '069', 'programa_2024_008', 1, '2024-06-07 13:47:13'),
-(29, '055', '069', 'programa_2024_009', 1, '2024-06-07 14:57:05');
+(29, '055', '069', 'programa_2024_009', 1, '2024-06-07 14:57:05'),
+(30, '003', '069', 'programa_2024_010', 1, '2024-06-12 15:39:10'),
+(31, '003', '069', 'programa_2024_011', 1, '2024-06-12 15:39:14'),
+(32, '003', '069', 'programa_2024_012', 1, '2024-06-12 15:39:16'),
+(33, '123', '069', 'programa_2024_013', 1, '2024-06-12 16:21:06');
 
 -- --------------------------------------------------------
 
@@ -180,7 +224,11 @@ INSERT INTO `indicadores` (`id_meta`, `id_indicador`, `nome`, `dt_criada`, `dt_a
 ('meta_areatext12024_008', 'indicadortextarea2024_00811', 'INDICADOR DE NÚMERO UM              ', '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('meta_areatext12024_008', 'indicadortextarea2024_00812', 'INDICADOR DE NÚMERO DOIS               ', '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('meta_areatext12024_009', 'indicadortextarea2024_00911', 'IYUI', '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
-('meta_areatext22024_009', 'indicadortextarea2024_00921', '', '2024-06-07 09:56:33', '0000-00-00 00:00:00');
+('meta_areatext22024_009', 'indicadortextarea2024_00921', '', '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('meta_areatext12024_010', 'indicadortextarea2024_01011', 'dgd', '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('meta_areatext12024_011', 'indicadortextarea2024_01111', 'gdg', '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('meta_areatext12024_012', 'indicadortextarea2024_01211', 'dsgdfg', '2024-06-12 10:39:06', '0000-00-00 00:00:00'),
+('meta_areatext22024_013', 'indicadortextarea2024_01321', 'Jejsjs', '2024-06-12 11:20:45', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -215,7 +263,7 @@ INSERT INTO `login` (`cpf`, `login`, `nome`, `setor`, `senha`, `status`, `perfil
 ('055', '055', 'IGOR MORCEGO ', 'CVT', '$2y$10$D/3X2BPTB2K0wq2K05utWOD4RbTahhNS2LnXuo/Wfxl/zHd77blue', 'ativo', 'Gestor', '../imagens/img_perfil/055-images.jpg', 1, '2024-06-07 14:52:49', '0000-00-00 00:00:00'),
 ('069', '069', 'RAFAEL PINHO DE SANTANA MEGA CHEFE', 'CVT', '$2y$10$gK5Its6v4LCt2EL82h3tuu0ivwDAaUpMmJji/qqXg8GNkAjqdDGX.', 'ativo', 'Mega Gestor', '../imagens/img_perfil/069-dd.jpeg', 1, '2024-05-15 12:52:26', '0000-00-00 00:00:00'),
 ('111', '111', 'VICTOR MONETEIRO CHEFE', 'CVT', '$2y$10$OhxLcf5p6r/MTqq6/CB8q.Zdz7jkBkKZVCRXOCFOL3lqYPY5xj6fK', 'ativo', 'Gestor', '', 0, '2024-05-15 12:48:37', '0000-00-00 00:00:00'),
-('123', '123', 'zibora', 'cvt', '$2y$10$SOSgjexQo46trrLO7fHF0OVs9aLPxMRCCK/l5mDeR7oP1E9KV9o.S', 'ativo', 'Gestor', '../imagens/img_perfil/123-babuino.jpg', 1, '2024-02-02 11:55:22', '0000-00-00 00:00:00'),
+('123', '123', 'zibora', 'cvt', '$2y$10$SOSgjexQo46trrLO7fHF0OVs9aLPxMRCCK/l5mDeR7oP1E9KV9o.S', 'ativo', 'Gestor', '../imagens/img_perfil/123-17182018737274257630669226938398.jpg', 1, '2024-02-02 11:55:22', '0000-00-00 00:00:00'),
 ('222', '222', 'GUILHERME MARCOS SANTOS ', 'TI', '$2y$10$sw8qC89YhSO5D2RCXL577.2g5DVl/9f52mBdw3hSx/csQwE/gvIV6', 'ativo', 'Mega Gestor', '', 0, '2024-05-15 13:50:08', '0000-00-00 00:00:00'),
 ('32', '32', 'Carla beatriz ', 'cvt', '$2y$10$b80zbH.yneGKdFtatpkAPON6SeC5H5weOQNK1HWDmFCnKhGoLXJGO', 'ativo', 'Gestor', '', 0, '2024-02-02 11:58:41', '0000-00-00 00:00:00'),
 ('777', '777', 'leleu', 'cvt', '$2y$10$dwD6ntaWKFuFhyo1lAX5aeFZakj4cVEnlIGRbgFs.125xZ/qOQjfS', 'ativo', 'Gestor', '', 0, '2024-04-24 12:40:17', '0000-00-00 00:00:00'),
@@ -248,10 +296,15 @@ INSERT INTO `metas` (`id_programa`, `id_meta`, `nome_meta`, `tem_indicador`, `dt
 ('programa_2024_007', 'meta_areatext12024_007', 'C É LOCO ', 1, '2024-06-06 11:28:31', '0000-00-00 00:00:00'),
 ('programa_2024_008', 'meta_areatext12024_008', 'UMA META COM DOISdd INDICADORES               ', 1, '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('programa_2024_009', 'meta_areatext12024_009', 'YKIUU', 1, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('programa_2024_010', 'meta_areatext12024_010', 'fsfssg', 1, '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('programa_2024_011', 'meta_areatext12024_011', 'gdgdgdfg', 1, '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('programa_2024_012', 'meta_areatext12024_012', 'gdfgdffgsagd', 1, '2024-06-12 10:39:06', '0000-00-00 00:00:00'),
+('programa_2024_013', 'meta_areatext12024_013', 'Neta', 0, '2024-06-12 11:18:14', '0000-00-00 00:00:00'),
 ('programa_2024_004', 'meta_areatext22024_004', 'SEGUNDA META ', 0, '2024-05-29 08:59:47', '0000-00-00 00:00:00'),
 ('programa_2024_005', 'meta_areatext22024_005', 'Realizar \"bootcamp\", \"hackathon\", \"challenge\" e palestras.\n', 1, '2024-05-29 10:23:11', '0000-00-00 00:00:00'),
 ('programa_2024_006', 'meta_areatext22024_006', '\'', 0, '2024-06-05 07:27:37', '0000-00-00 00:00:00'),
 ('programa_2024_009', 'meta_areatext22024_009', '', 1, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('programa_2024_013', 'meta_areatext22024_013', 'Do mario', 1, '2024-06-12 11:20:45', '0000-00-00 00:00:00'),
 ('programa_2024_006', 'meta_areatext32024_006', '\'', 0, '2024-06-05 07:27:37', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
@@ -337,7 +390,11 @@ INSERT INTO `previsoes` (`id_indicador`, `id_previsao_inicial`, `id_previsao_fin
 ('indicadortextarea2024_00811', 'text_previsao_inicial_2024_00811', 'text_previsao_final_2024_00811', '23/JULHO         vxcxc     ', '23/ABRIL              ', '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00812', 'text_previsao_inicial_2024_00812', 'text_previsao_final_2024_00812', '23/JULHO              ', '45/ABRILjjhg     ', '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00911', 'text_previsao_inicial_2024_00911', 'text_previsao_final_2024_00911', 'YYUI', '', '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
-('indicadortextarea2024_00921', 'text_previsao_inicial_2024_00921', 'text_previsao_final_2024_00921', '', '', '2024-06-07 09:56:33', '0000-00-00 00:00:00');
+('indicadortextarea2024_00921', 'text_previsao_inicial_2024_00921', 'text_previsao_final_2024_00921', '', '', '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'text_previsao_inicial_2024_01011', 'text_previsao_final_2024_01011', 'gfgd', 'gdgdfg', '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'text_previsao_inicial_2024_01111', 'text_previsao_final_2024_01111', 'dgdgd', 'gdgdfd', '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'text_previsao_inicial_2024_01211', 'text_previsao_final_2024_01211', 'gdg', 'dfgdfs', '2024-06-12 10:39:06', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'text_previsao_inicial_2024_01321', 'text_previsao_final_2024_01321', 'Hsjshs', 'Bsnshs', '2024-06-12 11:20:45', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -400,7 +457,23 @@ INSERT INTO `previstos_no_trimestre` (`id_tabela`, `id_previsto`, `valor`, `bime
 ('previsto_table2024_00921', 4545, 0, '1 °Bim'),
 ('previsto_table2024_00921', 4546, 0, '2 °Trim'),
 ('previsto_table2024_00921', 4547, 0, '3 °Trim'),
-('previsto_table2024_00921', 4548, 0, '4 °Trim');
+('previsto_table2024_00921', 4548, 0, '4 °Trim'),
+('previsto_table2024_01011', 4565, 0, '1 °Bim'),
+('previsto_table2024_01011', 4566, 0, '2 °Trim'),
+('previsto_table2024_01011', 4567, 0, '3 °Trim'),
+('previsto_table2024_01011', 4568, 0, '4 °Trim'),
+('previsto_table2024_01111', 4569, 0, '1 °Bim'),
+('previsto_table2024_01111', 4570, 0, '2 °Trim'),
+('previsto_table2024_01111', 4571, 0, '3 °Trim'),
+('previsto_table2024_01111', 4572, 0, '4 °Trim'),
+('previsto_table2024_01211', 4573, 0, '1 °Bim'),
+('previsto_table2024_01211', 4574, 0, '2 °Trim'),
+('previsto_table2024_01211', 4575, 0, '3 °Trim'),
+('previsto_table2024_01211', 4576, 0, '4 °Trim'),
+('previsto_table2024_01321', 4577, 1, '1 °Bim'),
+('previsto_table2024_01321', 4578, 0, '2 °Trim'),
+('previsto_table2024_01321', 4579, 0, '3 °Trim'),
+('previsto_table2024_01321', 4580, 0, '4 °Trim');
 
 -- --------------------------------------------------------
 
@@ -429,7 +502,11 @@ INSERT INTO `programa` (`id_programa`, `nome_programa`, `cpf_criador`, `contrato
 ('programa_2024_006', ' TESTANDO MEU MANO ', '003', '', 0, '2024-06-05 07:27:32', '0000-00-00 00:00:00'),
 ('programa_2024_007', ' BIG BROTHER BRASIL KKK', '003', '', 0, '2024-06-06 11:28:30', '0000-00-00 00:00:00'),
 ('programa_2024_008', ' TESTANDO FUNCI\n', '32', '', 0, '2024-06-07 07:56:22', '0000-00-00 00:00:00'),
-('programa_2024_009', ' JHJHJ', '055', '', 0, '2024-06-07 09:56:27', '0000-00-00 00:00:00');
+('programa_2024_009', ' JHJHJ', '055', '', 0, '2024-06-07 09:56:27', '0000-00-00 00:00:00'),
+('programa_2024_010', 'programa 1', '003', '', 0, '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('programa_2024_011', ' programa 2', '003', '', 0, '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('programa_2024_012', ' programa 3', '003', '', 0, '2024-06-12 10:39:05', '0000-00-00 00:00:00'),
+('programa_2024_013', ' Fritando ', '123', '', 0, '2024-06-12 11:18:14', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -520,7 +597,23 @@ INSERT INTO `realizados_no_trimestre` (`id_tabela`, `id_realizado`, `valor`, `bi
 ('previsto_table2024_00921', 4595, 0, '1 °Bim'),
 ('previsto_table2024_00921', 4596, 0, '2 °Trim'),
 ('previsto_table2024_00921', 4597, 0, '3 °Trim'),
-('previsto_table2024_00921', 4598, 0, '4 °Trim');
+('previsto_table2024_00921', 4598, 0, '4 °Trim'),
+('previsto_table2024_01011', 4615, 0, '1 °Bim'),
+('previsto_table2024_01011', 4616, 0, '2 °Trim'),
+('previsto_table2024_01011', 4617, 0, '3 °Trim'),
+('previsto_table2024_01011', 4618, 0, '4 °Trim'),
+('previsto_table2024_01111', 4619, 0, '1 °Bim'),
+('previsto_table2024_01111', 4620, 0, '2 °Trim'),
+('previsto_table2024_01111', 4621, 0, '3 °Trim'),
+('previsto_table2024_01111', 4622, 0, '4 °Trim'),
+('previsto_table2024_01211', 4623, 0, '1 °Bim'),
+('previsto_table2024_01211', 4624, 0, '2 °Trim'),
+('previsto_table2024_01211', 4625, 0, '3 °Trim'),
+('previsto_table2024_01211', 4626, 0, '4 °Trim'),
+('previsto_table2024_01321', 4627, 0, '1 °Bim'),
+('previsto_table2024_01321', 4628, 0, '2 °Trim'),
+('previsto_table2024_01321', 4629, 0, '3 °Trim'),
+('previsto_table2024_01321', 4630, 0, '4 °Trim');
 
 -- --------------------------------------------------------
 
@@ -611,7 +704,11 @@ INSERT INTO `tb_contratos` (`id_indicador`, `id_tabela`, `total_contratos`, `tot
 ('indicadortextarea2024_00811', 'totaltable_2024_00811', 2, 2, '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00812', 'totaltable_2024_00812', 2, 2, '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00911', 'totaltable_2024_00911', 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
-('indicadortextarea2024_00921', 'totaltable_2024_00921', 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00');
+('indicadortextarea2024_00921', 'totaltable_2024_00921', 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'totaltable_2024_01011', 0, 0, '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'totaltable_2024_01111', 0, 0, '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'totaltable_2024_01211', 0, 0, '2024-06-12 10:39:06', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'totaltable_2024_01321', 1, 2, '2024-06-12 11:20:45', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -644,7 +741,11 @@ INSERT INTO `tb_previsoes` (`id_indicador`, `id_tabela`, `total_previstos`, `tot
 ('indicadortextarea2024_00811', 'previsto_table2024_00811', 2, 3, 6, '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00812', 'previsto_table2024_00812', 2, 3, 2, '2024-06-07 07:56:24', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00911', 'previsto_table2024_00911', 0, 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
-('indicadortextarea2024_00921', 'previsto_table2024_00921', 0, 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00');
+('indicadortextarea2024_00921', 'previsto_table2024_00921', 0, 0, 0, '2024-06-07 09:56:33', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'previsto_table2024_01011', 0, 0, 0, '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'previsto_table2024_01111', 0, 0, 0, '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'previsto_table2024_01211', 0, 0, 0, '2024-06-12 10:39:06', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'previsto_table2024_01321', 1, 0, 0, '2024-06-12 11:20:45', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -697,7 +798,19 @@ INSERT INTO `texto_avaliativo` (`id_indicador`, `id_texto_avaliativo`, `valor`, 
 ('indicadortextarea2024_00911', 'text_texto_avaliativo2024_009113', '', '2024-06-07 09:56:27', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00921', 'text_texto_avaliativo2024_009211', '', '2024-06-07 09:56:31', '0000-00-00 00:00:00'),
 ('indicadortextarea2024_00921', 'text_texto_avaliativo2024_009212', '', '2024-06-07 09:56:31', '0000-00-00 00:00:00'),
-('indicadortextarea2024_00921', 'text_texto_avaliativo2024_009213', '', '2024-06-07 09:56:31', '0000-00-00 00:00:00');
+('indicadortextarea2024_00921', 'text_texto_avaliativo2024_009213', '', '2024-06-07 09:56:31', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'text_texto_avaliativo2024_010111', '', '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'text_texto_avaliativo2024_010112', '', '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01011', 'text_texto_avaliativo2024_010113', '', '2024-06-12 10:38:35', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'text_texto_avaliativo2024_011111', 'gdggdg', '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'text_texto_avaliativo2024_011112', 'dgd', '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01111', 'text_texto_avaliativo2024_011113', 'ggdsg', '2024-06-12 10:38:48', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'text_texto_avaliativo2024_012111', 'fdgdfgdsf', '2024-06-12 10:39:05', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'text_texto_avaliativo2024_012112', 'gdfg', '2024-06-12 10:39:05', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01211', 'text_texto_avaliativo2024_012113', 'gdsgdf', '2024-06-12 10:39:05', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'text_texto_avaliativo2024_013211', 'Sss', '2024-06-12 11:20:44', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'text_texto_avaliativo2024_013212', 'Ssss', '2024-06-12 11:20:44', '0000-00-00 00:00:00'),
+('indicadortextarea2024_01321', 'text_texto_avaliativo2024_013213', 'Eussj', '2024-06-12 11:20:44', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -782,7 +895,31 @@ INSERT INTO `total_executados` (`id_tabela`, `id_total_executados`, `valor`, `an
 ('totaltable_2024_00921', 6863, 0, '2026'),
 ('totaltable_2024_00921', 6864, 0, '2027'),
 ('totaltable_2024_00921', 6865, 0, '2028'),
-('totaltable_2024_00921', 6866, 0, '2029');
+('totaltable_2024_00921', 6866, 0, '2029'),
+('totaltable_2024_01011', 6891, 0, '2024'),
+('totaltable_2024_01011', 6892, 0, '2025'),
+('totaltable_2024_01011', 6893, 0, '2026'),
+('totaltable_2024_01011', 6894, 0, '2027'),
+('totaltable_2024_01011', 6895, 0, '2028'),
+('totaltable_2024_01011', 6896, 0, '2029'),
+('totaltable_2024_01111', 6897, 0, '2024'),
+('totaltable_2024_01111', 6898, 0, '2025'),
+('totaltable_2024_01111', 6899, 0, '2026'),
+('totaltable_2024_01111', 6900, 0, '2027'),
+('totaltable_2024_01111', 6901, 0, '2028'),
+('totaltable_2024_01111', 6902, 0, '2029'),
+('totaltable_2024_01211', 6903, 0, '2024'),
+('totaltable_2024_01211', 6904, 0, '2025'),
+('totaltable_2024_01211', 6905, 0, '2026'),
+('totaltable_2024_01211', 6906, 0, '2027'),
+('totaltable_2024_01211', 6907, 0, '2028'),
+('totaltable_2024_01211', 6908, 0, '2029'),
+('totaltable_2024_01321', 6909, 0, '2024'),
+('totaltable_2024_01321', 6910, 2, '2025'),
+('totaltable_2024_01321', 6911, 0, '2026'),
+('totaltable_2024_01321', 6912, 0, '2027'),
+('totaltable_2024_01321', 6913, 0, '2028'),
+('totaltable_2024_01321', 6914, 0, '2029');
 
 -- --------------------------------------------------------
 
@@ -867,7 +1004,31 @@ INSERT INTO `total_por_ano` (`id_tabela`, `id_total_por_ano`, `valor`, `ano`) VA
 ('totaltable_2024_00921', 6697, 0, '2026'),
 ('totaltable_2024_00921', 6698, 0, '2027'),
 ('totaltable_2024_00921', 6699, 0, '2028'),
-('totaltable_2024_00921', 6700, 0, '2029');
+('totaltable_2024_00921', 6700, 0, '2029'),
+('totaltable_2024_01011', 6725, 0, '2024'),
+('totaltable_2024_01011', 6726, 0, '2025'),
+('totaltable_2024_01011', 6727, 0, '2026'),
+('totaltable_2024_01011', 6728, 0, '2027'),
+('totaltable_2024_01011', 6729, 0, '2028'),
+('totaltable_2024_01011', 6730, 0, '2029'),
+('totaltable_2024_01111', 6731, 0, '2024'),
+('totaltable_2024_01111', 6732, 0, '2025'),
+('totaltable_2024_01111', 6733, 0, '2026'),
+('totaltable_2024_01111', 6734, 0, '2027'),
+('totaltable_2024_01111', 6735, 0, '2028'),
+('totaltable_2024_01111', 6736, 0, '2029'),
+('totaltable_2024_01211', 6737, 0, '2024'),
+('totaltable_2024_01211', 6738, 0, '2025'),
+('totaltable_2024_01211', 6739, 0, '2026'),
+('totaltable_2024_01211', 6740, 0, '2027'),
+('totaltable_2024_01211', 6741, 0, '2028'),
+('totaltable_2024_01211', 6742, 0, '2029'),
+('totaltable_2024_01321', 6743, 0, '2024'),
+('totaltable_2024_01321', 6744, 1, '2025'),
+('totaltable_2024_01321', 6745, 0, '2026'),
+('totaltable_2024_01321', 6746, 0, '2027'),
+('totaltable_2024_01321', 6747, 0, '2028'),
+('totaltable_2024_01321', 6748, 0, '2029');
 
 --
 -- Índices para tabelas despejadas
@@ -893,6 +1054,14 @@ ALTER TABLE `col_projeto`
 --
 ALTER TABLE `contratos`
   ADD PRIMARY KEY (`id_contrato`);
+
+--
+-- Índices de tabela `contratos_programas`
+--
+ALTER TABLE `contratos_programas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prog_cont` (`id_programa`),
+  ADD KEY `cont_prog` (`id_contrato`);
 
 --
 -- Índices de tabela `enviar_programas`
@@ -1026,10 +1195,16 @@ ALTER TABLE `col_projeto`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
+-- AUTO_INCREMENT de tabela `contratos_programas`
+--
+ALTER TABLE `contratos_programas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+
+--
 -- AUTO_INCREMENT de tabela `enviar_programas`
 --
 ALTER TABLE `enviar_programas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de tabela `notatividades`
@@ -1041,7 +1216,7 @@ ALTER TABLE `notatividades`
 -- AUTO_INCREMENT de tabela `previstos_no_trimestre`
 --
 ALTER TABLE `previstos_no_trimestre`
-  MODIFY `id_previsto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4549;
+  MODIFY `id_previsto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4581;
 
 --
 -- AUTO_INCREMENT de tabela `projetos`
@@ -1053,7 +1228,7 @@ ALTER TABLE `projetos`
 -- AUTO_INCREMENT de tabela `realizados_no_trimestre`
 --
 ALTER TABLE `realizados_no_trimestre`
-  MODIFY `id_realizado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4599;
+  MODIFY `id_realizado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4631;
 
 --
 -- AUTO_INCREMENT de tabela `relatorios`
@@ -1071,13 +1246,13 @@ ALTER TABLE `setor`
 -- AUTO_INCREMENT de tabela `total_executados`
 --
 ALTER TABLE `total_executados`
-  MODIFY `id_total_executados` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6867;
+  MODIFY `id_total_executados` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6915;
 
 --
 -- AUTO_INCREMENT de tabela `total_por_ano`
 --
 ALTER TABLE `total_por_ano`
-  MODIFY `id_total_por_ano` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6701;
+  MODIFY `id_total_por_ano` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6749;
 
 --
 -- Restrições para tabelas despejadas
@@ -1095,6 +1270,13 @@ ALTER TABLE `anexos`
 ALTER TABLE `col_projeto`
   ADD CONSTRAINT `col_setor` FOREIGN KEY (`id_setor`) REFERENCES `setor` (`id_setor`),
   ADD CONSTRAINT `projeto_col` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id_projeto`);
+
+--
+-- Restrições para tabelas `contratos_programas`
+--
+ALTER TABLE `contratos_programas`
+  ADD CONSTRAINT `cont_prog` FOREIGN KEY (`id_contrato`) REFERENCES `contratos` (`id_contrato`) ON DELETE CASCADE,
+  ADD CONSTRAINT `prog_cont` FOREIGN KEY (`id_programa`) REFERENCES `programa` (`id_programa`);
 
 --
 -- Restrições para tabelas `enviar_programas`

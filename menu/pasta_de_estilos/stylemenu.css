@@ -1,6 +1,6 @@
 .body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f5f3f3;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
   text-align: center;
   margin-top: 20px;
 }
-.icon-menu{
+.icon-menu {
   display: none;
   margin-left: auto;
   margin-right: auto;
@@ -72,7 +72,7 @@
   margin-right: 20px;
   border-radius: 15px;
 }
-.nome-perfil{
+.nome-perfil {
   color: #3cec10;
   margin-top: 80px;
 }
@@ -117,7 +117,7 @@ h3 {
   width: 100%;
 }
 
-.sidebar {
+#sidebar {
   display: none;
   /* Menu oculto por padrão */
   position: fixed;
@@ -129,6 +129,54 @@ h3 {
   background-color: #000000;
   /* background-color: #333; */
   padding-top: 20px;
+  opacity: 1;
+  transform: translateX(-250px);
+}
+#sidebar.visible {
+  animation-name: animar_visible;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  display: block;
+}
+#sidebar.sidebar {
+  animation-name: animar_sadebar;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  display: block;
+  /* opacity: 0; */
+}
+@keyframes animar_visible {
+  from {
+    opacity: 0;
+    transform: translateX(-250px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    /* background-color: #ff0b0b; */
+  }
+}
+@keyframes animar_sadebar {
+  /* from {
+    transform: translateX(-250px);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-250px);
+    opacity: 0; */
+
+  /* background-color: #ff0b0b; */
+  0% {
+    /* } */
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  50% {
+  }
+  100% {
+    transform: translateX(-250px);
+    opacity: 0;
+  }
 }
 
 .imagem-menu {
@@ -140,7 +188,7 @@ h3 {
   margin-left: 10px;
 }
 
-.sidebar a {
+#sidebar a {
   display: block;
   /* Cada link ocupa toda a largura */
   color: white;
@@ -149,7 +197,7 @@ h3 {
   text-decoration: none;
 }
 
-.sidebar a:hover {
+#sidebar a:hover {
   background-color: #575757;
   /* Cor ao passar o mouse sobre o link */
 }
@@ -161,7 +209,7 @@ h3 {
   /* Para evitar sobreposição */
 }
 @media screen and (max-width: 700px) {
-  .logo-menu{
+  .logo-menu {
     display: none;
   }
 }

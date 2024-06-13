@@ -1028,13 +1028,20 @@ function mostrar_contrato($id_contrato)
         $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >$resultado[plano_trabalho]</label> <br>";
 
         $pega = pegar_cont_prog($id_contrato);
-        for ($i = 0; $i < count($pega); $i++) {
-            $cont = $i+1;
-            $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA$cont</label>"; // Rótulo para o textarea
-            $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >." . $pega[$i] . " </label> <br>";
+        foreach( $pega as $cont=>$peg){
+            $conte = $cont+1;
+            $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA$conte:</label>"; // Rótulo para o textarea
+            $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >" . $peg['nome_programa'] . " </label>";
+            $dados_editar .= "<label class='meta-valor' id='quantidade_meta' name='relatorio' > Tem " . $peg['quantidade_meta'] . " metas </label>";
+            $dados_editar .= "<label class='meta-valor' id='quantidade_meta' name='relatorio' > e tem " . $peg['quantidade_indicador'] . " indicadores </label> <br>";
         }
+        // $nome_programa = $pega["quantidade_meta"];
+        // for ($i = 0; $i < count($nome_programa); $i++) {    
+        //     $cont = $i + 1;
+        //     $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA$cont</label>"; // Rótulo para o textarea
+        //     $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >." . $nome_programa['nome_programa'][$i] . " </label> <br>";
+        // }
         // var_dump($pega);
-
         $dados_editar .= "</form>"; // Fim do formulário
         $dados_editar .= "</body>";
         $dados_editar .= "</html>";
@@ -1054,16 +1061,57 @@ function pegar_cont_prog($id_contrato)
     $stmt->execute();
     $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $dados = [];
+    $dados_meta = [];
+
     foreach ($resultados as $resultado) {
         $chave_sql_programa_nome = "SELECT nome_programa FROM programa WHERE id_programa = :id_programa ";
         $stmt = $mysqli->prepare($chave_sql_programa_nome);
         $stmt->bindParam(":id_programa", $resultado["id_programa"]);
         $stmt->execute();
         $respostas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $quantidade_meta = cont_meta($resultado["id_programa"]);
         foreach ($respostas as $resposta) {
-            array_push($dados, $resposta["nome_programa"]);
+            $dadosPrograma = [
+                "nome_programa" => $resposta["nome_programa"],
+                "quantidade_meta" => $quantidade_meta["quant_meta"],
+                "quantidade_indicador" => $quantidade_meta['quant_ind']]; // Supondo que cont_meta seja uma função existente
+            $dados[] = $dadosPrograma;
+            // array_push($dados, $resposta["nome_programa"]);
         }
-
+        // array_push($dados_meta, $quantidade_meta);
+        // array_push($dados, $dados_meta);
     }
     return $dados;
+}
+
+function cont_meta($id_programa)
+{
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT id_meta FROM metas WHERE id_programa = :id_programa ";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_programa", $id_programa);
+    $stmt->execute();
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $contador = $stmt->rowCount();
+    $dados = [];
+    $total = 0;
+    foreach ($resultados as $resultado) {
+        $quantidade_ind = cont_indicador($resultado['id_meta']);
+        $total += $quantidade_ind;
+    }
+    $dados = ["quant_meta"=>$contador,"quant_ind"=>$total];
+
+    return $dados;
+}
+function cont_indicador($id_meta){
+    $con = new Conexao();
+    $mysqli = $con->connect();
+    $chave_sql_verificar = "SELECT id_indicador FROM indicadores WHERE id_meta = :id_meta ";
+    $stmt = $mysqli->prepare($chave_sql_verificar);
+    $stmt->bindParam(":id_meta", $id_meta);
+    $stmt->execute();
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $contador_ind = $stmt->rowCount();
+    return $contador_ind;
 }

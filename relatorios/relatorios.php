@@ -11,7 +11,6 @@ if (isset($_POST['criar_relatorio_form'])) {
 // Adicionar condição para apagar relatório
 if (isset($_GET['acao']) && $_GET['acao'] === 'apagar' && isset($_GET['relatorio'])) {
     $relatorioIndex = $_GET['relatorio'];
-
     // Verificar se o índice do relatório existe na sessão  
     if (isset($_SESSION['relatorios'][$relatorioIndex])) {
         // Apagar o relatório
@@ -90,6 +89,17 @@ if (isset($_GET['id'])) {
 
     }
 }
+function limitarString($string, $limite)
+{
+    // Verifica se a string é maior que o limite
+    if (strlen($string) > $limite) {
+        // Corta a string até o limite desejado
+        $string = substr($string, 0, $limite);
+        // Adiciona os três pontos
+        $string .= '...';
+    }
+    return $string;
+}
 $perfil = 0;
 if (isset($_SESSION['cpf'])) {
     $perfil = "Mega Gestor";
@@ -113,9 +123,10 @@ if (isset($_SESSION['cpf'])) {
         echo "<p>Total de relatórios encontrados: $count</p>";
 
         foreach ($dados as $rgt) {
+            $limitada = limitarString($rgt['nome_programa'], 15);
             $id_programa = $rgt['id_programa'];
             echo '<p>';
-            echo "<a href='mostrar_relatorio.php?id=$id_programa'> $rgt[nome_programa]</a>||";
+            echo "<a href='mostrar_relatorio.php?id=$id_programa'> $limitada</a>||";
             echo "<a href='editar_relatorio.php?id=$id_programa'> Editar </a>||";
             echo "<a href='relatorios.php?id=$id_programa'> Deletar </a> ||";
             echo "<a href='#' class='bt'name='$id_programa'id='tag_enviar'> Enviar </a><br>";
@@ -222,7 +233,7 @@ if (isset($_SESSION['cpf'])) {
 
 
     </nav>
-    <div class="sidebar" id="sidebar">
+    <div class="r" id="sidebar">
         <?php if ($perfil_ent == "Gestor") {
             ?>
             <a href="..\menu/menu.php">Menu</a>

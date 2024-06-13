@@ -57,11 +57,24 @@ meuPerfil.addEventListener("click", function () {
     document.location.href = "../perfil/perfil.php";
 });
 menuTrigger.addEventListener("click", function () {
-    if (sidebar.style.display === "none" || sidebar.style.display === "") {
-        sidebar.style.display = "block"; /* Mostra o menu lateral */
-    } else {
-        sidebar.style.display = "none"; /* Esconde o menu lateral */
-    }
+    if (sidebar.className === "r") {
+        // sidebar.style.opacity = "block"; /* Mostra o menu lateral */
+        sidebar.classList.remove('r');
+        
+        sidebar.offsetHeight; 
+        sidebar.classList.add('visible');
+      } else if(sidebar.className === "sidebar") {
+        // sidebar.style.display = "none"; /* Esconde o menu lateral */
+        sidebar.classList.remove('sidebar');
+        
+        sidebar.offsetHeight; 
+        sidebar.classList.add('visible')
+      }else{
+        sidebar.classList.remove('visible');
+        
+        sidebar.offsetHeight; 
+        sidebar.classList.add('sidebar');
+      }
 });
 
 function entrou(type) {

@@ -81,7 +81,7 @@ h3 {
 }
 
 #formCriarRelatorio {
-  width: 100%;
+  width: 50px;
   max-width: 700px;
   min-width: 500px;
   background-color: #fff;
@@ -90,6 +90,35 @@ h3 {
   padding: 10px;
   text-align: center;
   margin: auto;
+
+  opacity: 0;
+  animation: anima_entrada;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes anima_entrada {
+  to {
+    opacity: 1;
+    width: 700px  ;
+  }
+}
+
+@keyframes label_meta {
+  to {
+    opacity: 1;
+    /* width: 500px; */
+  }
+}
+
+.class_meta{
+  display: block;
+  margin-bottom: 10px;
+ 
+  opacity: 0;
+  animation-name: label_meta;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 
 #formCriarRelatorio label {
@@ -135,6 +164,7 @@ h3 {
   #formCriarRelatorio {
     max-width: 300px;
   }
+  
 }
 
 .img {
@@ -155,7 +185,6 @@ h3 {
   background-color: rgba(0, 0, 0, 0.5); /* fundo semi-transparente */
   overflow: auto;
   z-index: 9999;
-  
 }
 .overlay {
   display: none;
@@ -202,33 +231,33 @@ h3 {
   width: 50px;
   height: 40px;
 }
-.remetende{
+.remetende {
   font-size: 15px;
-  color:#888;
+  color: #888;
 }
 .checkboxes label {
-  display:block;
+  display: block;
 }
 
-.input_open{
+.input_open {
   width: auto;
   height: auto;
-  float:left;
+  float: left;
 }
-formCriarRelatorio label{
+formCriarRelatorio label {
   width: 40px;
   height: auto;
 }
 .checkbox-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px; /* Espaçamento entre cada checkbox e label */
-    }
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Espaçamento entre cada checkbox e label */
+}
 
-    .checkbox {
-        margin-right: 5px; /* Espaçamento entre o checkbox e o label */
-    }
+.checkbox {
+  margin-right: 5px; /* Espaçamento entre o checkbox e o label */
+}
 
-    .remetente {
-        margin-left: 10px; /* Espaçamento entre o nome do programa e o remetente */
-    }
+.remetente {
+  margin-left: 10px; /* Espaçamento entre o nome do programa e o remetente */
+}

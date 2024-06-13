@@ -110,7 +110,7 @@ try {
     <!-- <button id="toggle-sidebar">Mostrar Menu</button> -->
     <img src="..\imagens/iconeperfil.png" id="icon.png" class="icon-menu" alt="teste">
 
-    <div class="sidebar" id="sidebar">
+    <div class="r" id="sidebar">
         <?php
         if ($perfil == "Gestor") {
             ?>
