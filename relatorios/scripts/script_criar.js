@@ -102,6 +102,7 @@ function criarNovaMeta() {
     novo_text.style.resize = "none";
 
     novo_text.setAttribute('id', 'meta_areatext' + contMeta + contPrograma);
+    novo_text.required = true;
     //Coloca o label e o textare dentro da div
     novo_label.setAttribute('for', novo_text.id);
 
@@ -451,75 +452,81 @@ function verdados(enviado) {
 
         let pegarElementosMeta = JSON.stringify(pegaMeta(i, contPrograma));
         let pegarPrograma = JSON.stringify(pegaProgram());
+        if (pegarPrograma == 0) {
+            alert("Programa não pode ser vazio");
 
-        dados.append('pegarElementosMeta', pegarElementosMeta);
-        // dados.append('contador', contIndicador);
-        dados.append('pegarPrograma', pegarPrograma);
-        if (ultimoElementoCriado.tipo != 'indicador') {
-            $.ajax({
-                url: 'teste.php',
-                method: 'POST',
-                data: dados,
-                processData: false,
-                contentType: false,
-                success: function (resposta) {
-                    console.log(resposta);
-                }
-            });
-        }
-        if (contIndicador > guarda) {
-            guarda = contIndicador;
-        }
-        console.log(`  CADEEEEEEEEEEEE ${guarda}`);
-        if (guarda != 0) {
-            console.error(`CADEEEEEEEEEEEE ${guarda}`);
-            for (let j = 1; j <= guarda; j++) {
-                if (pegaIndicador(i, j, contPrograma)) {
-                    // console.error(`rodou ${j}`);
-                    console.error("ESSSEEEEEE" + i, j, contIndicador);
-                    console.log(pegaIndicador(i, j, contPrograma))
-                    console.log(pegaPrevisao(i, j, contPrograma));
-                    console.log(pegaElementosTabelaTotal(i, j, contPrograma));
-                    console.log(pegarElementosTabelaPrevisoes(i, j, contPrograma));
-                    console.log(pegarTextoAvaliativo(i, j, contPrograma));
+        } else {
+            pegarPrograma = JSON.stringify(pegarPrograma);
 
-                    let indicador = pegaIndicador(i, j, contPrograma);
-                    let id_indicador = indicador['id'];
+            dados.append('pegarElementosMeta', pegarElementosMeta);
+            // dados.append('contador', contIndicador);
+            dados.append('pegarPrograma', pegarPrograma);
+            if (ultimoElementoCriado.tipo != 'indicador') {
+                $.ajax({
+                    url: 'teste.php',
+                    method: 'POST',
+                    data: dados,
+                    processData: false,
+                    contentType: false,
+                    success: function (resposta) {
+                        console.log(resposta);
+                    }
+                });
+            }
+            if (contIndicador > guarda) {
+                guarda = contIndicador;
+            }
+            console.log(`  CADEEEEEEEEEEEE ${guarda}`);
+            if (guarda != 0) {
+                console.error(`CADEEEEEEEEEEEE ${guarda}`);
+                for (let j = 1; j <= guarda; j++) {
+                    if (pegaIndicador(i, j, contPrograma)) {
+                        // console.error(`rodou ${j}`);
+                        console.error("ESSSEEEEEE" + i, j, contIndicador);
+                        console.log(pegaIndicador(i, j, contPrograma))
+                        console.log(pegaPrevisao(i, j, contPrograma));
+                        console.log(pegaElementosTabelaTotal(i, j, contPrograma));
+                        console.log(pegarElementosTabelaPrevisoes(i, j, contPrograma));
+                        console.log(pegarTextoAvaliativo(i, j, contPrograma));
 
-                    let pegarElementoInicialFinal = JSON.stringify(pegaPrevisao(i, j, contPrograma));
-                    let pegarElementosPrevisoes = JSON.stringify(pegarElementosTabelaPrevisoes(i, j, contPrograma));
-                    let pegarElementosTotal = JSON.stringify(pegaElementosTabelaTotal(i, j, contPrograma));
-                    let pegarElementosTextoAvaliativo = JSON.stringify(pegarTextoAvaliativo(i, j, contPrograma));
-                    let pegarElementosIndicador = JSON.stringify(pegaIndicador(i, j, contPrograma));
+                        let indicador = pegaIndicador(i, j, contPrograma);
+                        let id_indicador = indicador['id'];
+
+                        let pegarElementoInicialFinal = JSON.stringify(pegaPrevisao(i, j, contPrograma));
+                        let pegarElementosPrevisoes = JSON.stringify(pegarElementosTabelaPrevisoes(i, j, contPrograma));
+                        let pegarElementosTotal = JSON.stringify(pegaElementosTabelaTotal(i, j, contPrograma));
+                        let pegarElementosTextoAvaliativo = JSON.stringify(pegarTextoAvaliativo(i, j, contPrograma));
+                        let pegarElementosIndicador = JSON.stringify(pegaIndicador(i, j, contPrograma));
 
 
-                    // console.log(pegarTextoAvaliativo(i, j, contPrograma));
+                        // console.log(pegarTextoAvaliativo(i, j, contPrograma));
 
-                    dados.append('pegarElementosIndicador', pegarElementosIndicador);
-                    dados.append('pegarElementoInicialFinal', pegarElementoInicialFinal);
-                    dados.append('pegarElementosTotal', pegarElementosTotal);
-                    dados.append('pegarElementosPrevisoes', pegarElementosPrevisoes);
-                    dados.append('pegarElementosTextoAvaliativo', pegarElementosTextoAvaliativo);
+                        dados.append('pegarElementosIndicador', pegarElementosIndicador);
+                        dados.append('pegarElementoInicialFinal', pegarElementoInicialFinal);
+                        dados.append('pegarElementosTotal', pegarElementosTotal);
+                        dados.append('pegarElementosPrevisoes', pegarElementosPrevisoes);
+                        dados.append('pegarElementosTextoAvaliativo', pegarElementosTextoAvaliativo);
 
-                    $.ajax({
-                        url: 'teste.php',
-                        method: 'POST',
-                        data: dados,
-                        processData: false,
-                        contentType: false,
-                        success: function (resposta) {
-                            console.log(resposta);
-                            if (pegarAnexo(i, j, contPrograma, id_indicador) == "erro") {
-                                erroAnexo();
-                            } else {
-                                if (enviado == "enviar") {
-                                    abrirPagina();
+                        $.ajax({
+                            url: 'teste.php',
+                            method: 'POST',
+                            data: dados,
+                            processData: false,
+                            contentType: false,
+                            success: function (resposta) {
+                                console.log(resposta);
+                                if (pegarAnexo(i, j, contPrograma, id_indicador) == "erro") {
+                                    erroAnexo();
+                                } else {
+                                    if (enviado == "enviar") {
+                                        abrirPagina();
+                                    }
                                 }
+
                             }
+                        });
 
-                        }
-                    });
-
+                    }
                 }
             }
         }
@@ -529,9 +536,13 @@ function pegaProgram() {
     let id_programa = `programa_${contPrograma}`;
     let programa_ = window.document.querySelector(`#${id_programa}`);
     let valorPrograma = programa_.value;
-    return {
-        id: id_programa,
-        valor: valorPrograma,
+    if (valorPrograma.trim() === "") {
+        return 0;
+    } else {
+        return {
+            id: id_programa,
+            valor: valorPrograma,
+        }
     }
 
 }
@@ -909,7 +920,7 @@ function teste() {
     });
 }
 function abrirPagina() {
-    window.location.href = "relatorios.php";
+    // window.location.href = "relatorios.php";
 }
 function voltar() {
     abrirPagina();

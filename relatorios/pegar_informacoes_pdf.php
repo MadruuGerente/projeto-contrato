@@ -1030,10 +1030,9 @@ function mostrar_contrato($id_contrato)
         $pega = pegar_cont_prog($id_contrato);
         foreach( $pega as $cont=>$peg){
             $conte = $cont+1;
-            $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA$conte:</label>"; // Rótulo para o textarea
+            $dados_editar .= "<label class='meta' for='relatorio' >PROGRAMA $conte:</label>"; // Rótulo para o textarea
             $dados_editar .= "<label class='meta-valor' id='plano_trabalho' name='relatorio' >" . $peg['nome_programa'] . " </label>";
-            $dados_editar .= "<label class='meta-valor' id='quantidade_meta' name='relatorio' > Tem " . $peg['quantidade_meta'] . " metas </label>";
-            $dados_editar .= "<label class='meta-valor' id='quantidade_meta' name='relatorio' > e tem " . $peg['quantidade_indicador'] . " indicadores </label> <br>";
+            $dados_editar .= "<label class='meta-valor' id='quantidade_meta' name='relatorio' > Tem " . $peg['quantidade_meta'] . " metas e ".$peg['quantidade_indicador'] . " indicadores</label> <br>";
         }
         // $nome_programa = $pega["quantidade_meta"];
         // for ($i = 0; $i < count($nome_programa); $i++) {    
